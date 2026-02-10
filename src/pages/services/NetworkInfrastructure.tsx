@@ -1,5 +1,6 @@
 import { Network } from "lucide-react";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
+import heroNetwork from "@/assets/hero-network.jpg";
 
 const NetworkInfrastructure = () => (
   <ServicePageTemplate
@@ -9,6 +10,7 @@ const NetworkInfrastructure = () => (
     headline="The Backbone of Modern Facilities"
     description="We design, build, remediate, and support structured network infrastructure across enterprise, industrial, and mission-critical environments—handling everything from greenfield deployments to complex live cutovers."
     tagline="Built for reliability, scalability, and long-term operations—not just installation."
+    heroImage={heroNetwork}
     items={[
       { title: "Structured Cabling Design-Build", description: "CAT6/CAT6A and fiber optic systems, MDF/IDF architecture, labeling, and standards-based installation." },
       { title: "Testing & Certification", description: "Tier 1 and Tier 2 testing for all copper and fiber systems, including qualification, certification, and documented results." },

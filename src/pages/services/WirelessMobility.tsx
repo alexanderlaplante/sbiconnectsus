@@ -1,5 +1,6 @@
 import { Wifi } from "lucide-react";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
+import heroWireless from "@/assets/hero-wireless.jpg";
 
 const WirelessMobility = () => (
   <ServicePageTemplate
@@ -9,6 +10,7 @@ const WirelessMobility = () => (
     headline="Coverage, Capacity, and Continuity—Everywhere"
     description="We engineer and deploy wireless and RF solutions that support mobility, safety, and operations across challenging environments."
     tagline="Designed for uptime, interference control, and real-world RF conditions."
+    heroImage={heroWireless}
     items={[
       { title: "Wi-Fi Networks", description: "Surveys, heat mapping, optimization, and performance remediation for enterprise wireless." },
       { title: "Public Safety DAS", description: "Code-compliant systems (NFPA / IFC) for first responder coverage in buildings and facilities." },
