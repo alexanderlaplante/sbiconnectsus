@@ -2,6 +2,7 @@ import { useState } from "react";
 import sbiLogo from "@/assets/sbi-logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
 
 const services = [
@@ -58,6 +59,8 @@ const Navbar = () => {
 
           <Link to="/#about" className="text-sm text-muted-foreground transition-colors hover:text-primary">About</Link>
           <Link to="/#contact" className="text-sm text-muted-foreground transition-colors hover:text-primary">Contact</Link>
+
+          <ThemeSwitcher />
 
           <Link
             to="/#contact"
