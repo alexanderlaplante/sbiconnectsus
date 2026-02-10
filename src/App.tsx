@@ -5,6 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import NetworkInfrastructure from "./pages/services/NetworkInfrastructure";
+import WirelessMobility from "./pages/services/WirelessMobility";
+import SecurityAccess from "./pages/services/SecurityAccess";
+import AudioVisual from "./pages/services/AudioVisual";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +20,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/services/network-infrastructure" element={<NetworkInfrastructure />} />
+          <Route path="/services/wireless-mobility" element={<WirelessMobility />} />
+          <Route path="/services/security-access" element={<SecurityAccess />} />
+          <Route path="/services/audio-visual" element={<AudioVisual />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
