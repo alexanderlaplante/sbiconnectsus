@@ -1,5 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
+import heroSecurity from "@/assets/hero-security.jpg";
 
 const SecurityAccess = () => (
   <ServicePageTemplate
@@ -9,6 +10,7 @@ const SecurityAccess = () => (
     headline="Integrated Physical Security with Operational Intelligence"
     description="We deliver converged security systems that protect people, assets, and operations—designed to integrate cleanly with IT infrastructure."
     tagline="Security systems engineered—not pieced together."
+    heroImage={heroSecurity}
     items={[
       { title: "Video Surveillance", description: "IP cameras, analytics, perimeter and industrial monitoring with enterprise-grade recording." },
       { title: "Access Control & Identity", description: "Card, mobile, biometric, and multi-factor systems for facility and area access management." },

@@ -1,5 +1,6 @@
 import { MonitorSpeaker } from "lucide-react";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
+import heroAV from "@/assets/hero-audiovisual.jpg";
 
 const AudioVisual = () => (
   <ServicePageTemplate
@@ -9,6 +10,7 @@ const AudioVisual = () => (
     headline="Clear Communication Where It Counts"
     description="We design and deploy professional AV and communication systems that support collaboration, safety, and daily operations."
     tagline="Technology that communicates clearly, reliably, and at scale."
+    heroImage={heroAV}
     items={[
       { title: "Audio-Visual & Collaboration", description: "Conference rooms, control spaces, digital displays, and video conferencing solutions." },
       { title: "Paging & Mass Notification", description: "Facility-wide voice and alerting systems for emergency and daily communication needs." },

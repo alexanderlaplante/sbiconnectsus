@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, CheckCircle2, ArrowRight, LucideIcon } from "lucide-react";
+import { useRef } from "react";
 import Layout from "@/components/layout/Layout";
 
 interface ServiceItem {
@@ -17,6 +18,7 @@ interface ServicePageProps {
   description: string;
   items: ServiceItem[];
   tagline: string;
+  heroImage: string;
   nextService?: { title: string; href: string };
   prevService?: { title: string; href: string };
 }
@@ -34,30 +36,43 @@ const ServicePageTemplate = ({
   description,
   items,
   tagline,
+  heroImage,
   nextService,
   prevService,
 }: ServicePageProps) => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative py-24 md:py-32 overflow-hidden noise-overlay">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
-        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl" />
-        
+      {/* Hero with parallax image */}
+      <section ref={heroRef} className="relative py-28 md:py-40 overflow-hidden">
+        <motion.div className="absolute inset-0" style={{ y: imgY, scale: imgScale }}>
+          <img src={heroImage} alt={title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/70" />
+        </motion.div>
+        <div className="absolute inset-0 grid-pattern opacity-15" />
+
         <div className="relative z-10 mx-auto max-w-7xl px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
               <ArrowLeft className="h-4 w-4" /> Back to Home
             </Link>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <Icon className="h-7 w-7 text-primary" />
-              </div>
+              <motion.div
+                animate={{ rotateY: [0, 10, 0], rotateX: [0, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="w-16 h-16 rounded-2xl bg-primary/10 backdrop-blur-sm border border-primary/20 flex items-center justify-center glow-gold"
+                style={{ perspective: 600 }}
+              >
+                <Icon className="h-8 w-8 text-primary" />
+              </motion.div>
               <span className="text-sm text-primary font-medium uppercase tracking-wider">{subtitle}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl">
-              {headline}
-            </h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl">{headline}</h1>
             <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">{description}</p>
           </motion.div>
         </div>
@@ -77,11 +92,8 @@ const ServicePageTemplate = ({
             {items.map((item, i) => (
               <motion.div
                 key={item.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={i}
-                variants={fadeUp}
+                initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
                 className="group p-6 rounded-2xl glass-card hover:border-primary/30 transition-all duration-300"
               >
                 <div className="flex items-start gap-4">

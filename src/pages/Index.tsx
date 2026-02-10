@@ -1,7 +1,9 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Network, Wifi, ShieldCheck, MonitorSpeaker, ArrowRight, CheckCircle2, Zap, Globe, Users } from "lucide-react";
+import { useRef } from "react";
 import Layout from "@/components/layout/Layout";
+import heroHome from "@/assets/hero-home.jpg";
 
 const pillars = [
   {
@@ -46,53 +48,109 @@ const fadeUp = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } }),
 };
 
+const FloatingCard = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
+  <motion.div
+    animate={{ y: [0, -12, 0], rotateX: [0, 2, 0], rotateY: [0, -2, 0] }}
+    transition={{ duration: 5 + delay, repeat: Infinity, ease: "easeInOut", delay }}
+    style={{ perspective: 1000 }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
 const Index = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden noise-overlay">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute top-1/4 -right-40 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute bottom-0 -left-40 w-[500px] h-[500px] rounded-full bg-accent/5 blur-3xl" />
-        
-        <div className="relative z-10 mx-auto max-w-7xl px-6 py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-medium mb-8">
-              <Zap className="h-3 w-3" />
-              Veteran-Owned (DVOSB) · Low-Voltage Specialists
+      <section ref={heroRef} className="relative min-h-[95vh] flex items-center overflow-hidden">
+        {/* Parallax Background Image */}
+        <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
+          <img src={heroHome} alt="Data center infrastructure" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
+        </motion.div>
+
+        {/* Grid overlay */}
+        <div className="absolute inset-0 grid-pattern opacity-20" />
+
+        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 mx-auto max-w-7xl px-6 py-24 w-full">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-medium mb-8 backdrop-blur-sm">
+                <Zap className="h-3 w-3" />
+                Veteran-Owned (DVOSB) · Low-Voltage Specialists
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+                Infrastructure<br />
+                <span className="text-gradient">Engineered Right.</span>
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed mb-10">
+                We design, build, and support the low-voltage systems that modern facilities depend on—network, wireless, security, and AV.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/#contact"
+                  className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold"
+                >
+                  Request a Consultation
+                </Link>
+                <Link
+                  to="/services/network-infrastructure"
+                  className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all backdrop-blur-sm"
+                >
+                  Explore Services
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* 3D Floating Pillar Cards */}
+            <div className="hidden md:block relative" style={{ perspective: 1200 }}>
+              <FloatingCard delay={0} className="absolute top-0 right-0 w-56">
+                <div className="glass-card rounded-2xl p-5 glow-gold" style={{ transform: "rotateY(-8deg) rotateX(4deg)" }}>
+                  <Network className="h-8 w-8 text-primary mb-3" />
+                  <div className="text-sm font-semibold mb-1">Network</div>
+                  <div className="text-xs text-muted-foreground">CAT6A · Fiber · Data Centers</div>
+                </div>
+              </FloatingCard>
+              <FloatingCard delay={1.2} className="absolute top-28 right-32 w-52">
+                <div className="glass-card rounded-2xl p-5 glow-accent" style={{ transform: "rotateY(6deg) rotateX(-3deg)" }}>
+                  <Wifi className="h-8 w-8 text-accent mb-3" />
+                  <div className="text-sm font-semibold mb-1">Wireless</div>
+                  <div className="text-xs text-muted-foreground">Wi-Fi · DAS · Private LTE</div>
+                </div>
+              </FloatingCard>
+              <FloatingCard delay={2.4} className="absolute top-56 right-8 w-52">
+                <div className="glass-card rounded-2xl p-5" style={{ transform: "rotateY(-5deg) rotateX(5deg)", boxShadow: "0 0 30px -8px hsl(0 70% 50% / 0.2)" }}>
+                  <ShieldCheck className="h-8 w-8 text-red-400 mb-3" />
+                  <div className="text-sm font-semibold mb-1">Security</div>
+                  <div className="text-xs text-muted-foreground">IP Cameras · Access Control</div>
+                </div>
+              </FloatingCard>
+              <FloatingCard delay={3.6} className="absolute top-80 right-36 w-52">
+                <div className="glass-card rounded-2xl p-5" style={{ transform: "rotateY(4deg) rotateX(-2deg)", boxShadow: "0 0 30px -8px hsl(270 70% 50% / 0.2)" }}>
+                  <MonitorSpeaker className="h-8 w-8 text-purple-400 mb-3" />
+                  <div className="text-sm font-semibold mb-1">Audio-Visual</div>
+                  <div className="text-xs text-muted-foreground">AV · Paging · Displays</div>
+                </div>
+              </FloatingCard>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
-              Infrastructure<br />
-              <span className="text-gradient">Engineered Right.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed mb-10">
-              We design, build, and support the low-voltage systems that modern facilities depend on—network, wireless, security, and AV.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/#contact"
-                className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold"
-              >
-                Request a Consultation
-              </Link>
-              <Link
-                to="/services/network-infrastructure"
-                className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all"
-              >
-                Explore Services
-              </Link>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* Stats Bar */}
-      <section className="border-y border-border/50 bg-card/30">
+      <section className="border-y border-border/50 bg-card/30 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, i) => (
             <motion.div
@@ -115,11 +173,7 @@ const Index = () => {
       <section className="py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-6">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={0}
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
@@ -134,18 +188,15 @@ const Index = () => {
             {pillars.map((pillar, i) => (
               <motion.div
                 key={pillar.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={i}
-                variants={fadeUp}
+                initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp}
               >
                 <Link
                   to={pillar.href}
-                  className="group block h-full p-8 rounded-2xl glass-card hover:border-primary/30 transition-all duration-300 hover:glow-gold"
+                  className="group block h-full p-8 rounded-2xl glass-card hover:border-primary/30 transition-all duration-300 hover:glow-gold hover:-translate-y-1"
+                  style={{ perspective: 800 }}
                 >
                   <div className="flex items-start gap-5">
-                    <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors group-hover:scale-110 transform duration-300">
                       <pillar.icon className="h-6 w-6 text-primary" />
                     </div>
                     <div className="flex-1">
@@ -191,7 +242,7 @@ const Index = () => {
                   { icon: Users, label: "Veteran-Owned" },
                   { icon: Zap, label: "Mission-Critical" },
                 ].map((item) => (
-                  <div key={item.label} className="text-center p-4 rounded-xl bg-secondary/50">
+                  <div key={item.label} className="text-center p-4 rounded-xl bg-secondary/50 hover:bg-secondary/80 transition-colors">
                     <item.icon className="h-5 w-5 text-primary mx-auto mb-2" />
                     <span className="text-xs text-muted-foreground">{item.label}</span>
                   </div>
@@ -200,7 +251,7 @@ const Index = () => {
             </motion.div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} variants={fadeUp}>
-              <div className="relative rounded-2xl overflow-hidden glass-card p-8">
+              <div className="relative rounded-2xl overflow-hidden glass-card p-8" style={{ perspective: 800 }}>
                 <div className="absolute inset-0 grid-pattern opacity-20" />
                 <div className="relative space-y-6">
                   {[
@@ -210,10 +261,17 @@ const Index = () => {
                     "24/7 support & lifecycle management",
                     "Scalable from single-site to multi-campus",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + i * 0.1 }}
+                      className="flex items-center gap-3"
+                    >
                       <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
                       <span className="text-sm text-foreground">{item}</span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -225,28 +283,15 @@ const Index = () => {
       {/* Contact CTA */}
       <section id="contact" className="py-24 md:py-32">
         <div className="mx-auto max-w-3xl px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0}
-            variants={fadeUp}
-            className="text-center mb-12"
-          >
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
               Let's <span className="text-gradient">Connect.</span>
             </h2>
-            <p className="text-muted-foreground text-lg">
-              Tell us about your project. We'll scope it, spec it, and deliver it right.
-            </p>
+            <p className="text-muted-foreground text-lg">Tell us about your project. We'll scope it, spec it, and deliver it right.</p>
           </motion.div>
 
           <motion.form
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={1}
-            variants={fadeUp}
+            initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} variants={fadeUp}
             className="glass-card rounded-2xl p-8 space-y-6"
             onSubmit={(e) => e.preventDefault()}
           >
@@ -268,10 +313,7 @@ const Index = () => {
               <label className="block text-sm text-muted-foreground mb-2">Message</label>
               <textarea rows={4} className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" placeholder="Tell us about your project…" />
             </div>
-            <button
-              type="submit"
-              className="w-full py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold"
-            >
+            <button type="submit" className="w-full py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold">
               Send Message
             </button>
           </motion.form>
