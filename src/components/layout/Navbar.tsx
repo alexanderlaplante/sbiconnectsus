@@ -1,5 +1,5 @@
 import { useState } from "react";
-import sbiLogo from "@/assets/sbi-logo.svg";
+import SbiLogo from "@/components/SbiLogo";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center">
-          <img src={sbiLogo} alt="SBI Connects" className="h-10" />
+          <SbiLogo className="h-10" />
         </Link>
 
         {/* Desktop Nav */}

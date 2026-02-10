@@ -3,11 +3,11 @@
   <defs>
     <style>
       .cls-1 {
-        fill: hsl(45, 93%, 58%);
+        fill: var(--logo-accent, hsl(45, 93%, 58%));
         fill-rule: evenodd;
       }
       .cls-2 {
-        fill: hsl(210, 20%, 92%);
+        fill: var(--logo-text, hsl(210, 20%, 92%));
         font-family: MontserratRoman-SemiBold, Montserrat, sans-serif;
         font-size: 76.86px;
         font-variation-settings: 'wght' 600;
@@ -15,7 +15,7 @@
         letter-spacing: .07em;
       }
       polygon, path:not(.cls-1) {
-        fill: hsl(210, 20%, 92%);
+        fill: var(--logo-text, hsl(210, 20%, 92%));
       }
     </style>
   </defs>

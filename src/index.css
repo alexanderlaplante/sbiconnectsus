@@ -38,6 +38,9 @@
 
     --radius: 0.75rem;
 
+    --logo-accent: hsl(45, 93%, 58%);
+    --logo-text: hsl(210, 20%, 92%);
+
     --sidebar-background: 220 22% 8%;
     --sidebar-foreground: 210 20% 92%;
     --sidebar-primary: 45 93% 58%;
@@ -80,6 +83,9 @@
 
     --radius: 0.75rem;
 
+    --logo-accent: hsl(205, 85%, 55%);
+    --logo-text: hsl(210, 20%, 92%);
+
     --sidebar-background: 222 24% 8%;
     --sidebar-foreground: 210 20% 92%;
     --sidebar-primary: 205 85% 55%;
@@ -121,6 +127,9 @@
     --ring: 220 70% 45%;
 
     --radius: 0.75rem;
+
+    --logo-accent: hsl(220, 70%, 45%);
+    --logo-text: hsl(222, 28%, 12%);
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 222 28% 12%;

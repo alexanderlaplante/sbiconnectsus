@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import sbiLogo from "@/assets/sbi-logo.svg";
+import SbiLogo from "@/components/SbiLogo";
 import { Shield, MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => (
@@ -9,7 +9,7 @@ const Footer = () => (
         {/* Brand */}
         <div className="md:col-span-1">
           <div className="mb-4">
-            <img src={sbiLogo} alt="SBI Connects" className="h-10" />
+            <SbiLogo className="h-10" />
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             Veteran-owned (DVOSB) low-voltage and telecommunications infrastructure specialists.
