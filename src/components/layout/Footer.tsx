@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import sbiLogo from "@/assets/sbi-logo.svg";
 import { Shield, MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => (
@@ -7,11 +8,8 @@ const Footer = () => (
       <div className="grid md:grid-cols-4 gap-10">
         {/* Brand */}
         <div className="md:col-span-1">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center font-bold text-primary-foreground text-sm" style={{ fontFamily: 'Space Grotesk' }}>
-              SBI
-            </div>
-            <span className="font-semibold text-foreground" style={{ fontFamily: 'Space Grotesk' }}>SBI Connects</span>
+          <div className="mb-4">
+            <img src={sbiLogo} alt="SBI Connects" className="h-10" />
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             Veteran-owned (DVOSB) low-voltage and telecommunications infrastructure specialists.
