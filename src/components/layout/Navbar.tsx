@@ -1,4 +1,5 @@
 import { useState } from "react";
+import sbiLogo from "@/assets/sbi-logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,13 +19,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center font-bold text-primary-foreground text-sm" style={{ fontFamily: 'Space Grotesk' }}>
-            SBI
-          </div>
-          <span className="font-semibold text-foreground text-lg" style={{ fontFamily: 'Space Grotesk' }}>
-            SBI Connects
-          </span>
+        <Link to="/" className="flex items-center">
+          <img src={sbiLogo} alt="SBI Connects" className="h-10" />
         </Link>
 
         {/* Desktop Nav */}
