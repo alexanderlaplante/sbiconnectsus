@@ -6,7 +6,9 @@ import { useState, useRef, useEffect } from "react";
 const themes: { id: Theme; label: string; icon: typeof Sun; accent: string }[] = [
   { id: "dark-gold", label: "Dark Gold", icon: Moon, accent: "bg-amber-400" },
   { id: "dark-blue", label: "Dark Blue", icon: Palette, accent: "bg-sky-400" },
-  { id: "light", label: "Light", icon: Sun, accent: "bg-yellow-300" },
+  { id: "light", label: "Light Blue", icon: Sun, accent: "bg-blue-500" },
+  { id: "light-warm", label: "Light Warm", icon: Sun, accent: "bg-orange-400" },
+  { id: "light-forest", label: "Light Forest", icon: Sun, accent: "bg-emerald-500" },
 ];
 
 const ThemeSwitcher = () => {
