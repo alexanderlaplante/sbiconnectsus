@@ -6,6 +6,8 @@ import { useState, useRef, useEffect } from "react";
 const themes: { id: Theme; label: string; icon: typeof Sun; accent: string }[] = [
   { id: "dark-gold", label: "Dark Gold", icon: Moon, accent: "bg-amber-400" },
   { id: "dark-blue", label: "Dark Blue", icon: Palette, accent: "bg-sky-400" },
+  { id: "dark-rose", label: "Dark Rose", icon: Moon, accent: "bg-rose-400" },
+  { id: "dark-emerald", label: "Dark Emerald", icon: Moon, accent: "bg-emerald-400" },
   { id: "dusk", label: "Dusk", icon: Palette, accent: "bg-violet-400" },
   { id: "light", label: "Light Blue", icon: Sun, accent: "bg-blue-500" },
   { id: "light-warm", label: "Light Warm", icon: Sun, accent: "bg-orange-400" },
