@@ -51,6 +51,96 @@
     --sidebar-ring: 45 93% 58%;
   }
 
+  /* Dark Rose — crimson & blush */
+  [data-theme="dark-rose"] {
+    --background: 340 25% 6%;
+    --foreground: 330 15% 90%;
+
+    --card: 340 22% 10%;
+    --card-foreground: 330 15% 90%;
+
+    --popover: 340 22% 10%;
+    --popover-foreground: 330 15% 90%;
+
+    --primary: 345 75% 58%;
+    --primary-foreground: 340 25% 6%;
+
+    --secondary: 338 18% 16%;
+    --secondary-foreground: 330 15% 90%;
+
+    --muted: 338 16% 14%;
+    --muted-foreground: 335 12% 52%;
+
+    --accent: 320 65% 55%;
+    --accent-foreground: 340 25% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 338 16% 18%;
+    --input: 338 16% 18%;
+    --ring: 345 75% 58%;
+
+    --radius: 0.75rem;
+
+    --logo-accent: hsl(345, 75%, 58%);
+    --logo-text: hsl(330, 15%, 90%);
+
+    --sidebar-background: 340 22% 8%;
+    --sidebar-foreground: 330 15% 90%;
+    --sidebar-primary: 345 75% 58%;
+    --sidebar-primary-foreground: 340 25% 6%;
+    --sidebar-accent: 338 16% 14%;
+    --sidebar-accent-foreground: 330 15% 90%;
+    --sidebar-border: 338 16% 18%;
+    --sidebar-ring: 345 75% 58%;
+  }
+
+  /* Dark Emerald — jade & teal */
+  [data-theme="dark-emerald"] {
+    --background: 160 25% 5%;
+    --foreground: 150 15% 90%;
+
+    --card: 160 22% 9%;
+    --card-foreground: 150 15% 90%;
+
+    --popover: 160 22% 9%;
+    --popover-foreground: 150 15% 90%;
+
+    --primary: 160 70% 48%;
+    --primary-foreground: 160 25% 5%;
+
+    --secondary: 158 18% 15%;
+    --secondary-foreground: 150 15% 90%;
+
+    --muted: 158 16% 13%;
+    --muted-foreground: 155 12% 50%;
+
+    --accent: 180 60% 45%;
+    --accent-foreground: 160 25% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 158 16% 17%;
+    --input: 158 16% 17%;
+    --ring: 160 70% 48%;
+
+    --radius: 0.75rem;
+
+    --logo-accent: hsl(160, 70%, 48%);
+    --logo-text: hsl(150, 15%, 90%);
+
+    --sidebar-background: 160 22% 7%;
+    --sidebar-foreground: 150 15% 90%;
+    --sidebar-primary: 160 70% 48%;
+    --sidebar-primary-foreground: 160 25% 5%;
+    --sidebar-accent: 158 16% 13%;
+    --sidebar-accent-foreground: 150 15% 90%;
+    --sidebar-border: 158 16% 17%;
+    --sidebar-ring: 160 70% 48%;
+  }
+
   /* Dark Blue */
   [data-theme="dark-blue"] {
     --background: 222 28% 6%;
