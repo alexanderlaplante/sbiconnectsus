@@ -83,6 +83,7 @@ const Index = () => {
           <img src={heroHome} alt="Data center infrastructure" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
+          <div className="absolute inset-0 bg-background/10 dark:bg-transparent" style={{ mixBlendMode: 'multiply' }} />
         </motion.div>
         <div className="absolute inset-0 grid-pattern opacity-20" />
 

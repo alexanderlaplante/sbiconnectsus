@@ -167,8 +167,16 @@
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
   }
 
+  [data-theme="light"] .glass-card {
+    @apply bg-card/90 shadow-md border-border/60;
+  }
+
   .glow-gold {
     box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.3);
+  }
+
+  [data-theme="light"] .glow-gold {
+    box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.2);
   }
 
   .glow-accent {
@@ -180,6 +188,12 @@
       linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
       linear-gradient(90deg, hsl(var(--border) / 0.4) 1px, transparent 1px);
     background-size: 60px 60px;
+  }
+
+  [data-theme="light"] .grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--border) / 0.6) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.6) 1px, transparent 1px);
   }
 
   .noise-overlay {
