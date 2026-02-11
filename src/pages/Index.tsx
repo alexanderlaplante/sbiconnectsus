@@ -81,9 +81,8 @@ const Index = () => {
       <section ref={heroRef} className="relative min-h-[95vh] flex items-center overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
           <img src={heroHome} alt="Data center infrastructure" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
-          <div className="absolute inset-0 bg-background/10 dark:bg-transparent" style={{ mixBlendMode: 'multiply' }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent dark:via-background/85 dark:to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/20 dark:to-background/60" />
         </motion.div>
         <div className="absolute inset-0 grid-pattern opacity-20" />
 
