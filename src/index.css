@@ -388,28 +388,7 @@
     background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
   }
 
-  /* Per-theme gradient overrides */
-  [data-theme="dark-blue"] .text-gradient {
-    background-image: linear-gradient(135deg, hsl(205, 85%, 55%), hsl(220, 90%, 70%), hsl(190, 80%, 50%));
-  }
-  [data-theme="dark-rose"] .text-gradient {
-    background-image: linear-gradient(135deg, hsl(345, 75%, 58%), hsl(330, 80%, 70%), hsl(320, 65%, 55%));
-  }
-  [data-theme="dark-emerald"] .text-gradient {
-    background-image: linear-gradient(135deg, hsl(160, 70%, 48%), hsl(140, 65%, 55%), hsl(180, 60%, 45%));
-  }
-  [data-theme="dusk"] .text-gradient {
-    background-image: linear-gradient(135deg, hsl(262, 60%, 62%), hsl(280, 55%, 70%), hsl(200, 55%, 55%));
-  }
-  [data-theme="light"] .text-gradient {
-    background-image: linear-gradient(135deg, hsl(220, 75%, 38%), hsl(230, 80%, 50%), hsl(200, 90%, 40%));
-  }
-  [data-theme="light-warm"] .text-gradient {
-    background-image: linear-gradient(135deg, hsl(16, 75%, 47%), hsl(25, 85%, 55%), hsl(35, 90%, 52%));
-  }
-  [data-theme="light-forest"] .text-gradient {
-    background-image: linear-gradient(135deg, hsl(158, 64%, 32%), hsl(150, 60%, 42%), hsl(172, 66%, 40%));
-  }
+  /* Per-theme gradient overrides - all use primary → accent by default */
 
   .glass-card {
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
