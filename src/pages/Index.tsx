@@ -111,28 +111,28 @@ const Index = () => {
             </motion.div>
 
             <div className="hidden md:block relative" style={{ perspective: 1200 }}>
-              <FloatingCard delay={0} className="absolute -top-8 right-0 w-56">
+              <FloatingCard delay={0} className="absolute -top-[132px] right-0 w-56">
                 <div className="glass-card rounded-2xl p-5 glow-gold" style={{ transform: "rotateY(-8deg) rotateX(4deg)" }}>
                   <Network className="h-8 w-8 text-primary mb-3" />
                   <div className="text-sm font-semibold mb-1">Network</div>
                   <div className="text-xs text-muted-foreground">CAT6A · Fiber · Data Centers</div>
                 </div>
               </FloatingCard>
-              <FloatingCard delay={1.2} className="absolute top-24 right-32 w-52">
+              <FloatingCard delay={1.2} className="absolute -top-[4px] right-32 w-52">
                 <div className="glass-card rounded-2xl p-5 glow-accent" style={{ transform: "rotateY(6deg) rotateX(-3deg)" }}>
                   <Wifi className="h-8 w-8 text-accent mb-3" />
                   <div className="text-sm font-semibold mb-1">Wireless</div>
                   <div className="text-xs text-muted-foreground">Wi-Fi · DAS · Private LTE</div>
                 </div>
               </FloatingCard>
-              <FloatingCard delay={2.4} className="absolute top-56 right-8 w-52">
+              <FloatingCard delay={2.4} className="absolute top-[124px] right-8 w-52">
                 <div className="glass-card rounded-2xl p-5" style={{ transform: "rotateY(-5deg) rotateX(5deg)", boxShadow: "0 0 30px -8px hsl(0 70% 50% / 0.2)" }}>
                   <ShieldCheck className="h-8 w-8 text-red-400 mb-3" />
                   <div className="text-sm font-semibold mb-1">Security</div>
                   <div className="text-xs text-muted-foreground">IP Cameras · Access Control</div>
                 </div>
               </FloatingCard>
-              <FloatingCard delay={3.6} className="absolute top-[22rem] right-36 w-52">
+              <FloatingCard delay={3.6} className="absolute top-[252px] right-36 w-52">
                 <div className="glass-card rounded-2xl p-5" style={{ transform: "rotateY(4deg) rotateX(-2deg)", boxShadow: "0 0 30px -8px hsl(270 70% 50% / 0.2)" }}>
                   <MonitorSpeaker className="h-8 w-8 text-purple-400 mb-3" />
                   <div className="text-sm font-semibold mb-1">Audio-Visual</div>
