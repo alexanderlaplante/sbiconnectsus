@@ -12,7 +12,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem("sbi-theme") as Theme;
-    return saved || "dark-gold";
+    return saved || "light";
   });
 
   useEffect(() => {
