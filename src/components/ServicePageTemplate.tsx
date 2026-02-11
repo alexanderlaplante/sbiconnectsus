@@ -51,9 +51,8 @@ const ServicePageTemplate = ({
       <section ref={heroRef} className="relative py-28 md:py-40 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: imgY, scale: imgScale }}>
           <img src={heroImage} alt={title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/50 [data-theme=light]_&:from-background/95 [data-theme=light]_&:via-background/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/70" />
-          <div className="absolute inset-0 bg-background/10 dark:bg-transparent" style={{ mixBlendMode: 'multiply' }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent dark:via-background/90 dark:to-background/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40 dark:to-background/70" />
         </motion.div>
         <div className="absolute inset-0 grid-pattern opacity-15" />
 
