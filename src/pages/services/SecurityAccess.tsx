@@ -5,17 +5,17 @@ import heroSecurity from "@/assets/hero-security.jpg";
 const SecurityAccess = () => (
   <ServicePageTemplate
     icon={ShieldCheck}
-    title="Security & Life-Safety"
+    title="Security, Access & Life-Safety Systems"
     subtitle="Core Pillar 3"
-    headline="Integrated Physical Security with Operational Intelligence"
-    description="We deliver converged security systems that protect people, assets, and operations—designed to integrate cleanly with IT infrastructure."
+    headline="Integrated Protection with Documented Performance"
+    description="We deliver converged security platforms designed to integrate cleanly with network and facility infrastructure. Systems are designed for scalability, auditability, and operational clarity."
     tagline="Security systems engineered—not pieced together."
     heroImage={heroSecurity}
     items={[
-      { title: "Video Surveillance", description: "IP cameras, analytics, perimeter and industrial monitoring with enterprise-grade recording." },
-      { title: "Access Control & Identity", description: "Card, mobile, biometric, and multi-factor systems for facility and area access management." },
-      { title: "Intrusion & Duress", description: "Alarm systems, monitoring interfaces, and site-specific protection strategies." },
-      { title: "Integrated Security Platforms", description: "Unified video, access, and intrusion management under a single operational interface." },
+      { title: "IP Video Surveillance", description: "IP cameras, analytics, perimeter detection, and industrial monitoring with enterprise-grade recording." },
+      { title: "Access Control & Identity Management", description: "Card, mobile, biometric, and multi-factor systems for facility and area access management." },
+      { title: "Intrusion, Duress & Monitoring", description: "Alarm systems, duress integrations, and monitoring interfaces for site-specific protection." },
+      { title: "Unified Security Platforms", description: "Converged video, access, and alarm management under a single operational interface." },
     ]}
     prevService={{ title: "Wireless & Mobility", href: "/services/wireless-mobility" }}
     nextService={{ title: "Audio-Visual Systems", href: "/services/audio-visual" }}
