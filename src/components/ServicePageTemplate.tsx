@@ -21,6 +21,7 @@ interface ServicePageProps {
   heroImage: string;
   nextService?: { title: string; href: string };
   prevService?: { title: string; href: string };
+  children?: ReactNode;
 }
 
 const fadeUp = {
@@ -39,6 +40,7 @@ const ServicePageTemplate = ({
   heroImage,
   nextService,
   prevService,
+  children,
 }: ServicePageProps) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -108,6 +110,8 @@ const ServicePageTemplate = ({
           </div>
         </div>
       </section>
+
+      {children}
 
       {/* Tagline */}
       <section className="py-16 border-y border-border/50 bg-card/20">
