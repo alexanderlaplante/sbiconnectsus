@@ -89,7 +89,7 @@ const Index = () => {
         <motion.div style={{ opacity: heroOpacity }} className="relative z-10 mx-auto max-w-7xl px-6 py-24 w-full">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
-              <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-primary/60 bg-primary/20 text-primary text-sm font-semibold mb-8 backdrop-blur-md shadow-lg shadow-primary/10">
+              <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-primary/60 bg-primary/20 text-primary text-sm font-semibold mb-8 backdrop-blur-md shadow-lg shadow-primary/10 animate-badge-glow">
                 <Zap className="h-4 w-4" />
                 Veteran-Owned (DVOSB) · Low-Voltage Specialists
               </div>
