@@ -118,21 +118,21 @@ const Index = () => {
                   <div className="text-xs text-muted-foreground">CAT6A · Fiber · Data Centers</div>
                 </div>
               </FloatingCard>
-              <FloatingCard delay={1.2} className="absolute top-28 right-32 w-52">
+              <FloatingCard delay={1.2} className="absolute top-32 right-32 w-52">
                 <div className="glass-card rounded-2xl p-5 glow-accent" style={{ transform: "rotateY(6deg) rotateX(-3deg)" }}>
                   <Wifi className="h-8 w-8 text-accent mb-3" />
                   <div className="text-sm font-semibold mb-1">Wireless</div>
                   <div className="text-xs text-muted-foreground">Wi-Fi · DAS · Private LTE</div>
                 </div>
               </FloatingCard>
-              <FloatingCard delay={2.4} className="absolute top-56 right-8 w-52">
+              <FloatingCard delay={2.4} className="absolute top-64 right-8 w-52">
                 <div className="glass-card rounded-2xl p-5" style={{ transform: "rotateY(-5deg) rotateX(5deg)", boxShadow: "0 0 30px -8px hsl(0 70% 50% / 0.2)" }}>
                   <ShieldCheck className="h-8 w-8 text-red-400 mb-3" />
                   <div className="text-sm font-semibold mb-1">Security</div>
                   <div className="text-xs text-muted-foreground">IP Cameras · Access Control</div>
                 </div>
               </FloatingCard>
-              <FloatingCard delay={3.6} className="absolute top-80 right-36 w-52">
+              <FloatingCard delay={3.6} className="absolute top-96 right-36 w-52">
                 <div className="glass-card rounded-2xl p-5" style={{ transform: "rotateY(4deg) rotateX(-2deg)", boxShadow: "0 0 30px -8px hsl(270 70% 50% / 0.2)" }}>
                   <MonitorSpeaker className="h-8 w-8 text-purple-400 mb-3" />
                   <div className="text-sm font-semibold mb-1">Audio-Visual</div>
