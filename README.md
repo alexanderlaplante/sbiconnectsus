@@ -62,12 +62,43 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### Option 1: Built-in Publishing
 
-## Can I connect a custom domain to my Lovable project?
+Click **Share → Publish** in the editor to deploy instantly. You can connect a custom domain under **Project > Settings > Domains**.
 
-Yes, you can!
+### Option 2: Self-Host via FTP
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. Clone the repo and install dependencies (`npm install`)
+2. Build the project: `npm run build`
+3. Upload the contents of the `dist/` folder to your server via FTP (FileZilla, WinSCP, etc.)
+4. **Important:** Configure your server to redirect all routes to `index.html` for SPA routing:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Apache (.htaccess in your site root):**
+```apache
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+```
+
+**Nginx:**
+```nginx
+location / {
+  try_files $uri $uri/ /index.html;
+}
+```
+
+### Option 3: Other Hosting Platforms
+
+The built output (`dist/`) is a standard static site and can be deployed to:
+
+- **Netlify** — drag & drop the `dist/` folder or connect the GitHub repo
+- **Vercel** — import the GitHub repo; framework preset: Vite
+- **Cloudflare Pages** — connect the GitHub repo; build command: `npm run build`, output: `dist`
+- **AWS S3 + CloudFront** — upload `dist/` to an S3 bucket and serve via CloudFront
+
+## Can I connect a custom domain?
+
+Yes! Navigate to **Project > Settings > Domains** and click **Connect Domain** (requires a paid plan).
