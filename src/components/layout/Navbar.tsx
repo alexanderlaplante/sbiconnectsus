@@ -30,6 +30,8 @@ const Navbar = () => {
             Home
           </Link>
 
+          <Link to="/about" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'}`}>About</Link>
+
           <div className="relative" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
             <button className={`text-sm flex items-center gap-1 transition-colors hover:text-primary ${location.pathname.startsWith('/services') ? 'text-primary' : 'text-muted-foreground'}`}>
               Services <ChevronDown className="h-3 w-3" />
@@ -57,7 +59,6 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          <Link to="/about" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'}`}>About</Link>
           <Link to="/#contact" className="text-sm text-muted-foreground transition-colors hover:text-primary">Contact</Link>
 
           <ThemeSwitcher />
@@ -90,6 +91,7 @@ const Navbar = () => {
           >
             <div className="px-6 py-4 space-y-2">
               <Link to="/" onClick={() => setMobileOpen(false)} className="block py-2 text-sm text-foreground">Home</Link>
+              <Link to="/about" onClick={() => setMobileOpen(false)} className="block py-2 text-sm text-foreground">About</Link>
               <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider pt-2 pb-1">Services</div>
               {services.map((s) => (
                 <Link key={s.href} to={s.href} onClick={() => setMobileOpen(false)} className="block py-2 pl-3 text-sm text-muted-foreground hover:text-primary">
