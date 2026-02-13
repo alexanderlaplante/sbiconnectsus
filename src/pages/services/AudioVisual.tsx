@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroAV from "@/assets/hero-audiovisual.jpg";
-import avEngineeringImage from "@/assets/av-engineering.jpg";
+import avEngineeringImage from "@/assets/av-why-matters.jpg";
+import avMassNotificationImage from "@/assets/av-mass-notification.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const fadeUp = {
@@ -256,7 +257,7 @@ const AudioVisual = () => (
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={heroAV} alt="Facility communication systems" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={avMassNotificationImage} alt="Mass notification and facility paging systems" className="w-full h-full object-cover aspect-[4/3]" />
           </motion.div>
         </div>
       </div>
