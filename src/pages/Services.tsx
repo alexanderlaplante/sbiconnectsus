@@ -1,145 +1,209 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Network, Wifi, ShieldCheck, MonitorSpeaker, CheckCircle2, ArrowRight, FileCheck, Wrench, Award } from "lucide-react";
+import {
+  Network,
+  Wifi,
+  ShieldCheck,
+  MonitorSpeaker,
+  ArrowRight,
+  Building2,
+  Server,
+  Heart,
+  Factory,
+  GraduationCap,
+  Landmark,
+  ShieldAlert,
+  FileCheck,
+  Eye,
+  CheckCircle2,
+  Award,
+} from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import heroImage from "@/assets/hero-home.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.5 },
+  }),
 };
 
 const pillars = [
   {
     icon: Network,
-    label: "Core 1 — Network",
-    title: "Network Infrastructure & Data Center Systems",
-    headline: "The backbone of reliable operations",
-    description: "We design, build, remediate, and support structured network infrastructure ranging from greenfield deployments to complex, live operational environments. All systems are delivered in alignment with BICSI methodologies and ANSI/TIA standards.",
-    capabilities: [
-      "Structured cabling design-build (CAT6, CAT6A, and fiber optic systems)",
-      "MDF/IDF design, rack & stack integration, cable management, and cleanup",
-      "Backbone fiber, campus connectivity, and redundant fiber ring architectures",
-      "Outside Plant (OSP): underground and aerial fiber, conduit systems, duct banks, and pathway remediation",
-      "Network migrations, live cutovers, and phased transitions",
-      "Troubleshooting and remediation of undocumented or underperforming cabling",
-      "IT field services and ticket-based support (adds, moves, changes, break/fix)",
-    ],
-    testing: [
-      "Copper cabling fully qualified and certified",
-      "Fiber systems tested to Tier 1 (OLTS) and Tier 2 (OTDR) where required",
-      "Test results reviewed and validated under RCDD technical oversight",
-      "Deliverables aligned with ANSI/TIA performance requirements and manufacturer specifications",
-    ],
-    testingNote: "Every system is delivered fully tested, labeled, and documented—no orphaned cables, no assumptions.",
+    title: "Network Infrastructure",
+    description:
+      "Standards-based structured cabling, fiber backbone systems, MDF/IDF integration, OSP deployment, testing, and remediation. The physical foundation of reliable operations.",
     href: "/services/network-infrastructure",
+    cta: "View Network Infrastructure",
   },
   {
     icon: Wifi,
-    label: "Core 2 — Wireless",
-    title: "Wireless, Mobility & Industrial Connectivity",
-    headline: "Coverage and capacity engineered for real-world conditions",
-    description: "We design and deploy wireless and RF systems that support mobility, safety, and operational continuity across demanding environments.",
-    capabilities: [
-      "Enterprise and industrial Wi-Fi (surveys, heat mapping, optimization)",
-      "Public Safety DAS (NFPA / IFC compliant and AHJ coordinated)",
-      "Cellular DAS and private LTE solutions",
-      "Point-to-point wireless, backhaul, and remote connectivity, including Starlink",
-    ],
-    testingNote: "Wireless designs are validated through predictive modeling and field verification—not guesswork.",
+    title: "Wireless & Mobility",
+    description:
+      "Enterprise Wi-Fi, Public Safety DAS, Private LTE, and point-to-point connectivity engineered using predictive RF modeling and field validation.",
     href: "/services/wireless-mobility",
+    cta: "View Wireless & Mobility",
   },
   {
     icon: ShieldCheck,
-    label: "Core 3 — Security",
-    title: "Security, Access & Life-Safety Systems",
-    headline: "Integrated protection with documented performance",
-    description: "We deliver converged security platforms designed to integrate cleanly with network and facility infrastructure.",
-    capabilities: [
-      "IP video surveillance and perimeter detection",
-      "Access control and identity management (card, mobile, biometric)",
-      "Intrusion, duress, and monitoring integrations",
-      "Unified security platforms across video, access, and alarms",
-    ],
-    testingNote: "Systems are designed for scalability, auditability, and operational clarity.",
+    title: "Security & Life-Safety",
+    description:
+      "Integrated video surveillance, access control, intrusion systems, and unified security platforms designed for compliance and documented performance.",
     href: "/services/security-access",
+    cta: "View Security & Life-Safety",
   },
   {
     icon: MonitorSpeaker,
-    label: "Core 4 — Audio-Visual",
-    title: "Audio-Visual, Communications & Facility Systems",
-    headline: "Clear communication at scale",
-    description: "We deploy professional AV and communication systems using structured cabling principles and coordinated design oversight.",
-    capabilities: [
-      "Conference rooms, collaboration spaces, and control environments",
-      "Enterprise paging and mass notification systems",
-      "Sound masking and commercial audio solutions",
-    ],
+    title: "Audio-Visual Systems",
+    description:
+      "Enterprise AV systems, collaboration environments, mass notification, and sound masking solutions engineered for clarity and scale.",
     href: "/services/audio-visual",
+    cta: "View Audio-Visual Systems",
   },
 ];
 
-const closeoutItems = [
-  "As-built drawings and updated floor plans",
-  "Cable schedules and labeling records",
-  "Copper and fiber test results (Tier 1 / Tier 2)",
-  "Fiber polarity, loss budgets, and performance data",
-  "Rack elevations and cabinet layouts",
-  "Grounding and bonding verification",
+const integrationBenefits = [
+  "Reduced operational risk",
+  "Simplified system management",
+  "Compliance-ready documentation",
+  "Scalable architecture",
+  "Coordinated lifecycle support",
+];
+
+const deliverySteps = [
+  {
+    step: "01",
+    title: "Assess",
+    description: "Site evaluation, compliance review, infrastructure analysis.",
+  },
+  {
+    step: "02",
+    title: "Design",
+    description: "Standards-based engineering across all relevant pillars.",
+  },
+  {
+    step: "03",
+    title: "Integrate",
+    description: "Cross-system coordination ensuring interoperability.",
+  },
+  {
+    step: "04",
+    title: "Deploy",
+    description: "Professional installation with documented validation.",
+  },
+  {
+    step: "05",
+    title: "Support",
+    description: "Ongoing lifecycle services and performance monitoring.",
+  },
+];
+
+const industries = [
+  { icon: Building2, label: "Enterprise & Corporate Campuses" },
+  { icon: Server, label: "Data Centers" },
+  { icon: Heart, label: "Healthcare" },
+  { icon: Factory, label: "Manufacturing & Industrial" },
+  { icon: GraduationCap, label: "Education" },
+  { icon: Landmark, label: "Government & Municipal" },
+];
+
+const complianceColumns = [
+  {
+    icon: ShieldAlert,
+    title: "Standards Alignment",
+    description: "BICSI, ANSI/TIA, NFPA, and AHJ coordination.",
+  },
+  {
+    icon: FileCheck,
+    title: "Validation & Testing",
+    description:
+      "Certified copper and fiber testing, RF validation, system commissioning.",
+  },
+  {
+    icon: Eye,
+    title: "Operational Clarity",
+    description:
+      "As-built documentation, audit-ready reporting, lifecycle transparency.",
+  },
 ];
 
 const Services = () => {
   return (
     <Layout>
-      {/* Hero */}
+      {/* 1. HERO */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
-        <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+        <div className="absolute inset-0 grid-pattern opacity-10" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
+          >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-medium mb-6">
               <Award className="h-3 w-3" />
-              RCDD-Led · PE Coordinated · BICSI Aligned
+              RCDD-Led · BICSI Aligned · PE Coordinated
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              SBI <span className="text-gradient">Capabilities</span>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              Integrated Infrastructure.{" "}
+              <span className="text-gradient">Engineered for Performance.</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-4">
-              We are a design-build low-voltage contractor delivering engineered, standards-based infrastructure across commercial, industrial, and mission-critical environments. Our work is executed under RCDD-led design oversight, with Professional Engineer involvement where required, ensuring systems are built correctly, tested thoroughly, and documented for long-term operation.
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
+              We design, deploy, and support converged infrastructure systems
+              across network backbone, wireless mobility, security platforms, and
+              enterprise communication environments. Our four-pillar approach
+              ensures operational continuity, scalability, and documented
+              performance.
             </p>
-            <p className="text-sm text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Engineering oversight is provided by appropriately licensed Professional Engineers where required by jurisdiction or scope. All work is performed in compliance with applicable state licensing laws and recognized industry standards.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Design-Build Advantage */}
-      <section className="py-16 md:py-24 bg-card/20 border-y border-border/50">
-        <div className="mx-auto max-w-7xl px-6">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="max-w-3xl mx-auto text-center">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-              <Wrench className="h-7 w-7 text-primary" />
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#pillars"
+                className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold"
+              >
+                Explore Our Services
+              </a>
+              <Link
+                to="/#contact"
+                className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all"
+              >
+                Schedule a Consultation
+              </Link>
             </div>
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">
-              Design-Build <span className="text-gradient">Advantage</span>
-            </h2>
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              Our design-build model provides a single point of accountability—from design and engineering through installation, testing, and closeout. The result is infrastructure that is compliant, supportable, and engineered to perform from day one through the life of the facility.
-            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Four Core Pillars */}
-      <section className="py-20 md:py-32">
+      {/* 2. FOUR-PILLAR APPROACH */}
+      <section id="pillars" className="py-20 md:py-32">
         <div className="mx-auto max-w-7xl px-6">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="text-center mb-16">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            variants={fadeUp}
+            className="text-center mb-16 max-w-3xl mx-auto"
+          >
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Our Four <span className="text-gradient">Core</span> Pillars
+              Our Four-Pillar{" "}
+              <span className="text-gradient">Approach</span>
             </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Our services are structured around four integrated pillars
+              designed to deliver resilient, scalable, and performance-driven
+              environments.
+            </p>
           </motion.div>
 
-          <div className="space-y-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {pillars.map((pillar, i) => (
               <motion.div
                 key={pillar.title}
@@ -148,110 +212,275 @@ const Services = () => {
                 viewport={{ once: true }}
                 custom={i}
                 variants={fadeUp}
+                className="group"
               >
-                <div className="glass-card rounded-2xl p-8 md:p-10 hover:border-primary/30 transition-all duration-300">
-                  <div className="flex items-start gap-5 mb-6">
-                    <div className="shrink-0 w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <pillar.icon className="h-7 w-7 text-primary" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-medium text-primary mb-1 block">{pillar.label}</span>
-                      <h3 className="text-xl md:text-2xl font-bold">{pillar.title}</h3>
-                      <p className="text-sm text-muted-foreground italic mt-1">{pillar.headline}</p>
-                    </div>
+                <Link
+                  to={pillar.href}
+                  className="glass-card rounded-2xl p-8 h-full flex flex-col hover:border-primary/40 transition-all duration-300 block"
+                >
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
+                    <pillar.icon className="h-7 w-7 text-primary" />
                   </div>
-
-                  <p className="text-muted-foreground leading-relaxed mb-6">{pillar.description}</p>
-
-                  <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Capabilities include:</h4>
-                  <div className="grid md:grid-cols-2 gap-2 mb-6">
-                    {pillar.capabilities.map((cap, j) => (
-                      <div key={j} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                        <span className="text-sm text-muted-foreground">{cap}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {pillar.testing && (
-                    <>
-                      <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Testing, Qualification & Certification</h4>
-                      <div className="grid md:grid-cols-2 gap-2 mb-6">
-                        {pillar.testing.map((item, j) => (
-                          <div key={j} className="flex items-start gap-2.5">
-                            <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                            <span className="text-sm text-muted-foreground">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  )}
-
-                  {pillar.testingNote && (
-                    <p className="text-sm text-muted-foreground italic mb-6">{pillar.testingNote}</p>
-                  )}
-
-                  <Link
-                    to={pillar.href}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:brightness-110 transition-all"
-                  >
-                    Explore {pillar.label.split(" — ")[1]} Services <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
+                  <h3 className="text-xl font-bold mb-3">{pillar.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
+                    {pillar.description}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
+                    {pillar.cta} <ArrowRight className="h-4 w-4" />
+                  </span>
+                </Link>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Standards-Based Closeout */}
+      {/* 3. WHY INTEGRATED INFRASTRUCTURE MATTERS */}
       <section className="py-20 md:py-28 bg-card/20 border-y border-border/50">
         <div className="mx-auto max-w-7xl px-6">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="max-w-3xl mx-auto text-center mb-12">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-              <FileCheck className="h-7 w-7 text-primary" />
-            </div>
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">
-              Standards-Based Closeout & <span className="text-gradient">Documentation</span>
-            </h2>
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              Every project is closed out using a BICSI-aligned, ANSI/TIA-compliant documentation package, developed under RCDD technical oversight and PE coordination where required.
-            </p>
-          </motion.div>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={0}
+              variants={fadeUp}
+            >
+              <h2 className="text-2xl md:text-4xl font-bold mb-4">
+                Converged Systems Deliver{" "}
+                <span className="text-gradient">Operational Advantage</span>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed text-lg mb-8">
+                When infrastructure systems operate independently, complexity
+                increases and performance suffers. Our four-pillar model ensures
+                coordinated design, deployment, and lifecycle support across all
+                technology layers.
+              </p>
+              <ul className="space-y-3">
+                {integrationBenefits.map((benefit, i) => (
+                  <motion.li
+                    key={i}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    custom={i}
+                    variants={fadeUp}
+                    className="flex items-center gap-3"
+                  >
+                    <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
+                    <span className="text-foreground font-medium">
+                      {benefit}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
 
-          <div className="max-w-2xl mx-auto">
-            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider text-center">Closeout deliverables may include:</h4>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {closeoutItems.map((item, i) => (
-                <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i} variants={fadeUp} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                  <span className="text-sm text-muted-foreground">{item}</span>
-                </motion.div>
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground italic text-center mt-6">
-              Clients receive a complete, auditable record of what was installed, how it was tested, and how it performs.
-            </p>
+            {/* Integration diagram */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={2}
+              variants={fadeUp}
+              className="relative"
+            >
+              <div className="glass-card rounded-2xl p-8 md:p-10">
+                <div className="grid grid-cols-2 gap-4">
+                  {pillars.map((pillar, i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl bg-primary/5 border border-primary/20 p-5 text-center hover:bg-primary/10 transition-colors"
+                    >
+                      <pillar.icon className="h-8 w-8 text-primary mx-auto mb-2" />
+                      <span className="text-xs font-semibold text-foreground">
+                        {pillar.title}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 text-center">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30">
+                    <span className="text-xs font-semibold text-primary">
+                      Unified Infrastructure Platform
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Build <span className="text-gradient">Infrastructure That Performs?</span>
+      {/* 4. DELIVERY MODEL */}
+      <section className="py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            variants={fadeUp}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              A Structured Approach to{" "}
+              <span className="text-gradient">Complex Environments</span>
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-              Let's assess your environment and engineer a solution built to last.
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {deliverySteps.map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i}
+                variants={fadeUp}
+                className="glass-card rounded-2xl p-6 text-center relative"
+              >
+                <span className="text-3xl font-bold text-primary/20 mb-2 block">
+                  {step.step}
+                </span>
+                <h3 className="text-lg font-bold mb-2">{step.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {step.description}
+                </p>
+                {i < deliverySteps.length - 1 && (
+                  <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary/30 z-10" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. INDUSTRIES WE SERVE */}
+      <section className="py-20 md:py-28 bg-card/20 border-y border-border/50">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            variants={fadeUp}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              Industries We <span className="text-gradient">Serve</span>
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Proven performance across demanding operational environments.
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {industries.map((industry, i) => (
+              <motion.div
+                key={industry.label}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i}
+                variants={fadeUp}
+                className="glass-card rounded-xl p-5 flex items-center gap-4 hover:border-primary/30 transition-all"
+              >
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <industry.icon className="h-5 w-5 text-primary" />
+                </div>
+                <span className="font-medium text-sm">{industry.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. DOCUMENTATION, COMPLIANCE & ACCOUNTABILITY */}
+      <section className="py-20 md:py-28 bg-muted/30">
+        <div className="mx-auto max-w-7xl px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            variants={fadeUp}
+            className="text-center mb-12"
+          >
+            <h2 className="text-2xl md:text-4xl font-bold mb-4">
+              Documentation, Compliance &{" "}
+              <span className="text-gradient">Accountability</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {complianceColumns.map((col, i) => (
+              <motion.div
+                key={col.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i}
+                variants={fadeUp}
+                className="glass-card rounded-2xl p-8 text-center"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <col.icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">{col.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {col.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            variants={fadeUp}
+            className="text-center text-muted-foreground italic max-w-2xl mx-auto"
+          >
+            Our systems are engineered not only to perform, but to withstand
+            inspection, expansion, and operational scrutiny.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* 7. FINAL CTA */}
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 grid-pattern opacity-10" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0}
+            variants={fadeUp}
+          >
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              Build Infrastructure That Performs Today{" "}
+              <span className="text-gradient">
+                and Scales for Tomorrow.
+              </span>
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-xl mx-auto text-lg">
+              Let's engineer a solution built for long-term operational success.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/#contact" className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold">
-                Request a Consultation
+              <Link
+                to="/#contact"
+                className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold"
+              >
+                Schedule a Strategy Session
               </Link>
-              <Link to="/#contact" className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all">
-                Speak With a Specialist
+              <Link
+                to="/#contact"
+                className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all"
+              >
+                Speak With an Infrastructure Specialist
               </Link>
             </div>
           </motion.div>
