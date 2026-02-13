@@ -1,8 +1,7 @@
-import { ReactNode } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { ReactNode, useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, ArrowRight, LucideIcon } from "lucide-react";
-import { useRef } from "react";
+import { ArrowLeft, CheckCircle2, ArrowRight, ChevronLeft, ChevronRight, LucideIcon } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 
 interface ServiceItem {
@@ -47,8 +46,62 @@ const ServicePageTemplate = ({
   const imgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
+  const [showFloatingNav, setShowFloatingNav] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFloatingNav(window.scrollY > 500);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <Layout>
+      {/* Floating side navigation */}
+      <AnimatePresence>
+        {showFloatingNav && prevService && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="fixed left-3 top-1/2 -translate-y-1/2 z-40 hidden lg:block"
+          >
+            <Link
+              to={prevService.href}
+              className="group flex items-center gap-2 px-3 py-3 rounded-xl glass-card border border-border/50 hover:border-primary/30 transition-all shadow-lg"
+            >
+              <ChevronLeft className="h-4 w-4 text-primary shrink-0 group-hover:-translate-x-0.5 transition-transform" />
+              <div className="max-w-[120px]">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Previous</div>
+                <div className="text-xs font-medium text-foreground truncate">{prevService.title}</div>
+              </div>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showFloatingNav && nextService && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            className="fixed right-3 top-1/2 -translate-y-1/2 z-40 hidden lg:block"
+          >
+            <Link
+              to={nextService.href}
+              className="group flex items-center gap-2 px-3 py-3 rounded-xl glass-card border border-border/50 hover:border-primary/30 transition-all shadow-lg"
+            >
+              <div className="max-w-[120px] text-right">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Next</div>
+                <div className="text-xs font-medium text-foreground truncate">{nextService.title}</div>
+              </div>
+              <ChevronRight className="h-4 w-4 text-primary shrink-0 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero with parallax image */}
       <section ref={heroRef} className="relative py-28 md:py-40 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: imgY, scale: imgScale }}>
