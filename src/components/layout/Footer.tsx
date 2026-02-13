@@ -12,11 +12,11 @@ const Footer = () => (
             <SbiLogo className="h-10" />
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            Veteran-owned (DVOSB) low-voltage and telecommunications infrastructure specialists.
+            Veteran-owned (SDVOSB) low-voltage and telecommunications infrastructure specialists.
           </p>
           <div className="flex items-center gap-2 text-xs text-primary">
             <Shield className="h-4 w-4" />
-            <span className="font-medium">Service-Disabled Veteran Owned</span>
+            <span className="font-medium">Service-Disabled Veteran-Owned Small Business</span>
           </div>
         </div>
 

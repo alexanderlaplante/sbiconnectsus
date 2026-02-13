@@ -14,7 +14,7 @@ const SecurityAccess = () => (
   <ServicePageTemplate
     icon={ShieldCheck}
     title="Security, Access & Life-Safety Systems"
-    subtitle="Core Pillar 3"
+    subtitle="Core 3 — Security"
     headline="Integrated Protection with Documented Performance"
     description="We deliver converged security platforms designed to integrate cleanly with network and facility infrastructure. Systems are designed for scalability, auditability, and operational clarity."
     tagline="Security systems engineered—not pieced together."
@@ -270,7 +270,7 @@ const SecurityAccess = () => (
       <div className="mx-auto max-w-7xl px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Four Pillar <span className="text-gradient">Integration</span>
+            Four Core <span className="text-gradient">Integration</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Security & Life-Safety systems operate as part of a broader infrastructure ecosystem.

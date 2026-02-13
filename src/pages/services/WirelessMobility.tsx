@@ -14,7 +14,7 @@ const WirelessMobility = () => (
   <ServicePageTemplate
     icon={Wifi}
     title="Wireless, Mobility & Industrial Connectivity"
-    subtitle="Core Pillar 2"
+    subtitle="Core 2 — Wireless"
     headline="Coverage and Capacity Engineered for Real-World Conditions"
     description="We design and deploy wireless and RF systems that support mobility, safety, and operational continuity across demanding environments. Wireless designs are validated through predictive modeling and field verification—not guesswork."
     tagline="Designed for uptime, interference control, and real-world RF conditions."
@@ -264,7 +264,7 @@ const WirelessMobility = () => (
       <div className="mx-auto max-w-7xl px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Four Pillar <span className="text-gradient">Integration</span>
+            Four Core <span className="text-gradient">Integration</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Wireless & Mobility solutions operate in coordination with the broader infrastructure ecosystem.
