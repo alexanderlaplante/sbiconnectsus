@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroNetwork from "@/assets/hero-network.jpg";
+import networkInfraImage from "@/assets/hero-network-infrastructure.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const fadeUp = {
@@ -63,7 +64,7 @@ const NetworkInfrastructure = () => (
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={heroNetwork} alt="Enterprise network infrastructure" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={networkInfraImage} alt="Enterprise structured cabling and patch panels" className="w-full h-full object-cover aspect-[4/3]" />
           </motion.div>
         </div>
       </div>
