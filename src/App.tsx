@@ -10,6 +10,7 @@ import NetworkInfrastructure from "./pages/services/NetworkInfrastructure";
 import WirelessMobility from "./pages/services/WirelessMobility";
 import SecurityAccess from "./pages/services/SecurityAccess";
 import AudioVisual from "./pages/services/AudioVisual";
+import Services from "./pages/Services";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/services" element={<Services />} />
             <Route path="/services/network-infrastructure" element={<NetworkInfrastructure />} />
             <Route path="/services/wireless-mobility" element={<WirelessMobility />} />
             <Route path="/services/security-access" element={<SecurityAccess />} />
