@@ -12,6 +12,7 @@ import SecurityAccess from "./pages/services/SecurityAccess";
 import AudioVisual from "./pages/services/AudioVisual";
 import Services from "./pages/Services";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/network-infrastructure" element={<NetworkInfrastructure />} />
             <Route path="/services/wireless-mobility" element={<WirelessMobility />} />

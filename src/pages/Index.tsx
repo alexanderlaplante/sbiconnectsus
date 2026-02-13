@@ -102,7 +102,7 @@ const Index = () => {
                 We are a design-build low-voltage contractor delivering engineered, standards-based infrastructure across commercial, industrial, and mission-critical environments.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/#contact" className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold">
+                <Link to="/contact" className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold">
                   Request a Consultation
                 </Link>
                 <Link to="/services" className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all backdrop-blur-sm">
