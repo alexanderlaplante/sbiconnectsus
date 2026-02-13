@@ -94,6 +94,10 @@ const Navbar = () => {
                 </Link>
               ))}
               <Link to="/#contact" onClick={() => setMobileOpen(false)} className="block py-2 text-sm text-foreground">Contact</Link>
+              <div className="flex items-center justify-between pt-3 border-t border-border/50 mt-2">
+                <span className="text-xs text-muted-foreground">Theme</span>
+                <ThemeSwitcher />
+              </div>
               <Link to="/#contact" onClick={() => setMobileOpen(false)} className="mt-2 block text-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium">
                 Get a Quote
               </Link>
