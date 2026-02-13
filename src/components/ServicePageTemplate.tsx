@@ -155,7 +155,7 @@ const ServicePageTemplate = ({
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp}>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-muted-foreground mb-8">Let's scope your project and build something that lasts.</p>
-            <Link to="/#contact" className="inline-flex px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold">
+            <Link to="/contact" className="inline-flex px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold">
               Request a Consultation
             </Link>
           </motion.div>

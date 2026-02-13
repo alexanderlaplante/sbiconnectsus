@@ -171,7 +171,7 @@ const Services = () => {
                 Explore Our Services
               </a>
               <Link
-                to="/#contact"
+                to="/contact"
                 className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all"
               >
                 Schedule a Consultation
@@ -471,13 +471,13 @@ const Services = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                to="/#contact"
+                to="/contact"
                 className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold"
               >
                 Schedule a Strategy Session
               </Link>
               <Link
-                to="/#contact"
+                to="/contact"
                 className="px-8 py-3.5 rounded-xl border border-border bg-secondary/50 text-foreground font-medium hover:bg-secondary transition-all"
               >
                 Speak With an Infrastructure Specialist
