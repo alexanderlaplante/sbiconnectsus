@@ -59,12 +59,12 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          <Link to="/#contact" className="text-sm text-muted-foreground transition-colors hover:text-primary">Contact</Link>
+          <Link to="/contact" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/contact' ? 'text-primary' : 'text-muted-foreground'}`}>Contact</Link>
 
           <ThemeSwitcher />
 
           <Link
-            to="/#contact"
+            to="/contact"
             className="ml-2 px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:brightness-110 transition-all"
           >
             Get a Quote
@@ -98,8 +98,8 @@ const Navbar = () => {
                   {s.title}
                 </Link>
               ))}
-              <Link to="/#contact" onClick={() => setMobileOpen(false)} className="block py-2 text-sm text-foreground">Contact</Link>
-              <Link to="/#contact" onClick={() => setMobileOpen(false)} className="mt-2 block text-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium">
+              <Link to="/contact" onClick={() => setMobileOpen(false)} className="block py-2 text-sm text-foreground">Contact</Link>
+              <Link to="/contact" onClick={() => setMobileOpen(false)} className="mt-2 block text-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium">
                 Get a Quote
               </Link>
             </div>

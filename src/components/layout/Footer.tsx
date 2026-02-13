@@ -41,8 +41,8 @@ const Footer = () => (
         <div>
           <h4 className="text-sm font-semibold text-foreground mb-4" style={{ fontFamily: 'Space Grotesk' }}>Company</h4>
           <ul className="space-y-2.5">
-            <li><Link to="/#about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
-            <li><Link to="/#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
+            <li><Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
+            <li><Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
           </ul>
         </div>
 
