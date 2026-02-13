@@ -2,7 +2,8 @@ import { ShieldCheck, CheckCircle2, Network, Wifi, Headphones, Building2, Heart,
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
-import heroSecurity from "@/assets/hero-security.jpg";
+import heroSecurity from "@/assets/hero-security-facial.jpg";
+import securityAccessControl from "@/assets/hero-security.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const fadeUp = {
@@ -60,7 +61,7 @@ const SecurityAccess = () => (
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={heroSecurity} alt="Enterprise security systems" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={securityAccessControl} alt="Enterprise security systems" className="w-full h-full object-cover aspect-[4/3]" />
           </motion.div>
         </div>
       </div>
@@ -259,7 +260,7 @@ const SecurityAccess = () => (
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={heroSecurity} alt="Life-safety systems" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={securityAccessControl} alt="Life-safety systems" className="w-full h-full object-cover aspect-[4/3]" />
           </motion.div>
         </div>
       </div>
