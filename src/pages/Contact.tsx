@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, ArrowRight } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import usePageSEO from "@/hooks/usePageSEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -39,6 +40,12 @@ const contactInfo = [
 ];
 
 const Contact = () => {
+  usePageSEO({
+    title: "Contact SBI Connects | Schedule a Low-Voltage Infrastructure Consultation",
+    description: "Contact SBI Connects for a consultation on structured cabling, wireless systems, security, or audio-visual infrastructure. Veteran-owned, RCDD-led design-build services in Longwood, FL.",
+    keywords: "contact SBI Connects, low voltage consultation, infrastructure quote, Longwood FL, structured cabling contractor, technology consultation",
+  });
+
   return (
     <Layout>
       {/* Hero */}

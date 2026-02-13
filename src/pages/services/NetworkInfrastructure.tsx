@@ -5,13 +5,21 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroNetwork from "@/assets/hero-network.jpg";
 import networkInfraImage from "@/assets/hero-network-infrastructure.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import usePageSEO from "@/hooks/usePageSEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }),
 };
 
-const NetworkInfrastructure = () => (
+const NetworkInfrastructure = () => {
+  usePageSEO({
+    title: "Network Infrastructure & Data Center Systems | SBI Connects",
+    description: "Enterprise structured cabling, fiber optic backbone, MDF/IDF integration, OSP deployment, and data center infrastructure. RCDD-designed, BICSI-aligned, and fully certified.",
+    keywords: "structured cabling, fiber optic, network infrastructure, data center, MDF IDF, CAT6A, RCDD, BICSI, copper certification, OTDR testing, OSP, campus connectivity",
+  });
+
+  return (
   <ServicePageTemplate
     icon={Network}
     title="Network Infrastructure & Data Center Systems"
@@ -396,6 +404,7 @@ const NetworkInfrastructure = () => (
       </div>
     </section>
   </ServicePageTemplate>
-);
+  );
+};
 
 export default NetworkInfrastructure;

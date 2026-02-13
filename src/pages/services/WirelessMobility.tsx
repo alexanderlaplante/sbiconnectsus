@@ -5,13 +5,21 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroWireless from "@/assets/hero-wireless.jpg";
 import wirelessEngineeringImage from "@/assets/wireless-engineering.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import usePageSEO from "@/hooks/usePageSEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }),
 };
 
-const WirelessMobility = () => (
+const WirelessMobility = () => {
+  usePageSEO({
+    title: "Wireless, Mobility & Industrial Connectivity | SBI Connects",
+    description: "Enterprise Wi-Fi, Public Safety DAS, Private LTE, and point-to-point wireless solutions engineered with predictive RF modeling and field validation for demanding environments.",
+    keywords: "enterprise WiFi, DAS, distributed antenna system, public safety DAS, private LTE, wireless survey, RF engineering, point-to-point wireless, Starlink, NFPA, IFC",
+  });
+
+  return (
   <ServicePageTemplate
     icon={Wifi}
     title="Wireless, Mobility & Industrial Connectivity"
@@ -394,6 +402,7 @@ const WirelessMobility = () => (
       </div>
     </section>
   </ServicePageTemplate>
-);
+  );
+};
 
 export default WirelessMobility;

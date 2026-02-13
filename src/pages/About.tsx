@@ -4,6 +4,7 @@ import { Award, CheckCircle2, ArrowRight, Target, Users, ShieldCheck, Handshake 
 import Layout from "@/components/layout/Layout";
 import heroAbout from "@/assets/hero-about.jpg";
 import aboutTeam from "@/assets/about-team.jpg";
+import usePageSEO from "@/hooks/usePageSEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -22,6 +23,12 @@ const whyChoose = [
 ];
 
 const About = () => {
+  usePageSEO({
+    title: "About SBI Connects | Veteran-Owned SDVOSB Low-Voltage Contractor",
+    description: "Learn about SBI Connects, a certified disabled veteran-owned small business (SDVOSB) specializing in design-build low-voltage infrastructure with RCDD-led engineering and BICSI-aligned standards.",
+    keywords: "about SBI Connects, veteran-owned contractor, SDVOSB, DVOSB, RCDD, BICSI, low voltage integrator, technology integration company",
+  });
+
   return (
     <Layout>
       {/* 1. HERO */}
