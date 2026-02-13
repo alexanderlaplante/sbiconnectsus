@@ -6,13 +6,21 @@ import heroAV from "@/assets/hero-audiovisual.jpg";
 import avEngineeringImage from "@/assets/av-why-matters.jpg";
 import avMassNotificationImage from "@/assets/av-mass-notification.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import usePageSEO from "@/hooks/usePageSEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }),
 };
 
-const AudioVisual = () => (
+const AudioVisual = () => {
+  usePageSEO({
+    title: "Audio-Visual, Communications & Facility Systems | SBI Connects",
+    description: "Enterprise AV systems, video conferencing, mass notification, sound masking, and collaboration environments engineered for clarity, scalability, and reliable facility communication.",
+    keywords: "audio visual integration, AV systems, video conferencing, mass notification, sound masking, enterprise AV, paging systems, collaboration rooms, digital signage",
+  });
+
+  return (
   <ServicePageTemplate
     icon={MonitorSpeaker}
     title="Audio-Visual, Communications & Facility Systems"
@@ -397,6 +405,7 @@ const AudioVisual = () => (
       </div>
     </section>
   </ServicePageTemplate>
-);
+  );
+};
 
 export default AudioVisual;

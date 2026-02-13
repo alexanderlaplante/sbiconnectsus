@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-home.jpg";
+import usePageSEO from "@/hooks/usePageSEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -131,6 +132,12 @@ const complianceColumns = [
 ];
 
 const Services = () => {
+  usePageSEO({
+    title: "Services | SBI Connects — Network, Wireless, Security & AV Solutions",
+    description: "Explore SBI Connects' four-pillar service model: network infrastructure, wireless & mobility, security & life-safety, and audio-visual systems. RCDD-led, BICSI-aligned design-build for enterprise environments.",
+    keywords: "low voltage services, network infrastructure, wireless mobility, security access control, audio visual integration, structured cabling, DAS, enterprise technology services",
+  });
+
   return (
     <Layout>
       {/* 1. HERO */}

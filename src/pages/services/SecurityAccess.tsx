@@ -5,13 +5,21 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroSecurity from "@/assets/hero-security-facial.jpg";
 import securityAccessControl from "@/assets/hero-security.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import usePageSEO from "@/hooks/usePageSEO";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }),
 };
 
-const SecurityAccess = () => (
+const SecurityAccess = () => {
+  usePageSEO({
+    title: "Security, Access Control & Life-Safety Systems | SBI Connects",
+    description: "Integrated IP video surveillance, access control, intrusion detection, and unified security platforms designed for compliance, scalability, and documented performance.",
+    keywords: "IP video surveillance, access control, intrusion detection, life safety, security integration, NFPA, AHJ, biometric access, enterprise security, converged security platform",
+  });
+
+  return (
   <ServicePageTemplate
     icon={ShieldCheck}
     title="Security, Access & Life-Safety Systems"
@@ -400,6 +408,7 @@ const SecurityAccess = () => (
       </div>
     </section>
   </ServicePageTemplate>
-);
+  );
+};
 
 export default SecurityAccess;
