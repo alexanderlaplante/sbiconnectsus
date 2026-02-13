@@ -9,6 +9,8 @@ const themes: { id: Theme; label: string; icon: typeof Sun; accent: string }[] =
   { id: "dark-steel", label: "Dark Steel", icon: Moon, accent: "bg-orange-500" },
   { id: "dark-emerald", label: "Dark Emerald", icon: Moon, accent: "bg-emerald-400" },
   { id: "dusk", label: "Dusk", icon: Palette, accent: "bg-violet-400" },
+  { id: "dusk-gold", label: "Dusk Gold", icon: Palette, accent: "bg-amber-400" },
+  { id: "dusk-steel", label: "Dusk Steel", icon: Palette, accent: "bg-orange-400" },
   { id: "light", label: "Light Blue", icon: Sun, accent: "bg-blue-500" },
   { id: "light-warm", label: "Light Warm", icon: Sun, accent: "bg-orange-400" },
   { id: "light-forest", label: "Light Forest", icon: Sun, accent: "bg-emerald-500" },

@@ -231,6 +231,96 @@
     --sidebar-ring: 262 60% 62%;
   }
 
+  /* Dusk Gold — slate with warm gold accents */
+  [data-theme="dusk-gold"] {
+    --background: 230 18% 22%;
+    --foreground: 220 15% 85%;
+
+    --card: 230 16% 26%;
+    --card-foreground: 220 15% 85%;
+
+    --popover: 230 16% 26%;
+    --popover-foreground: 220 15% 85%;
+
+    --primary: 45 85% 55%;
+    --primary-foreground: 230 18% 10%;
+
+    --secondary: 228 14% 30%;
+    --secondary-foreground: 220 15% 85%;
+
+    --muted: 228 12% 28%;
+    --muted-foreground: 225 12% 55%;
+
+    --accent: 38 80% 50%;
+    --accent-foreground: 230 18% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 228 14% 32%;
+    --input: 228 14% 32%;
+    --ring: 45 85% 55%;
+
+    --radius: 0.75rem;
+
+    --logo-accent: hsl(45, 85%, 55%);
+    --logo-text: hsl(220, 15%, 85%);
+
+    --sidebar-background: 230 16% 24%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 45 85% 55%;
+    --sidebar-primary-foreground: 230 18% 10%;
+    --sidebar-accent: 228 12% 28%;
+    --sidebar-accent-foreground: 220 15% 85%;
+    --sidebar-border: 228 14% 32%;
+    --sidebar-ring: 45 85% 55%;
+  }
+
+  /* Dusk Steel — slate with orange-steel accents */
+  [data-theme="dusk-steel"] {
+    --background: 230 18% 22%;
+    --foreground: 220 15% 85%;
+
+    --card: 230 16% 26%;
+    --card-foreground: 220 15% 85%;
+
+    --popover: 230 16% 26%;
+    --popover-foreground: 220 15% 85%;
+
+    --primary: 25 90% 52%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 228 14% 30%;
+    --secondary-foreground: 220 15% 85%;
+
+    --muted: 228 12% 28%;
+    --muted-foreground: 225 12% 55%;
+
+    --accent: 35 85% 48%;
+    --accent-foreground: 230 18% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 228 14% 32%;
+    --input: 228 14% 32%;
+    --ring: 25 90% 52%;
+
+    --radius: 0.75rem;
+
+    --logo-accent: hsl(25, 90%, 52%);
+    --logo-text: hsl(220, 15%, 85%);
+
+    --sidebar-background: 230 16% 24%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 25 90% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 228 12% 28%;
+    --sidebar-accent-foreground: 220 15% 85%;
+    --sidebar-border: 228 14% 32%;
+    --sidebar-ring: 25 90% 52%;
+  }
+
   /* Light */
   [data-theme="light"] {
     --background: 220 20% 96%;
@@ -400,6 +490,12 @@
   }
   [data-theme="dusk"] .text-gradient {
     background-image: linear-gradient(135deg, hsl(262, 65%, 65%), hsl(330, 60%, 65%), hsl(200, 70%, 60%));
+  }
+  [data-theme="dusk-gold"] .text-gradient {
+    background-image: linear-gradient(135deg, hsl(45, 90%, 58%), hsl(30, 80%, 55%), hsl(200, 55%, 55%));
+  }
+  [data-theme="dusk-steel"] .text-gradient {
+    background-image: linear-gradient(135deg, hsl(25, 95%, 55%), hsl(45, 85%, 55%), hsl(200, 50%, 55%));
   }
   [data-theme="light"] .text-gradient {
     background-image: linear-gradient(135deg, hsl(220, 80%, 40%), hsl(280, 70%, 50%), hsl(190, 90%, 38%));
