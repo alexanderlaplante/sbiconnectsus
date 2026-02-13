@@ -14,7 +14,7 @@ const NetworkInfrastructure = () => (
   <ServicePageTemplate
     icon={Network}
     title="Network Infrastructure & Data Center Systems"
-    subtitle="Core Pillar 1"
+    subtitle="Core 1 — Network"
     headline="The Backbone of Reliable Operations"
     description="We design, build, remediate, and support structured network infrastructure ranging from greenfield deployments to complex, live operational environments. All systems are delivered in alignment with BICSI methodologies and ANSI/TIA standards."
     tagline="Every system is delivered fully tested, labeled, and documented—no orphaned cables, no assumptions."
@@ -272,7 +272,7 @@ const NetworkInfrastructure = () => (
       <div className="mx-auto max-w-7xl px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Four Pillar <span className="text-gradient">Integration</span>
+            Four Core <span className="text-gradient">Integration</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Network Infrastructure serves as the physical foundation for all four operational pillars.

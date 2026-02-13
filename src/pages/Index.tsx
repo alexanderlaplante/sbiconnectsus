@@ -91,8 +91,9 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
               <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-primary/60 bg-primary/20 text-primary text-sm font-semibold mb-8 backdrop-blur-md shadow-lg shadow-primary/10 animate-badge-glow">
                 <Zap className="h-4 w-4" />
-                Veteran-Owned (DVOSB) · Low-Voltage Specialists
+                Veteran-Owned (SDVOSB) · Low-Voltage Specialists
               </div>
+              <p className="text-sm text-muted-foreground font-medium mb-4 tracking-wide">Design Build Low Voltage Integrator</p>
               <h1 className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
                 Infrastructure<br />
                 <span className="text-gradient">Engineered Right.</span>
@@ -223,7 +224,7 @@ const Index = () => {
         <div className="mx-auto max-w-7xl px-6">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Four Core <span className="text-gradient">Pillars</span>
+              Four <span className="text-gradient">Core</span> Pillars
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
               End-to-end low-voltage solutions across the critical systems your operations rely on.

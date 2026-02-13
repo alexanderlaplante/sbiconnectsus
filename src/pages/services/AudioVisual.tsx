@@ -14,7 +14,7 @@ const AudioVisual = () => (
   <ServicePageTemplate
     icon={MonitorSpeaker}
     title="Audio-Visual, Communications & Facility Systems"
-    subtitle="Core Pillar 4"
+    subtitle="Core 4 — Audio-Visual"
     headline="Clear Communication at Scale"
     description="We deploy professional AV and communication systems using structured cabling principles and coordinated design oversight to support collaboration, safety, and daily operations."
     tagline="Technology that communicates clearly, reliably, and at scale."
@@ -266,7 +266,7 @@ const AudioVisual = () => (
       <div className="mx-auto max-w-7xl px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp} className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Four Pillar <span className="text-gradient">Integration</span>
+            Four Core <span className="text-gradient">Integration</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Audio-Visual Systems operate as part of an integrated infrastructure ecosystem.
