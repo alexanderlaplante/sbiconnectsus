@@ -380,13 +380,13 @@ const NetworkInfrastructure = () => (
           <p className="text-muted-foreground mb-8">Let's assess your environment and engineer a solution built to last.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/#contact"
+              to="/contact"
               className="inline-flex px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold"
             >
               Start Your Infrastructure Assessment
             </Link>
             <Link
-              to="/#contact"
+              to="/contact"
               className="inline-flex px-8 py-3.5 rounded-xl border border-primary/30 text-primary font-semibold hover:bg-primary/10 transition-all"
             >
               Speak With an Infrastructure Specialist
