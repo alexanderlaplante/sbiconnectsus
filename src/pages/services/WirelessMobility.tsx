@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroWireless from "@/assets/hero-wireless.jpg";
+import wirelessEngineeringImage from "@/assets/wireless-engineering.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const fadeUp = {
@@ -60,7 +61,7 @@ const WirelessMobility = () => (
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={heroWireless} alt="Enterprise wireless infrastructure" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={wirelessEngineeringImage} alt="Wireless RF heat map survey and access point" className="w-full h-full object-cover aspect-[4/3]" />
           </motion.div>
         </div>
       </div>
