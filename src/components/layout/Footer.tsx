@@ -52,15 +52,15 @@ const Footer = () => (
           <ul className="space-y-3">
             <li className="flex items-start gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" />
-              <span>Serving clients nationwide</span>
+              <span>2120 N Ronald Reagan Blvd, Unit 1104<br />Longwood, FL 32750</span>
             </li>
             <li className="flex items-center gap-2 text-sm text-muted-foreground">
               <Phone className="h-4 w-4 text-primary shrink-0" />
-              <span>(555) 123-4567</span>
+              <a href="tel:+14075093004" className="hover:text-primary transition-colors">(407) 509-3004</a>
             </li>
             <li className="flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="h-4 w-4 text-primary shrink-0" />
-              <span>info@sbiconnects.us</span>
+              <a href="mailto:info@sbiconnects.us" className="hover:text-primary transition-colors">info@sbiconnects.us</a>
             </li>
           </ul>
         </div>
