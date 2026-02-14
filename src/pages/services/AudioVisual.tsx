@@ -77,6 +77,12 @@ const AudioVisual = () => {
     description="We deploy professional AV and communication systems using structured cabling principles and coordinated design oversight to support collaboration, safety, and daily operations."
     tagline="Technology that communicates clearly, reliably, and at scale."
     heroImage={heroAV}
+    heroAlt="Enterprise conference room with professional video conferencing and AV integration"
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Audio-Visual Systems", path: "/services/audio-visual" },
+    ]}
     items={[
       { title: "Conference & Collaboration Spaces", description: "Conference rooms, control environments, digital displays, and video conferencing solutions." },
       { title: "Enterprise Paging & Mass Notification", description: "Facility-wide voice and alerting systems for emergency and daily communication needs." },
@@ -108,7 +114,7 @@ const AudioVisual = () => {
 
             <h3 className="text-lg font-semibold mb-3">Designed for Clarity & Scalability</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Our AV systems are engineered using structured cabling principles, coordinated design oversight, and integration with network, security, and facility infrastructure.
+              Our AV systems are engineered using structured cabling principles, coordinated design oversight, and integration with <Link to="/services/network-infrastructure" className="text-primary hover:underline font-medium">enterprise network infrastructure</Link>, <Link to="/services/security-access" className="text-primary hover:underline font-medium">security and life-safety platforms</Link>, and <Link to="/services/wireless-mobility" className="text-primary hover:underline font-medium">wireless mobility systems</Link>.
             </p>
           </motion.div>
 
@@ -116,7 +122,7 @@ const AudioVisual = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={avEngineeringImage} alt="Professional conference room with AV and video conferencing" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={avEngineeringImage} alt="Professional enterprise conference room with video conferencing and AV rack systems" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -313,7 +319,7 @@ const AudioVisual = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={avMassNotificationImage} alt="Mass notification and facility paging systems" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={avMassNotificationImage} alt="Enterprise mass notification speakers and facility-wide paging system" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -332,9 +338,9 @@ const AudioVisual = () => {
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[
-            { icon: Network, title: "Network Infrastructure", desc: "Structured cabling and backbone systems supporting AV signal transport.", href: "/services/network-infrastructure" },
-            { icon: Wifi, title: "Wireless & Mobility", desc: "Wireless connectivity enabling collaboration and mobile device integration.", href: "/services/wireless-mobility" },
-            { icon: Shield, title: "Security & Life-Safety", desc: "Integration with surveillance, access control, and emergency notification platforms.", href: "/services/security-access" },
+            { icon: Network, title: "Enterprise Structured Cabling Solutions", desc: "Structured cabling and fiber backbone systems supporting AV signal transport, video distribution, and control wiring.", href: "/services/network-infrastructure" },
+            { icon: Wifi, title: "Wireless & Mobility Infrastructure", desc: "Wireless connectivity enabling collaboration devices, wireless presentation, and mobile device integration.", href: "/services/wireless-mobility" },
+            { icon: Shield, title: "Security & Life-Safety Systems", desc: "Integration with IP video surveillance, access control, and emergency notification platforms.", href: "/services/security-access" },
           ].map((item, i) => (
             <motion.div
               key={item.title}

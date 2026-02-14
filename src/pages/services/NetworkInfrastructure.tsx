@@ -75,6 +75,12 @@ const NetworkInfrastructure = () => {
     description="We design, build, remediate, and support structured network infrastructure ranging from greenfield deployments to complex, live operational environments. All systems are delivered in alignment with BICSI methodologies and ANSI/TIA standards."
     tagline="Every system is delivered fully tested, labeled, and documented—no orphaned cables, no assumptions."
     heroImage={heroNetwork}
+    heroAlt="Enterprise structured cabling installation and fiber optic network infrastructure"
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Network Infrastructure", path: "/services/network-infrastructure" },
+    ]}
     items={[
       { title: "Structured Cabling Design-Build", description: "CAT6, CAT6A, and fiber optic systems with standards-based installation and labeling." },
       { title: "MDF/IDF Design & Integration", description: "Rack & stack integration, cable management, cleanup, and remediation." },
@@ -111,7 +117,7 @@ const NetworkInfrastructure = () => {
 
             <h3 className="text-lg font-semibold mb-3">Engineered for Modern Enterprise Demands</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Our structured cabling and fiber infrastructure solutions support high-density enterprise environments, data centers, healthcare systems, manufacturing facilities, and multi-building campuses.
+              Our structured cabling and fiber infrastructure solutions support high-density enterprise environments, data centers, healthcare systems, manufacturing facilities, and multi-building campuses. Every network backbone we build is designed to carry <Link to="/services/wireless-mobility" className="text-primary hover:underline font-medium">enterprise wireless systems</Link>, <Link to="/services/security-access" className="text-primary hover:underline font-medium">IP video surveillance and access control platforms</Link>, and <Link to="/services/audio-visual" className="text-primary hover:underline font-medium">commercial AV integration systems</Link>.
             </p>
           </motion.div>
 
@@ -119,7 +125,7 @@ const NetworkInfrastructure = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={networkInfraImage} alt="Enterprise structured cabling and patch panels" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={networkInfraImage} alt="Enterprise structured cabling patch panel installation in MDF room" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -336,9 +342,9 @@ const NetworkInfrastructure = () => {
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[
-            { icon: Shield, title: "Secure Infrastructure", desc: "Supports physical security, access control, and surveillance systems.", href: "/services/security-access" },
-            { icon: Cpu, title: "Intelligent Systems & Low Voltage", desc: "Provides backbone support for AV, IoT, and building automation.", href: "/services/audio-visual" },
-            { icon: Headphones, title: "Lifecycle Operations & Support", desc: "Enables ongoing maintenance, validation, and scalable growth.", href: "/services/wireless-mobility" },
+            { icon: Shield, title: "Security & Access Control Systems", desc: "Structured cabling backbone supporting IP video surveillance, access control, and intrusion detection platforms.", href: "/services/security-access" },
+            { icon: Cpu, title: "Audio-Visual & Communication Systems", desc: "Network infrastructure enabling AV signal transport, video conferencing, and mass notification systems.", href: "/services/audio-visual" },
+            { icon: Headphones, title: "Wireless & Mobility Solutions", desc: "Fiber and copper backbone supporting enterprise Wi-Fi access layers, Public Safety DAS, and Private LTE.", href: "/services/wireless-mobility" },
           ].map((item, i) => (
             <motion.div
               key={item.title}

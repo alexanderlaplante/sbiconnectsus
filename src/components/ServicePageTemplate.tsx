@@ -3,10 +3,23 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Link } from "react-router-dom";
 import { ArrowLeft, CheckCircle2, ArrowRight, ChevronLeft, ChevronRight, LucideIcon } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 interface ServiceItem {
   title: string;
   description: string;
+}
+
+interface BreadcrumbItem {
+  name: string;
+  path: string;
 }
 
 interface ServicePageProps {
@@ -18,8 +31,10 @@ interface ServicePageProps {
   items: ServiceItem[];
   tagline: string;
   heroImage: string;
+  heroAlt?: string;
   nextService?: { title: string; href: string };
   prevService?: { title: string; href: string };
+  breadcrumbs?: BreadcrumbItem[];
   children?: ReactNode;
 }
 
@@ -37,8 +52,10 @@ const ServicePageTemplate = ({
   items,
   tagline,
   heroImage,
+  heroAlt,
   nextService,
   prevService,
+  breadcrumbs,
   children,
 }: ServicePageProps) => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -105,7 +122,7 @@ const ServicePageTemplate = ({
       {/* Hero with parallax image */}
       <section ref={heroRef} className="relative py-28 md:py-40 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: imgY, scale: imgScale }}>
-          <img src={heroImage} alt={title} className="w-full h-full object-cover" />
+          <img src={heroImage} alt={heroAlt || title} className="w-full h-full object-cover" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/30 dark:from-background dark:via-background/85 dark:to-background/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/10 dark:via-transparent dark:to-background/60" />
         </motion.div>
@@ -113,9 +130,32 @@ const ServicePageTemplate = ({
 
         <div className="relative z-10 mx-auto max-w-7xl px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
-              <ArrowLeft className="h-4 w-4" /> Back to Home
-            </Link>
+            {breadcrumbs && breadcrumbs.length > 0 ? (
+              <Breadcrumb className="mb-8">
+                <BreadcrumbList>
+                  {breadcrumbs.map((crumb, i) => (
+                    <BreadcrumbItem key={crumb.path} className="inline-flex items-center gap-1.5">
+                      {i < breadcrumbs.length - 1 ? (
+                        <>
+                          <BreadcrumbLink asChild>
+                            <Link to={crumb.path} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                              {crumb.name}
+                            </Link>
+                          </BreadcrumbLink>
+                          <BreadcrumbSeparator />
+                        </>
+                      ) : (
+                        <BreadcrumbPage className="text-sm">{crumb.name}</BreadcrumbPage>
+                      )}
+                    </BreadcrumbItem>
+                  ))}
+                </BreadcrumbList>
+              </Breadcrumb>
+            ) : (
+              <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
+                <ArrowLeft className="h-4 w-4" /> Back to Home
+              </Link>
+            )}
             <div className="flex items-center gap-4 mb-6">
               <motion.div
                 animate={{ rotateY: [0, 10, 0], rotateX: [0, -5, 0] }}
