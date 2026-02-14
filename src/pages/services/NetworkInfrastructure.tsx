@@ -6,6 +6,8 @@ import heroNetwork from "@/assets/hero-network.jpg";
 import networkInfraImage from "@/assets/hero-network-infrastructure.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import usePageSEO from "@/hooks/usePageSEO";
+import AeoSection from "@/components/seo/AeoSection";
+import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -19,7 +21,52 @@ const NetworkInfrastructure = () => {
     keywords: "structured cabling, fiber optic, network infrastructure, data center, MDF IDF, CAT6A, RCDD, BICSI, copper certification, OTDR testing, OSP, campus connectivity",
   });
 
+  const networkFaqs = [
+    { question: "What is structured cabling?", answer: "Structured cabling is a standardized system of cables, connectors, and pathways that forms the physical foundation of an organization's network infrastructure. It follows ANSI/TIA-568 standards to ensure consistent performance, scalability, and compatibility across voice, data, and video systems." },
+    { question: "What is the difference between Tier 1 and Tier 2 fiber testing?", answer: "Tier 1 (OLTS) testing measures insertion loss and link length. Tier 2 (OTDR) testing provides a detailed trace of the entire fiber link, identifying individual splice losses, connector reflections, and potential faults along the cable path." },
+    { question: "Do you provide copper and fiber certification?", answer: "Yes. All copper installations are fully qualified and certified. Fiber is tested to Tier 1 (OLTS) and Tier 2 (OTDR) standards, with results reviewed under RCDD technical oversight." },
+    { question: "Can you perform live cutovers with minimal downtime?", answer: "Absolutely. We specialize in phased migrations and after-hours cutovers within live operational environments, ensuring minimal disruption to your operations." },
+    { question: "Are your designs standards compliant?", answer: "All designs follow ANSI/TIA standards and BICSI best practices. Every project receives RCDD technical review to ensure full compliance." },
+    { question: "Do you support large campus fiber builds?", answer: "Yes. We design and build redundant fiber ring architectures, campus interconnects, and outside plant (OSP) systems including underground and aerial fiber deployments." },
+    { question: "What is an MDF/IDF and why does it matter?", answer: "An MDF (Main Distribution Frame) is the primary hub where external and internal cabling converges. IDFs (Intermediate Distribution Frames) extend connectivity across floors or buildings. Proper MDF/IDF design ensures organized, scalable, and maintainable network infrastructure." },
+  ];
+
+  const networkEntities = [
+    {
+      question: "What is structured cabling?",
+      answer: "Structured cabling is a standardized approach to designing and installing a building's or campus's network cabling infrastructure. It uses organized subsystems of copper and fiber optic cabling, patch panels, and pathways following ANSI/TIA-568 standards to deliver reliable, scalable connectivity.",
+      details: "A properly engineered structured cabling system supports voice, data, video, and security systems on a single unified platform. It reduces troubleshooting complexity, supports future technology upgrades, and ensures compliance with manufacturer warranty requirements. SBI designs all structured cabling systems under RCDD oversight with BICSI-aligned installation practices.",
+      standards: ["ANSI/TIA-568", "BICSI", "ISO/IEC 11801"],
+      relatedLink: { label: "Enterprise Wireless Systems", href: "/services/wireless-mobility" },
+    },
+    {
+      question: "What is fiber optic backbone infrastructure?",
+      answer: "Fiber optic backbone infrastructure consists of high-capacity fiber cables that interconnect main distribution frames, intermediate distribution frames, and campus buildings. It provides the primary data transport layer for enterprise networks, supporting speeds from 10 Gbps to 400 Gbps and beyond.",
+      details: "SBI designs redundant fiber ring architectures for enterprise and campus environments. Our deployments include single-mode and multimode fiber, fusion splicing, and both Tier 1 (OLTS) and Tier 2 (OTDR) testing under RCDD technical review. This ensures verified performance, documented link budgets, and long-term reliability.",
+      standards: ["ANSI/TIA-568", "ANSI/TIA-758-B", "BICSI OSPDRM"],
+      relatedLink: { label: "Security & Access Control Systems", href: "/services/security-access" },
+    },
+    {
+      question: "What is MDF/IDF integration?",
+      answer: "MDF/IDF integration involves the design, rack-and-stack installation, cable management, and documentation of Main Distribution Frame and Intermediate Distribution Frame rooms. These spaces house the active and passive infrastructure components that distribute connectivity throughout a facility.",
+      details: "SBI provides complete MDF/IDF services including rack elevation planning, cable pathway optimization, grounding and bonding coordination, power distribution, and environmental monitoring. Every room is delivered with standardized labeling, as-built documentation, and ANSI/TIA-compliant installation practices.",
+      standards: ["ANSI/TIA-569", "ANSI/TIA-607", "BICSI TDMM"],
+    },
+  ];
+
   return (
+  <>
+  <ServiceSchemaJsonLd
+    serviceName="Network Infrastructure & Data Center Systems"
+    serviceDescription="Enterprise structured cabling, fiber optic backbone, MDF/IDF integration, OSP deployment, and data center infrastructure. RCDD-designed, BICSI-aligned, and fully certified."
+    serviceType="Network Infrastructure Services"
+    faqs={networkFaqs}
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Network Infrastructure", path: "/services/network-infrastructure" },
+    ]}
+  />
   <ServicePageTemplate
     icon={Network}
     title="Network Infrastructure & Data Center Systems"
@@ -339,6 +386,13 @@ const NetworkInfrastructure = () => {
       </div>
     </section>
 
+    {/* AEO Entity Definition Sections */}
+    <AeoSection
+      sectionTitle="Core Entities & Definitions"
+      sectionSubtitle="Authoritative definitions for the core components of enterprise network infrastructure."
+      entities={networkEntities}
+    />
+
     {/* Section 9: FAQ */}
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
@@ -349,30 +403,12 @@ const NetworkInfrastructure = () => {
         </motion.div>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} variants={fadeUp} className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="q1">
-              <AccordionTrigger>Do you provide copper and fiber certification?</AccordionTrigger>
-              <AccordionContent>
-                Yes. All copper installations are fully qualified and certified. Fiber is tested to Tier 1 (OLTS) and Tier 2 (OTDR) standards, with results reviewed under RCDD technical oversight.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>Can you perform live cutovers with minimal downtime?</AccordionTrigger>
-              <AccordionContent>
-                Absolutely. We specialize in phased migrations and after-hours cutovers within live operational environments, ensuring minimal disruption to your operations.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>Are your designs standards compliant?</AccordionTrigger>
-              <AccordionContent>
-                All designs follow ANSI/TIA standards and BICSI best practices. Every project receives RCDD technical review to ensure full compliance.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q4">
-              <AccordionTrigger>Do you support large campus fiber builds?</AccordionTrigger>
-              <AccordionContent>
-                Yes. We design and build redundant fiber ring architectures, campus interconnects, and outside plant (OSP) systems including underground and aerial fiber deployments.
-              </AccordionContent>
-            </AccordionItem>
+            {networkFaqs.map((faq, i) => (
+              <AccordionItem key={i} value={`q${i + 1}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </motion.div>
       </div>
@@ -404,6 +440,7 @@ const NetworkInfrastructure = () => {
       </div>
     </section>
   </ServicePageTemplate>
+  </>
   );
 };
 

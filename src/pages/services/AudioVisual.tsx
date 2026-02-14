@@ -7,6 +7,8 @@ import avEngineeringImage from "@/assets/av-why-matters.jpg";
 import avMassNotificationImage from "@/assets/av-mass-notification.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import usePageSEO from "@/hooks/usePageSEO";
+import AeoSection from "@/components/seo/AeoSection";
+import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -20,7 +22,53 @@ const AudioVisual = () => {
     keywords: "audio visual integration, AV systems, video conferencing, mass notification, sound masking, enterprise AV, paging systems, collaboration rooms, digital signage",
   });
 
+  const avFaqs = [
+    { question: "What is commercial AV integration?", answer: "Commercial AV integration is the design, engineering, and installation of professional audio-visual systems for enterprise environments. It encompasses conference room technology, video conferencing, digital signage, paging systems, and control interfaces—all engineered to work reliably within a facility's network and cabling infrastructure." },
+    { question: "What are mass notification systems?", answer: "Mass notification systems deliver emergency and routine messages across a facility or campus using speakers, displays, strobes, and digital endpoints. They integrate with life-safety platforms and provide zoned alerting, pre-recorded messages, and live paging capabilities for building-wide communication." },
+    { question: "What is sound masking?", answer: "Sound masking is an acoustic technology that introduces a uniform, low-level background sound into open office environments. It reduces speech intelligibility at a distance, improving acoustic privacy, reducing distractions, and supporting compliance with HIPAA and other privacy requirements." },
+    { question: "Do you standardize AV systems across multiple rooms?", answer: "Yes. We design modular, standardized AV configurations that ensure consistent user experience and simplified management across multiple rooms, floors, and campuses." },
+    { question: "Can AV integrate with existing network infrastructure?", answer: "Absolutely. Our AV systems are engineered to integrate seamlessly with structured cabling, network switches, and existing IT infrastructure using standards-based design principles." },
+    { question: "Do you provide system documentation and training?", answer: "Every deployment includes complete system documentation, rack elevations, signal flow diagrams, and end-user training to ensure confident, independent operation." },
+    { question: "Can paging systems integrate with life-safety platforms?", answer: "Yes. Our paging and mass notification systems are designed to coordinate with life-safety platforms, supporting emergency messaging, zoned alerts, and redundant communication pathways." },
+    { question: "Do you support multi-site deployments?", answer: "We specialize in multi-site enterprise AV deployments with standardized designs, centralized management capabilities, and consistent performance across all locations." },
+  ];
+
+  const avEntities = [
+    {
+      question: "What is commercial AV integration?",
+      answer: "Commercial AV integration is the professional design, engineering, and deployment of audio-visual technology systems for enterprise, government, healthcare, and education environments. It includes conference room solutions, video conferencing, digital signage, control systems, and rack-based infrastructure—all coordinated with structured cabling and network systems.",
+      details: "SBI designs AV systems using structured cabling principles and coordinated design oversight. Every system is engineered for clarity, reliability, and long-term maintainability. Our deployments integrate with enterprise network infrastructure and are delivered with complete documentation, rack elevations, and signal flow diagrams.",
+      standards: ["AVIXA", "BICSI", "ANSI/TIA-568"],
+      relatedLink: { label: "Enterprise Network Infrastructure", href: "/services/network-infrastructure" },
+    },
+    {
+      question: "What are mass notification systems?",
+      answer: "Mass notification systems are facility-wide communication platforms that deliver emergency alerts, routine announcements, and safety messages through speakers, visual displays, strobes, and digital endpoints. They are designed to reach all building occupants rapidly during emergency events and daily operations.",
+      details: "SBI designs and deploys mass notification systems that integrate with security and life-safety platforms. Our systems support zoned audio distribution, pre-recorded emergency messaging, live paging, and coordination with fire alarm and access control systems for unified emergency response.",
+      standards: ["NFPA 72", "UL 2572", "OSHA"],
+      relatedLink: { label: "Security & Life-Safety Systems", href: "/services/security-access" },
+    },
+    {
+      question: "What is sound masking technology?",
+      answer: "Sound masking introduces a controlled, uniform background sound into a workspace to reduce the intelligibility of human speech at a distance. It is deployed in open offices, healthcare facilities, legal environments, and government buildings where acoustic privacy and reduced distraction are operational requirements.",
+      details: "SBI installs sound masking systems as part of integrated AV and facility communication deployments. These systems improve workplace productivity, support HIPAA compliance in healthcare settings, and protect confidential conversations in executive and legal environments.",
+      standards: ["ASTM E1130", "HIPAA", "GSA PBS-P100"],
+    },
+  ];
+
   return (
+  <>
+  <ServiceSchemaJsonLd
+    serviceName="Audio-Visual, Communications & Facility Systems"
+    serviceDescription="Enterprise AV systems, video conferencing, mass notification, sound masking, and collaboration environments engineered for clarity, scalability, and reliable facility communication."
+    serviceType="Audio-Visual Integration Services"
+    faqs={avFaqs}
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Audio-Visual Systems", path: "/services/audio-visual" },
+    ]}
+  />
   <ServicePageTemplate
     icon={MonitorSpeaker}
     title="Audio-Visual, Communications & Facility Systems"
@@ -334,6 +382,13 @@ const AudioVisual = () => {
       </div>
     </section>
 
+    {/* AEO Entity Definition Sections */}
+    <AeoSection
+      sectionTitle="Core Entities & Definitions"
+      sectionSubtitle="Authoritative definitions for the core components of enterprise audio-visual and communication systems."
+      entities={avEntities}
+    />
+
     {/* Section 9: FAQ */}
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
@@ -344,36 +399,12 @@ const AudioVisual = () => {
         </motion.div>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} variants={fadeUp} className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="q1">
-              <AccordionTrigger>Do you standardize AV systems across multiple rooms?</AccordionTrigger>
-              <AccordionContent>
-                Yes. We design modular, standardized AV configurations that ensure consistent user experience and simplified management across multiple rooms, floors, and campuses.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>Can AV integrate with existing network infrastructure?</AccordionTrigger>
-              <AccordionContent>
-                Absolutely. Our AV systems are engineered to integrate seamlessly with structured cabling, network switches, and existing IT infrastructure using standards-based design principles.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>Do you provide system documentation and training?</AccordionTrigger>
-              <AccordionContent>
-                Every deployment includes complete system documentation, rack elevations, signal flow diagrams, and end-user training to ensure confident, independent operation.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q4">
-              <AccordionTrigger>Can paging systems integrate with life-safety platforms?</AccordionTrigger>
-              <AccordionContent>
-                Yes. Our paging and mass notification systems are designed to coordinate with life-safety platforms, supporting emergency messaging, zoned alerts, and redundant communication pathways.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q5">
-              <AccordionTrigger>Do you support multi-site deployments?</AccordionTrigger>
-              <AccordionContent>
-                We specialize in multi-site enterprise AV deployments with standardized designs, centralized management capabilities, and consistent performance across all locations.
-              </AccordionContent>
-            </AccordionItem>
+            {avFaqs.map((faq, i) => (
+              <AccordionItem key={i} value={`q${i + 1}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </motion.div>
       </div>
@@ -405,6 +436,7 @@ const AudioVisual = () => {
       </div>
     </section>
   </ServicePageTemplate>
+  </>
   );
 };
 

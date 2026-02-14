@@ -6,6 +6,8 @@ import heroWireless from "@/assets/hero-wireless.jpg";
 import wirelessEngineeringImage from "@/assets/wireless-engineering.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import usePageSEO from "@/hooks/usePageSEO";
+import AeoSection from "@/components/seo/AeoSection";
+import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -19,7 +21,53 @@ const WirelessMobility = () => {
     keywords: "enterprise WiFi, DAS, distributed antenna system, public safety DAS, private LTE, wireless survey, RF engineering, point-to-point wireless, Starlink, NFPA, IFC",
   });
 
+  const wirelessFaqs = [
+    { question: "What is Public Safety DAS?", answer: "Public Safety DAS (Distributed Antenna System) is an in-building radio frequency system designed to provide reliable first responder communication coverage. It is required by NFPA and IFC codes in many commercial, healthcare, and government buildings to ensure fire, police, and EMS radio signals penetrate throughout the structure." },
+    { question: "What is predictive RF modeling?", answer: "Predictive RF modeling uses specialized software to simulate wireless signal propagation through a building's architectural environment before installation. It accounts for wall materials, floor plans, interference sources, and device density to optimize access point placement and ensure reliable coverage." },
+    { question: "What is the difference between DAS and Wi-Fi?", answer: "DAS extends cellular or public safety radio signals inside buildings using a network of distributed antennas. Wi-Fi provides local area network connectivity using unlicensed spectrum. DAS addresses cellular coverage gaps; Wi-Fi provides data connectivity for enterprise devices and applications." },
+    { question: "Do you provide predictive wireless modeling?", answer: "Yes. We use predictive RF modeling and heatmap simulation based on architectural drawings and environmental variables to optimize access point placement and coverage before installation begins." },
+    { question: "Can you support NFPA-compliant Public Safety DAS?", answer: "Absolutely. We design, deploy, and support Public Safety DAS systems in full compliance with NFPA and IFC requirements, including AHJ coordination and inspection support." },
+    { question: "Do you design high-density Wi-Fi environments?", answer: "Yes. Our designs account for peak device counts, roaming behavior, and application performance requirements to ensure reliable connectivity in high-density environments." },
+    { question: "Can you deploy private LTE networks?", answer: "Yes. We engineer and deploy private LTE solutions for environments requiring dedicated wireless capacity, enhanced security, and operational independence from public carrier networks." },
+    { question: "Do you perform post-installation validation testing?", answer: "Every deployment includes post-installation surveys, signal verification, throughput testing, and optimization tuning to ensure the system performs to specification under real-world conditions." },
+  ];
+
+  const wirelessEntities = [
+    {
+      question: "What is enterprise Wi-Fi engineering?",
+      answer: "Enterprise Wi-Fi engineering is the process of designing, deploying, and optimizing wireless local area networks for commercial and institutional environments. It involves site surveys, predictive RF modeling, access point placement, controller configuration, and post-deployment validation to ensure consistent coverage, capacity, and roaming performance.",
+      details: "Unlike consumer-grade wireless, enterprise Wi-Fi must support hundreds or thousands of simultaneous devices, maintain Quality of Service for real-time applications, and integrate with network authentication systems. SBI designs enterprise wireless systems using predictive modeling validated by on-site surveys, ensuring performance under peak load conditions.",
+      standards: ["IEEE 802.11ax (Wi-Fi 6/6E)", "BICSI", "ANSI/TIA-568"],
+      relatedLink: { label: "Enterprise Structured Cabling Solutions", href: "/services/network-infrastructure" },
+    },
+    {
+      question: "What is Public Safety DAS?",
+      answer: "Public Safety DAS is a code-required in-building wireless system that ensures reliable radio frequency coverage for first responders including fire, police, and emergency medical services. NFPA 72, NFPA 1221, and IFC Section 510 mandate these systems in buildings where signal penetration testing reveals inadequate coverage levels.",
+      details: "SBI designs and deploys Public Safety DAS systems in full compliance with NFPA and IFC requirements. Our process includes initial signal strength testing, system design coordinated with the Authority Having Jurisdiction (AHJ), professional installation, final acceptance testing, and ongoing annual compliance testing.",
+      standards: ["NFPA 72", "NFPA 1221", "IFC Section 510", "FCC Part 90"],
+      relatedLink: { label: "Integrated Security & Life-Safety Systems", href: "/services/security-access" },
+    },
+    {
+      question: "What is a cellular Distributed Antenna System (DAS)?",
+      answer: "A cellular DAS extends carrier macro network signals throughout buildings and campuses where architectural materials or building density attenuate outdoor cellular signals. It uses a network of antennas connected to signal source equipment to distribute cellular coverage uniformly across all areas of a facility.",
+      details: "SBI deploys carrier-neutral DAS solutions that support multiple carriers on a single infrastructure. These systems improve cellular voice and data performance for building occupants and visitors, supporting enterprise mobility, IoT connectivity, and operational continuity.",
+      standards: ["FCC Part 22/24/27", "3GPP", "BICSI"],
+    },
+  ];
+
   return (
+  <>
+  <ServiceSchemaJsonLd
+    serviceName="Wireless, Mobility & Industrial Connectivity"
+    serviceDescription="Enterprise Wi-Fi, Public Safety DAS, Private LTE, and point-to-point wireless solutions engineered with predictive RF modeling and field validation."
+    serviceType="Wireless Infrastructure Services"
+    faqs={wirelessFaqs}
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Wireless & Mobility", path: "/services/wireless-mobility" },
+    ]}
+  />
   <ServicePageTemplate
     icon={Wifi}
     title="Wireless, Mobility & Industrial Connectivity"
@@ -331,6 +379,13 @@ const WirelessMobility = () => {
       </div>
     </section>
 
+    {/* AEO Entity Definition Sections */}
+    <AeoSection
+      sectionTitle="Core Entities & Definitions"
+      sectionSubtitle="Authoritative definitions for the core components of enterprise wireless and RF infrastructure."
+      entities={wirelessEntities}
+    />
+
     {/* Section 9: FAQ */}
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
@@ -341,36 +396,12 @@ const WirelessMobility = () => {
         </motion.div>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} variants={fadeUp} className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="q1">
-              <AccordionTrigger>Do you provide predictive wireless modeling?</AccordionTrigger>
-              <AccordionContent>
-                Yes. We use predictive RF modeling and heatmap simulation based on architectural drawings and environmental variables to optimize access point placement and coverage before installation begins.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>Can you support NFPA-compliant Public Safety DAS?</AccordionTrigger>
-              <AccordionContent>
-                Absolutely. We design, deploy, and support Public Safety DAS systems in full compliance with NFPA and IFC requirements, including AHJ coordination and inspection support.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>Do you design high-density Wi-Fi environments?</AccordionTrigger>
-              <AccordionContent>
-                Yes. Our designs account for peak device counts, roaming behavior, and application performance requirements to ensure reliable connectivity in high-density environments.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q4">
-              <AccordionTrigger>Can you deploy private LTE networks?</AccordionTrigger>
-              <AccordionContent>
-                Yes. We engineer and deploy private LTE solutions for environments requiring dedicated wireless capacity, enhanced security, and operational independence from public carrier networks.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q5">
-              <AccordionTrigger>Do you perform post-installation validation testing?</AccordionTrigger>
-              <AccordionContent>
-                Every deployment includes post-installation surveys, signal verification, throughput testing, and optimization tuning to ensure the system performs to specification under real-world conditions.
-              </AccordionContent>
-            </AccordionItem>
+            {wirelessFaqs.map((faq, i) => (
+              <AccordionItem key={i} value={`q${i + 1}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </motion.div>
       </div>
@@ -402,6 +433,7 @@ const WirelessMobility = () => {
       </div>
     </section>
   </ServicePageTemplate>
+  </>
   );
 };
 

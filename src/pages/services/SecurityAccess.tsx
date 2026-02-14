@@ -6,6 +6,8 @@ import heroSecurity from "@/assets/hero-security-facial.jpg";
 import securityAccessControl from "@/assets/hero-security.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import usePageSEO from "@/hooks/usePageSEO";
+import AeoSection from "@/components/seo/AeoSection";
+import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -19,7 +21,53 @@ const SecurityAccess = () => {
     keywords: "IP video surveillance, access control, intrusion detection, life safety, security integration, NFPA, AHJ, biometric access, enterprise security, converged security platform",
   });
 
+  const securityFaqs = [
+    { question: "What is enterprise access control?", answer: "Enterprise access control is a security system that manages and restricts physical entry to buildings, rooms, and sensitive areas using credentials such as key cards, mobile devices, biometrics, or multi-factor authentication. It provides centralized policy management, audit logging, and real-time monitoring across facilities." },
+    { question: "What is IP video surveillance?", answer: "IP video surveillance uses network-connected cameras to capture, transmit, and store video over an IP network. Unlike analog CCTV, IP systems support high-resolution imaging, remote access, video analytics, and integration with access control and alarm platforms for unified security management." },
+    { question: "Do you integrate video, access control, and intrusion systems?", answer: "Yes. We design and deploy converged security platforms that unify video surveillance, access control, and intrusion detection under a single operational interface for streamlined management." },
+    { question: "Are your systems compliant with life-safety standards?", answer: "All deployments are aligned with applicable NFPA codes and local AHJ requirements. We coordinate inspections and deliver complete documentation for compliance readiness." },
+    { question: "Can you support audit and documentation requirements?", answer: "Absolutely. Our systems include comprehensive audit trails, access control logging, surveillance retention policies, and compliance-ready reporting for regulated environments." },
+    { question: "Do you provide unified security management platforms?", answer: "Yes. We implement converged platforms that provide centralized dashboards, real-time monitoring, and actionable alerts across all security and life-safety subsystems." },
+    { question: "Can systems scale across multiple facilities?", answer: "Our security architectures are designed for multi-site scalability, supporting centralized management, standardized configurations, and consistent policy enforcement across distributed locations." },
+    { question: "Who installs enterprise access control systems?", answer: "Qualified low-voltage integrators with experience in security system design, network infrastructure, and compliance coordination install enterprise access control systems. SBI provides design-build access control solutions with RCDD-led engineering and documented system validation." },
+  ];
+
+  const securityEntities = [
+    {
+      question: "What are access control systems?",
+      answer: "Access control systems are electronic security platforms that manage physical entry to facilities and restricted areas. They authenticate individuals using credentials—such as proximity cards, smart cards, mobile devices, PIN codes, or biometrics—and enforce access policies based on identity, time, and location parameters.",
+      details: "SBI designs and deploys enterprise access control systems that integrate with IP video surveillance, intrusion detection, and visitor management platforms. Our systems support centralized policy management, real-time event monitoring, audit-ready logging, and multi-site scalability for corporate, healthcare, government, and education environments.",
+      standards: ["UL 294", "NFPA 101", "ADA Compliance"],
+      relatedLink: { label: "Enterprise Network Infrastructure", href: "/services/network-infrastructure" },
+    },
+    {
+      question: "What is IP video surveillance?",
+      answer: "IP video surveillance is a network-based camera system that captures, transmits, records, and manages video over enterprise IP infrastructure. It replaces legacy analog CCTV with high-resolution digital imaging, remote accessibility, intelligent video analytics, and integration with unified security platforms.",
+      details: "SBI deploys IP video surveillance systems engineered for enterprise environments. Our designs include camera placement optimization, storage capacity planning, bandwidth analysis, retention policy configuration, and integration with access control and alarm management platforms. All systems are installed on structured cabling infrastructure designed under RCDD oversight.",
+      standards: ["ONVIF", "NDAA Compliant", "BICSI"],
+      relatedLink: { label: "Wireless & Mobility Solutions", href: "/services/wireless-mobility" },
+    },
+    {
+      question: "What are unified security platforms?",
+      answer: "Unified security platforms converge video surveillance, access control, intrusion detection, and alarm management into a single operational interface. They provide centralized monitoring, correlated event management, and streamlined incident response across all security subsystems within a facility or multi-site organization.",
+      details: "SBI implements converged security platforms that reduce operational complexity and improve response time. By unifying disparate security technologies under a single management layer, organizations gain real-time situational awareness, simplified compliance reporting, and reduced total cost of ownership.",
+      standards: ["NFPA", "UL", "ASIS International"],
+    },
+  ];
+
   return (
+  <>
+  <ServiceSchemaJsonLd
+    serviceName="Security, Access & Life-Safety Systems"
+    serviceDescription="Integrated IP video surveillance, access control, intrusion detection, and unified security platforms designed for compliance, scalability, and documented performance."
+    serviceType="Security Systems Integration"
+    faqs={securityFaqs}
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Security & Life-Safety", path: "/services/security-access" },
+    ]}
+  />
   <ServicePageTemplate
     icon={ShieldCheck}
     title="Security, Access & Life-Safety Systems"
@@ -337,6 +385,13 @@ const SecurityAccess = () => {
       </div>
     </section>
 
+    {/* AEO Entity Definition Sections */}
+    <AeoSection
+      sectionTitle="Core Entities & Definitions"
+      sectionSubtitle="Authoritative definitions for the core components of enterprise security and life-safety infrastructure."
+      entities={securityEntities}
+    />
+
     {/* Section 9: FAQ */}
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
@@ -347,36 +402,12 @@ const SecurityAccess = () => {
         </motion.div>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} variants={fadeUp} className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="q1">
-              <AccordionTrigger>Do you integrate video, access control, and intrusion systems?</AccordionTrigger>
-              <AccordionContent>
-                Yes. We design and deploy converged security platforms that unify video surveillance, access control, and intrusion detection under a single operational interface for streamlined management.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>Are your systems compliant with life-safety standards?</AccordionTrigger>
-              <AccordionContent>
-                All deployments are aligned with applicable NFPA codes and local AHJ requirements. We coordinate inspections and deliver complete documentation for compliance readiness.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>Can you support audit and documentation requirements?</AccordionTrigger>
-              <AccordionContent>
-                Absolutely. Our systems include comprehensive audit trails, access control logging, surveillance retention policies, and compliance-ready reporting for regulated environments.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q4">
-              <AccordionTrigger>Do you provide unified security management platforms?</AccordionTrigger>
-              <AccordionContent>
-                Yes. We implement converged platforms that provide centralized dashboards, real-time monitoring, and actionable alerts across all security and life-safety subsystems.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q5">
-              <AccordionTrigger>Can systems scale across multiple facilities?</AccordionTrigger>
-              <AccordionContent>
-                Our security architectures are designed for multi-site scalability, supporting centralized management, standardized configurations, and consistent policy enforcement across distributed locations.
-              </AccordionContent>
-            </AccordionItem>
+            {securityFaqs.map((faq, i) => (
+              <AccordionItem key={i} value={`q${i + 1}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </motion.div>
       </div>
@@ -408,6 +439,7 @@ const SecurityAccess = () => {
       </div>
     </section>
   </ServicePageTemplate>
+  </>
   );
 };
 
