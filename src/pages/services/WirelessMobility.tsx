@@ -76,6 +76,12 @@ const WirelessMobility = () => {
     description="We design and deploy wireless and RF systems that support mobility, safety, and operational continuity across demanding environments. Wireless designs are validated through predictive modeling and field verification—not guesswork."
     tagline="Designed for uptime, interference control, and real-world RF conditions."
     heroImage={heroWireless}
+    heroAlt="Enterprise wireless access point installation and RF heat map survey"
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Wireless & Mobility", path: "/services/wireless-mobility" },
+    ]}
     items={[
       { title: "Enterprise & Industrial Wi-Fi", description: "Surveys, heat mapping, optimization, and performance remediation for enterprise wireless networks." },
       { title: "Public Safety DAS", description: "NFPA / IFC compliant and AHJ coordinated systems for first responder coverage in buildings and facilities." },
@@ -109,7 +115,7 @@ const WirelessMobility = () => {
 
             <h3 className="text-lg font-semibold mb-3">Engineered for Real-World Conditions</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Our wireless and RF systems are designed using predictive modeling, validated through on-site surveys, and optimized for enterprise, industrial, healthcare, and campus environments.
+              Our wireless and RF systems are designed using predictive modeling, validated through on-site surveys, and optimized for enterprise, industrial, healthcare, and campus environments. All wireless systems are built on <Link to="/services/network-infrastructure" className="text-primary hover:underline font-medium">enterprise structured cabling infrastructure</Link> and integrate with <Link to="/services/security-access" className="text-primary hover:underline font-medium">security and life-safety systems</Link> for coordinated facility coverage.
             </p>
           </motion.div>
 
@@ -117,7 +123,7 @@ const WirelessMobility = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={wirelessEngineeringImage} alt="Wireless RF heat map survey and access point" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={wirelessEngineeringImage} alt="Predictive RF heat map survey and enterprise wireless access point deployment" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -310,7 +316,7 @@ const WirelessMobility = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={heroWireless} alt="Point-to-point wireless connectivity" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={heroWireless} alt="Point-to-point wireless backhaul and remote connectivity infrastructure" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -329,9 +335,9 @@ const WirelessMobility = () => {
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[
-            { icon: Network, title: "Network Infrastructure", desc: "Structured cabling and fiber backbone supporting wireless access layers.", href: "/services/network-infrastructure" },
-            { icon: Cpu, title: "Intelligent Systems", desc: "Integration with IoT, AV, security, and operational technology systems.", href: "/services/audio-visual" },
-            { icon: Headphones, title: "Lifecycle Operations", desc: "Ongoing wireless monitoring, performance tuning, and expansion planning.", href: "/services/security-access" },
+            { icon: Network, title: "Enterprise Structured Cabling Solutions", desc: "Structured cabling and fiber optic backbone supporting wireless access layers and backhaul connectivity.", href: "/services/network-infrastructure" },
+            { icon: Cpu, title: "Commercial AV Integration Services", desc: "Wireless connectivity enabling AV collaboration, video conferencing, and digital signage systems.", href: "/services/audio-visual" },
+            { icon: Headphones, title: "Integrated Security & Access Control", desc: "Wireless coverage supporting mobile credentials, IP surveillance, and security platform connectivity.", href: "/services/security-access" },
           ].map((item, i) => (
             <motion.div
               key={item.title}

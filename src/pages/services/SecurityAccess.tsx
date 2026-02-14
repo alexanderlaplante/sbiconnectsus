@@ -76,6 +76,12 @@ const SecurityAccess = () => {
     description="We deliver converged security platforms designed to integrate cleanly with network and facility infrastructure. Systems are designed for scalability, auditability, and operational clarity."
     tagline="Security systems engineered—not pieced together."
     heroImage={heroSecurity}
+    heroAlt="Enterprise IP video surveillance and facial recognition access control system"
+    breadcrumbs={[
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: "Security & Life-Safety", path: "/services/security-access" },
+    ]}
     items={[
       { title: "IP Video Surveillance", description: "IP cameras, analytics, perimeter detection, and industrial monitoring with enterprise-grade recording." },
       { title: "Access Control & Identity Management", description: "Card, mobile, biometric, and multi-factor systems for facility and area access management." },
@@ -109,7 +115,7 @@ const SecurityAccess = () => {
 
             <h3 className="text-lg font-semibold mb-3">Built for Performance & Accountability</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Our security platforms are engineered for scalability, system interoperability, and documented performance across enterprise and regulated environments.
+              Our security platforms are engineered for scalability, system interoperability, and documented performance across enterprise and regulated environments. All security systems are deployed on <Link to="/services/network-infrastructure" className="text-primary hover:underline font-medium">enterprise structured cabling and fiber backbone infrastructure</Link> and coordinate with <Link to="/services/audio-visual" className="text-primary hover:underline font-medium">mass notification and facility communication systems</Link>.
             </p>
           </motion.div>
 
@@ -117,7 +123,7 @@ const SecurityAccess = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={securityAccessControl} alt="Enterprise security systems" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={securityAccessControl} alt="Enterprise IP video surveillance cameras and access control card readers" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -316,7 +322,7 @@ const SecurityAccess = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={securityAccessControl} alt="Life-safety systems" className="w-full h-full object-cover aspect-[4/3]" />
+            <img src={securityAccessControl} alt="Life-safety duress alarm and emergency communication systems" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -335,9 +341,9 @@ const SecurityAccess = () => {
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[
-            { icon: Network, title: "Network Infrastructure", desc: "Structured cabling and fiber backbone supporting surveillance and access systems.", href: "/services/network-infrastructure" },
-            { icon: Wifi, title: "Wireless & Mobility", desc: "Wireless coverage enabling mobile credentials and surveillance connectivity.", href: "/services/wireless-mobility" },
-            { icon: Headphones, title: "Lifecycle Operations", desc: "Ongoing system monitoring, maintenance, and compliance validation.", href: "/services/audio-visual" },
+            { icon: Network, title: "Enterprise Structured Cabling Solutions", desc: "Structured cabling and fiber optic backbone supporting IP surveillance cameras, access control readers, and alarm panels.", href: "/services/network-infrastructure" },
+            { icon: Wifi, title: "Wireless & Mobility Infrastructure", desc: "Wireless coverage enabling mobile access credentials, wireless IP cameras, and Public Safety DAS integration.", href: "/services/wireless-mobility" },
+            { icon: Headphones, title: "Audio-Visual & Mass Notification Systems", desc: "Integration with enterprise paging, mass notification, and emergency communication platforms.", href: "/services/audio-visual" },
           ].map((item, i) => (
             <motion.div
               key={item.title}
