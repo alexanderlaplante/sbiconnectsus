@@ -1,4 +1,7 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+const BASE_URL = "https://sbiconnectsus.lovable.app";
 
 interface SEOProps {
   title: string;
@@ -7,6 +10,8 @@ interface SEOProps {
 }
 
 const usePageSEO = ({ title, description, keywords }: SEOProps) => {
+  const { pathname } = useLocation();
+
   useEffect(() => {
     document.title = title;
 
@@ -30,11 +35,22 @@ const usePageSEO = ({ title, description, keywords }: SEOProps) => {
       el.content = content;
     };
 
+    // Canonical tag
+    const canonicalUrl = `${BASE_URL}${pathname === "/" ? "" : pathname}`;
+    let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "canonical";
+      document.head.appendChild(link);
+    }
+    link.href = canonicalUrl;
+
     setMeta("description", description);
     setMeta("keywords", keywords);
     setOgMeta("og:title", title);
     setOgMeta("og:description", description);
-  }, [title, description, keywords]);
+    setOgMeta("og:url", canonicalUrl);
+  }, [title, description, keywords, pathname]);
 };
 
 export default usePageSEO;
