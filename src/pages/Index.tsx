@@ -5,6 +5,7 @@ import CapabilitiesSection from "@/components/home/CapabilitiesSection";
 import PillarsSection from "@/components/home/PillarsSection";
 import MissionSection from "@/components/home/MissionSection";
 import usePageSEO from "@/hooks/usePageSEO";
+import JsonLd from "@/components/JsonLd";
 
 const Index = () => {
   usePageSEO({
@@ -15,6 +16,7 @@ const Index = () => {
 
   return (
   <Layout>
+    <JsonLd />
     <HeroSection />
     <StatsBar />
     <CapabilitiesSection />
