@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 
+const BASE_URL = "https://sbiconnects.us";
+
 const jsonLdData = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://sbiconnectsus.lovable.app/#organization",
+      "@id": `${BASE_URL}/#organization`,
       name: "SBI Connects",
       legalName: "Smart Building Integrators, LLC",
-      url: "https://sbiconnectsus.lovable.app",
-      logo: "https://sbiconnectsus.lovable.app/favicon.ico",
+      url: BASE_URL,
+      logo: `${BASE_URL}/favicon.ico`,
       description:
         "Service-Disabled Veteran-Owned design-build low-voltage contractor delivering network infrastructure, wireless, security, and audio-visual solutions.",
       foundingDate: "2020",
@@ -21,14 +23,53 @@ const jsonLdData = {
         areaServed: "US",
         availableLanguage: "English",
       },
+      knowsAbout: [
+        "Structured Cabling",
+        "Fiber Optic Backbone",
+        "Network Infrastructure",
+        "Enterprise Wi-Fi",
+        "Public Safety DAS",
+        "Access Control Systems",
+        "IP Video Surveillance",
+        "Commercial AV Systems",
+        "Mass Notification Systems",
+        "RCDD Design",
+        "BICSI Standards",
+      ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Low-Voltage Infrastructure Services",
+        itemListElement: [
+          {
+            "@type": "OfferCatalog",
+            name: "Network Infrastructure & Data Center Systems",
+            url: `${BASE_URL}/services/network-infrastructure`,
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Wireless, Mobility & Industrial Connectivity",
+            url: `${BASE_URL}/services/wireless-mobility`,
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Security, Access & Life-Safety Systems",
+            url: `${BASE_URL}/services/security-access`,
+          },
+          {
+            "@type": "OfferCatalog",
+            name: "Audio-Visual, Communications & Facility Systems",
+            url: `${BASE_URL}/services/audio-visual`,
+          },
+        ],
+      },
       sameAs: [],
     },
     {
       "@type": "LocalBusiness",
-      "@id": "https://sbiconnectsus.lovable.app/#localbusiness",
+      "@id": `${BASE_URL}/#localbusiness`,
       name: "SBI Connects",
-      image: "https://sbiconnectsus.lovable.app/favicon.ico",
-      url: "https://sbiconnectsus.lovable.app",
+      image: `${BASE_URL}/favicon.ico`,
+      url: BASE_URL,
       telephone: "+1-407-509-3004",
       email: "info@sbiconnects.us",
       address: {
@@ -52,14 +93,26 @@ const jsonLdData = {
         "@type": "Country",
         name: "United States",
       },
-      knowsAbout: [
-        "Structured Cabling",
-        "Network Infrastructure",
-        "Wireless Systems",
-        "Security & Access Control",
-        "Audio-Visual Systems",
-        "RCDD Design",
-        "BICSI Standards",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: "SBI Connects",
+      publisher: {
+        "@id": `${BASE_URL}/#organization`,
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${BASE_URL}/#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: BASE_URL,
+        },
       ],
     },
   ],
