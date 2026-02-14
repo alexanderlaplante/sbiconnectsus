@@ -16,10 +16,10 @@ const fadeUp = {
 };
 
 const whyChoose = [
-  { num: "01", title: "Tailored Solutions", icon: Target, description: "We customize our services to align perfectly to your specific requirements, ensuring optimal performance and satisfaction." },
-  { num: "02", title: "Expert Team", icon: Users, description: "Our skilled professionals have extensive experience in technology, guaranteeing high-quality results." },
-  { num: "03", title: "Veteran Commitment", icon: ShieldCheck, description: "Our values are rooted in discipline and integrity, ensuring that we deliver on our promises." },
-  { num: "04", title: "Customer-centric Approach", icon: Handshake, description: "We prioritize open communication and collaboration with our clients fostering long-lasting partnerships." },
+  { num: "01", title: "Engineered Design Authority", icon: Target, description: "RCDD-led design with in-house Professional Engineer oversight. Every system is standards-based, code-aligned, and built for long-term performance." },
+  { num: "02", title: "Single-Source Accountability", icon: Users, description: "One partner from concept through closeout. Design, installation, testing, documentation, and lifecycle support—all under one roof." },
+  { num: "03", title: "Standards-Driven Execution", icon: ShieldCheck, description: "BICSI-aligned installation, certified testing, ANSI/TIA documentation, and complete as-built deliverables. No guesswork. No loose ends." },
+  { num: "04", title: "Veteran-Led Discipline", icon: Handshake, description: "Service-Disabled Veteran-Owned. We operate with structure, integrity, and accountability—execution is our differentiator." },
 ];
 
 const About = () => {
@@ -90,10 +90,10 @@ const About = () => {
                 Why Choose <span className="text-gradient">SBI</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed text-lg mb-6">
-                At Smart Building Integrators, LLC (SBI), we pride ourselves on being more than just a technology integration company; we are your dedicated partner in creating innovative infrastructure solutions. As a Certified Disabled Veteran-Owned Small Business, we bring a unique perspective and commitment to excellence that sets us apart in the industry.
+                At Smart Building Integrators, LLC (SBI), we are more than a technology integrator—we are a Service-Disabled Veteran-Owned design-build partner committed to disciplined execution and long-term performance. Our projects are led by in-house RCDD and Professional Engineer oversight, ensuring every system is designed to industry standards, code-compliant, and engineered for reliability. From structured cabling and fiber to wireless, access control, and video surveillance, we deliver coordinated infrastructure solutions built for operational continuity and future scalability.
               </p>
               <p className="text-muted-foreground leading-relaxed text-lg">
-                Our team is about understanding your unique needs and delivering solutions that not only meet but exceed your expectations. We customize our services to align perfectly to your specific requirements, ensuring optimal performance and satisfaction.
+                We don't offer one-size-fits-all systems. We assess your environment, understand your operational demands, and design solutions that align precisely with your objectives—then execute with accountability, documentation, and measurable results.
               </p>
             </motion.div>
 
@@ -135,16 +135,17 @@ const About = () => {
               <h2 className="text-2xl md:text-4xl font-bold mb-4">
                 Who <span className="text-gradient">We Are</span>
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-                Smart Building Integrators, LLC (SBI), a Certified Disabled Veteran-Owned Small Business (DVOSB), is a dynamic and forward-thinking technology integration small business specializing in delivering end-to-end infrastructure solutions tailored to meet the evolving demands of modern environments.
+              <p className="text-muted-foreground leading-relaxed text-lg mb-4">
+                Smart Building Integrators, LLC (SBI) is a Service-Disabled Veteran-Owned Small Business delivering engineered, standards-driven low-voltage infrastructure solutions for modern facilities. With in-house RCDD leadership and Professional Engineer oversight, we design and build systems that meet BICSI, ANSI/TIA, and industry compliance standards—without compromise.
               </p>
+              <p className="text-sm font-semibold text-foreground mb-3">Our capabilities include:</p>
               <ul className="space-y-3">
                 {[
-                  "RCDD-led design & BICSI-aligned installation",
-                  "Certified testing & ANSI/TIA documentation",
-                  "Live cutover & migration expertise",
-                  "24/7 support & lifecycle management",
-                  "Scalable from single-site to multi-campus",
+                  "RCDD-led design and BICSI-aligned installation",
+                  "Certified testing and ANSI/TIA-compliant documentation",
+                  "Live cutovers and complex system migrations",
+                  "24/7 support and lifecycle management",
+                  "Scalable delivery from single-site deployments to multi-campus rollouts",
                 ].map((item, i) => (
                   <motion.li
                     key={i}
@@ -160,6 +161,9 @@ const About = () => {
                   </motion.li>
                 ))}
               </ul>
+              <p className="text-muted-foreground leading-relaxed mt-6">
+                We don't just install infrastructure. We engineer environments for reliability, performance, and long-term serviceability.
+              </p>
             </motion.div>
 
             <motion.div

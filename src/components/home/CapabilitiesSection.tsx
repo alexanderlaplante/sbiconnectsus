@@ -17,13 +17,13 @@ const CapabilitiesSection = () => (
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-medium mb-6">
           <Award className="h-3 w-3" />
-          RCDD-Led · PE Coordinated · BICSI Aligned
+          RCDD-Led · Licensed PE On Staff · BICSI-Aligned
         </div>
         <h2 className="text-3xl md:text-5xl font-bold mb-4">
           SBI <span className="text-gradient">Capabilities</span>
         </h2>
         <p className="text-muted-foreground max-w-3xl mx-auto text-lg leading-relaxed">
-          We are a design-build low-voltage contractor delivering engineered, standards-based infrastructure across commercial, industrial, and mission-critical environments. Our work is executed under RCDD-led design oversight, with Professional Engineer involvement where required.
+          We deliver engineered, standards-driven low-voltage infrastructure across commercial, industrial, and mission-critical environments. Operating as a full design-build partner, our work is led by in-house RCDD and licensed Professional Engineer expertise—ensuring compliant, coordinated, and performance-driven systems from concept through closeout.
         </p>
       </motion.div>
 

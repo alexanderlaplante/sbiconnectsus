@@ -3,11 +3,11 @@ import { CheckCircle2, Globe, Users, Zap } from "lucide-react";
 import { fadeUp } from "@/lib/animations";
 
 const capabilities = [
-  "RCDD-led design & BICSI-aligned installation",
-  "Certified testing & ANSI/TIA documentation",
-  "Live cutover & migration expertise",
-  "24/7 support & lifecycle management",
-  "Scalable from single-site to multi-campus",
+  "RCDD-led design and BICSI-aligned installation",
+  "Certified testing and ANSI/TIA-compliant documentation",
+  "Live cutovers and complex system migrations",
+  "24/7 support and lifecycle management",
+  "Scalable delivery from single-site deployments to multi-campus rollouts",
 ];
 
 const badges = [
@@ -22,14 +22,17 @@ const MissionSection = () => (
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} variants={fadeUp}>
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Built by People Who<br />
-            <span className="text-gradient">Build Systems.</span>
+            A True One-Stop<br />
+            <span className="text-gradient">Infrastructure Partner</span>
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-6">
-            SBI Connects is a service-disabled veteran-owned small business delivering low-voltage and telecommunications infrastructure solutions for enterprise, industrial, and mission-critical environments.
+            At Smart Building Integrators, we operate as a single-source, design-build partner for low-voltage and outside plant infrastructure. From engineering and standards-based design to installation, testing, documentation, and long-term support, we manage the entire system lifecycle under one roof.
           </p>
-          <p className="text-muted-foreground leading-relaxed mb-8">
-            We don't just install—we engineer systems for reliability, scalability, and long-term operations. Engineering oversight is provided by appropriately licensed Professional Engineers where required by jurisdiction or scope. All work is performed in compliance with applicable state licensing laws and recognized industry standards.
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Our mission is simple: understand our clients' operational goals and deliver resilient, performance-driven systems that support security, continuity, and growth. By integrating outside plant, structured cabling, fiber backbones, wireless, access control, and video into coordinated platforms, we eliminate fragmented vendors and reduce risk.
+          </p>
+          <p className="text-foreground font-semibold mb-8">
+            One partner. One standard. One accountable team.
           </p>
           <div className="grid grid-cols-3 gap-4">
             {badges.map((item) => (
