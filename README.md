@@ -50,6 +50,10 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## SEO & AI Overview Updates
+
+For a complete, non-technical summary of all search engine optimization and AI readiness improvements made to this website, see the **[SEO & AI Updates Wiki](docs/SEO-AND-AI-UPDATES.md)**.
+
 ## What technologies are used for this project?
 
 This project is built with:
