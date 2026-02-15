@@ -54,6 +54,7 @@ npm run dev
 
 - **[Complete Site Changelog](docs/SITE-CHANGELOG.md)** — A plain-language record of every major change made to the site from initial build through current version. Covers pages, design, animations, architecture, and more.
 - **[SEO & AI Updates](docs/SEO-AND-AI-UPDATES.md)** — A non-technical summary of all search engine optimization and AI readiness improvements.
+- **[Production VM Deployment Guide](docs/PRODUCTION-DEPLOYMENT.md)** — Step-by-step instructions for deploying to a Linux VM with Nginx and a free TLS certificate from Let's Encrypt.
 
 ## What technologies are used for this project?
 
