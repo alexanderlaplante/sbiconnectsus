@@ -5,7 +5,7 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroSecurity from "@/assets/hero-security-facial.jpg";
 import securityAccessControl from "@/assets/hero-security.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import usePageSEO from "@/hooks/usePageSEO";
+import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
 import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
@@ -15,12 +15,6 @@ const fadeUp = {
 };
 
 const SecurityAccess = () => {
-  usePageSEO({
-    title: "Security, Access Control & Life-Safety Systems | SBI Connects",
-    description: "Integrated IP video surveillance, access control, intrusion detection, and unified security platforms designed for compliance, scalability, and documented performance.",
-    keywords: "IP video surveillance, access control, intrusion detection, life safety, security integration, NFPA, AHJ, biometric access, enterprise security, converged security platform",
-  });
-
   const securityFaqs = [
     { question: "What is enterprise access control?", answer: "Enterprise access control is a security system that manages and restricts physical entry to buildings, rooms, and sensitive areas using credentials such as key cards, mobile devices, biometrics, or multi-factor authentication. It provides centralized policy management, audit logging, and real-time monitoring across facilities." },
     { question: "What is IP video surveillance?", answer: "IP video surveillance uses network-connected cameras to capture, transmit, and store video over an IP network. Unlike analog CCTV, IP systems support high-resolution imaging, remote access, video analytics, and integration with access control and alarm platforms for unified security management." },
@@ -57,6 +51,12 @@ const SecurityAccess = () => {
 
   return (
   <>
+  <SeoHead
+    title="Security, Access Control & Life-Safety Systems | SBI Connects"
+    description="Integrated IP video surveillance, access control, intrusion detection, and unified security platforms designed for compliance, scalability, and documented performance."
+    canonical="/services/security-access"
+    keywords="IP video surveillance, access control, intrusion detection, life safety, security integration, NFPA, AHJ, biometric access, enterprise security, converged security platform"
+  />
   <ServiceSchemaJsonLd
     serviceName="Security, Access & Life-Safety Systems"
     serviceDescription="Integrated IP video surveillance, access control, intrusion detection, and unified security platforms designed for compliance, scalability, and documented performance."

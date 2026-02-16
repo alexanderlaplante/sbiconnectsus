@@ -5,7 +5,7 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroNetwork from "@/assets/hero-network.jpg";
 import networkInfraImage from "@/assets/hero-network-infrastructure.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import usePageSEO from "@/hooks/usePageSEO";
+import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
 import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
@@ -15,12 +15,6 @@ const fadeUp = {
 };
 
 const NetworkInfrastructure = () => {
-  usePageSEO({
-    title: "Network Infrastructure & Data Center Systems | SBI Connects",
-    description: "Enterprise structured cabling, fiber optic backbone, MDF/IDF integration, OSP deployment, and data center infrastructure. RCDD-designed, BICSI-aligned, and fully certified.",
-    keywords: "structured cabling, fiber optic, network infrastructure, data center, MDF IDF, CAT6A, RCDD, BICSI, copper certification, OTDR testing, OSP, campus connectivity",
-  });
-
   const networkFaqs = [
     { question: "What is structured cabling?", answer: "Structured cabling is a standardized system of cables, connectors, and pathways that forms the physical foundation of an organization's network infrastructure. It follows ANSI/TIA-568 standards to ensure consistent performance, scalability, and compatibility across voice, data, and video systems." },
     { question: "What is the difference between Tier 1 and Tier 2 fiber testing?", answer: "Tier 1 (OLTS) testing measures insertion loss and link length. Tier 2 (OTDR) testing provides a detailed trace of the entire fiber link, identifying individual splice losses, connector reflections, and potential faults along the cable path." },
@@ -56,6 +50,12 @@ const NetworkInfrastructure = () => {
 
   return (
   <>
+  <SeoHead
+    title="Network Infrastructure & Data Center Systems | SBI Connects"
+    description="Enterprise structured cabling, fiber optic backbone, MDF/IDF integration, OSP deployment, and data center infrastructure. RCDD-designed, BICSI-aligned, and fully certified."
+    canonical="/services/network-infrastructure"
+    keywords="structured cabling, fiber optic, network infrastructure, data center, MDF IDF, CAT6A, RCDD, BICSI, copper certification, OTDR testing, OSP, campus connectivity"
+  />
   <ServiceSchemaJsonLd
     serviceName="Network Infrastructure & Data Center Systems"
     serviceDescription="Enterprise structured cabling, fiber optic backbone, MDF/IDF integration, OSP deployment, and data center infrastructure. RCDD-designed, BICSI-aligned, and fully certified."

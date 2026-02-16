@@ -6,7 +6,7 @@ import heroAV from "@/assets/hero-audiovisual.jpg";
 import avEngineeringImage from "@/assets/av-why-matters.jpg";
 import avMassNotificationImage from "@/assets/av-mass-notification.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import usePageSEO from "@/hooks/usePageSEO";
+import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
 import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
@@ -16,12 +16,6 @@ const fadeUp = {
 };
 
 const AudioVisual = () => {
-  usePageSEO({
-    title: "Audio-Visual, Communications & Facility Systems | SBI Connects",
-    description: "Enterprise AV systems, video conferencing, mass notification, sound masking, and collaboration environments engineered for clarity, scalability, and reliable facility communication.",
-    keywords: "audio visual integration, AV systems, video conferencing, mass notification, sound masking, enterprise AV, paging systems, collaboration rooms, digital signage",
-  });
-
   const avFaqs = [
     { question: "What is commercial AV integration?", answer: "Commercial AV integration is the design, engineering, and installation of professional audio-visual systems for enterprise environments. It encompasses conference room technology, video conferencing, digital signage, paging systems, and control interfaces—all engineered to work reliably within a facility's network and cabling infrastructure." },
     { question: "What are mass notification systems?", answer: "Mass notification systems deliver emergency and routine messages across a facility or campus using speakers, displays, strobes, and digital endpoints. They integrate with life-safety platforms and provide zoned alerting, pre-recorded messages, and live paging capabilities for building-wide communication." },
@@ -58,6 +52,12 @@ const AudioVisual = () => {
 
   return (
   <>
+  <SeoHead
+    title="Audio-Visual, Communications & Facility Systems | SBI Connects"
+    description="Enterprise AV systems, video conferencing, mass notification, sound masking, and collaboration environments engineered for clarity, scalability, and reliable facility communication."
+    canonical="/services/audio-visual"
+    keywords="audio visual integration, AV systems, video conferencing, mass notification, sound masking, enterprise AV, paging systems, collaboration rooms, digital signage"
+  />
   <ServiceSchemaJsonLd
     serviceName="Audio-Visual, Communications & Facility Systems"
     serviceDescription="Enterprise AV systems, video conferencing, mass notification, sound masking, and collaboration environments engineered for clarity, scalability, and reliable facility communication."

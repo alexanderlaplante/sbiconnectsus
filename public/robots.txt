@@ -1,3 +1,6 @@
+# SBI Connects — robots.txt
+# Allow all major search engines and AI crawlers
+
 User-agent: Googlebot
 Allow: /
 

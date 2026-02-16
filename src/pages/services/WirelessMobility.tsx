@@ -5,7 +5,7 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroWireless from "@/assets/hero-wireless.jpg";
 import wirelessEngineeringImage from "@/assets/wireless-engineering.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import usePageSEO from "@/hooks/usePageSEO";
+import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
 import ServiceSchemaJsonLd from "@/components/seo/ServiceSchemaJsonLd";
 
@@ -15,12 +15,6 @@ const fadeUp = {
 };
 
 const WirelessMobility = () => {
-  usePageSEO({
-    title: "Wireless, Mobility & Industrial Connectivity | SBI Connects",
-    description: "Enterprise Wi-Fi, Public Safety DAS, Private LTE, and point-to-point wireless solutions engineered with predictive RF modeling and field validation for demanding environments.",
-    keywords: "enterprise WiFi, DAS, distributed antenna system, public safety DAS, private LTE, wireless survey, RF engineering, point-to-point wireless, Starlink, NFPA, IFC",
-  });
-
   const wirelessFaqs = [
     { question: "What is Public Safety DAS?", answer: "Public Safety DAS (Distributed Antenna System) is an in-building radio frequency system designed to provide reliable first responder communication coverage. It is required by NFPA and IFC codes in many commercial, healthcare, and government buildings to ensure fire, police, and EMS radio signals penetrate throughout the structure." },
     { question: "What is predictive RF modeling?", answer: "Predictive RF modeling uses specialized software to simulate wireless signal propagation through a building's architectural environment before installation. It accounts for wall materials, floor plans, interference sources, and device density to optimize access point placement and ensure reliable coverage." },
@@ -57,6 +51,12 @@ const WirelessMobility = () => {
 
   return (
   <>
+  <SeoHead
+    title="Wireless, Mobility & Industrial Connectivity | SBI Connects"
+    description="Enterprise Wi-Fi, Public Safety DAS, Private LTE, and point-to-point wireless solutions engineered with predictive RF modeling and field validation for demanding environments."
+    canonical="/services/wireless-mobility"
+    keywords="enterprise WiFi, DAS, distributed antenna system, public safety DAS, private LTE, wireless survey, RF engineering, point-to-point wireless, Starlink, NFPA, IFC"
+  />
   <ServiceSchemaJsonLd
     serviceName="Wireless, Mobility & Industrial Connectivity"
     serviceDescription="Enterprise Wi-Fi, Public Safety DAS, Private LTE, and point-to-point wireless solutions engineered with predictive RF modeling and field validation."
