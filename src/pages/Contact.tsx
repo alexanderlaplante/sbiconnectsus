@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, ArrowRight } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import usePageSEO from "@/hooks/usePageSEO";
+import SeoHead from "@/components/seo/SeoHead";
+import ContactSchemaJsonLd from "@/components/seo/ContactSchemaJsonLd";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -40,14 +41,15 @@ const contactInfo = [
 ];
 
 const Contact = () => {
-  usePageSEO({
-    title: "Contact SBI Connects | Schedule a Low-Voltage Infrastructure Consultation",
-    description: "Contact SBI Connects for a consultation on structured cabling, wireless systems, security, or audio-visual infrastructure. Veteran-owned, RCDD-led design-build services in Longwood, FL.",
-    keywords: "contact SBI Connects, low voltage consultation, infrastructure quote, Longwood FL, structured cabling contractor, technology consultation",
-  });
-
   return (
     <Layout>
+      <SeoHead
+        title="Contact SBI Connects | Schedule a Low-Voltage Infrastructure Consultation"
+        description="Contact SBI Connects for a consultation on structured cabling, wireless systems, security, or audio-visual infrastructure. Veteran-owned, RCDD-led design-build services in Longwood, FL."
+        canonical="/contact"
+        keywords="contact SBI Connects, low voltage consultation, infrastructure quote, Longwood FL, structured cabling contractor, technology consultation"
+      />
+      <ContactSchemaJsonLd />
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-20" />

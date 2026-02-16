@@ -4,7 +4,7 @@ import { Award, CheckCircle2, ArrowRight, Target, Users, ShieldCheck, Handshake 
 import Layout from "@/components/layout/Layout";
 import heroAbout from "@/assets/hero-about.jpg";
 import aboutTeam from "@/assets/about-team.jpg";
-import usePageSEO from "@/hooks/usePageSEO";
+import SeoHead from "@/components/seo/SeoHead";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -23,15 +23,14 @@ const whyChoose = [
 ];
 
 const About = () => {
-  usePageSEO({
-    title: "About SBI Connects | Veteran-Owned SDVOSB Low-Voltage Contractor",
-    description: "Learn about SBI Connects, a certified disabled veteran-owned small business (SDVOSB) specializing in design-build low-voltage infrastructure with RCDD-led engineering and BICSI-aligned standards.",
-    keywords: "about SBI Connects, veteran-owned contractor, SDVOSB, DVOSB, RCDD, BICSI, low voltage integrator, technology integration company",
-  });
-
   return (
     <Layout>
-      {/* 1. HERO */}
+      <SeoHead
+        title="About SBI Connects | Veteran-Owned SDVOSB Low-Voltage Contractor"
+        description="Learn about SBI Connects, a certified disabled veteran-owned small business (SDVOSB) specializing in design-build low-voltage infrastructure with RCDD-led engineering and BICSI-aligned standards."
+        canonical="/about"
+        keywords="about SBI Connects, veteran-owned contractor, SDVOSB, DVOSB, RCDD, BICSI, low voltage integrator, technology integration company"
+      />
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"

@@ -20,7 +20,8 @@ import {
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-home.jpg";
-import usePageSEO from "@/hooks/usePageSEO";
+import SeoHead from "@/components/seo/SeoHead";
+import ServicesSchemaJsonLd from "@/components/seo/ServicesSchemaJsonLd";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -132,14 +133,15 @@ const complianceColumns = [
 ];
 
 const Services = () => {
-  usePageSEO({
-    title: "Services | SBI Connects — Network, Wireless, Security & AV Solutions",
-    description: "Explore SBI Connects' four-pillar service model: network infrastructure, wireless & mobility, security & life-safety, and audio-visual systems. RCDD-led, BICSI-aligned design-build for enterprise environments.",
-    keywords: "low voltage services, network infrastructure, wireless mobility, security access control, audio visual integration, structured cabling, DAS, enterprise technology services",
-  });
-
   return (
     <Layout>
+      <SeoHead
+        title="Services | SBI Connects — Network, Wireless, Security & AV Solutions"
+        description="Explore SBI Connects' four-pillar service model: network infrastructure, wireless & mobility, security & life-safety, and audio-visual systems. RCDD-led, BICSI-aligned design-build for enterprise environments."
+        canonical="/services"
+        keywords="low voltage services, network infrastructure, wireless mobility, security access control, audio visual integration, structured cabling, DAS, enterprise technology services"
+      />
+      <ServicesSchemaJsonLd />
       {/* 1. HERO */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div
