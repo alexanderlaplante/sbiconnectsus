@@ -1,26 +1,23 @@
-# Welcome to your Lovable project
+# SBI Connects — Company Website
 
-## Project info
+## About SBI
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Smart Building Integrators, LLC (SBI)** is a Service-Disabled Veteran-Owned Small Business (SDVOSB) delivering engineered, standards-driven low-voltage infrastructure solutions for modern facilities. With in-house RCDD leadership and Professional Engineer oversight, SBI designs and builds systems that meet BICSI, ANSI/TIA, and industry compliance standards.
 
-## How can I edit this code?
+SBI Connects specializes in four integrated service pillars:
 
-There are several ways of editing your application.
+- **Network Infrastructure** — Structured cabling, fiber, MDF/IDF, data center systems
+- **Wireless & Mobility** — Enterprise Wi-Fi, Public Safety DAS, cellular DAS, private LTE
+- **Security & Life-Safety** — IP video surveillance, access control, intrusion detection, unified platforms
+- **Audio-Visual Systems** — Conference/collaboration, mass notification, sound masking
 
-**Use Lovable**
+## About This Repository
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+This repository contains the source code for the SBI Connects marketing website at [sbiconnects.us](https://sbiconnects.us). It is a modern single-page application built for fast navigation, SEO optimization, and clear presentation of SBI's design-build capabilities.
 
-Changes made via Lovable will be committed automatically to this repo.
+## How to Edit This Code
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+If you want to work locally using your own IDE, clone this repo and push changes. The only requirement is having Node.js & npm installed — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
@@ -36,27 +33,13 @@ npm i
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
 ## Documentation
 
 - **[Complete Site Changelog](docs/SITE-CHANGELOG.md)** — A plain-language record of every major change made to the site from initial build through current version. Covers pages, design, animations, architecture, and more.
 - **[SEO & AI Updates](docs/SEO-AND-AI-UPDATES.md)** — A non-technical summary of all search engine optimization and AI readiness improvements.
 - **[Production VM Deployment Guide](docs/PRODUCTION-DEPLOYMENT.md)** — Step-by-step instructions for deploying to a Linux VM with Nginx and a free TLS certificate from Let's Encrypt.
 
-## What technologies are used for this project?
+## Technologies
 
 This project is built with:
 
@@ -66,13 +49,9 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Deployment
 
-### Option 1: Built-in Publishing
-
-Click **Share → Publish** in the editor to deploy instantly. You can connect a custom domain under **Project > Settings > Domains**.
-
-### Option 2: Self-Host via FTP
+### Option 1: Self-Host via FTP
 
 1. Clone the repo and install dependencies (`npm install`)
 2. Build the project: `npm run build`
@@ -96,7 +75,7 @@ location / {
 }
 ```
 
-### Option 3: Other Hosting Platforms
+### Option 2: Other Hosting Platforms
 
 The built output (`dist/`) is a standard static site and can be deployed to:
 
@@ -104,7 +83,3 @@ The built output (`dist/`) is a standard static site and can be deployed to:
 - **Vercel** — import the GitHub repo; framework preset: Vite
 - **Cloudflare Pages** — connect the GitHub repo; build command: `npm run build`, output: `dist`
 - **AWS S3 + CloudFront** — upload `dist/` to an S3 bucket and serve via CloudFront
-
-## Can I connect a custom domain?
-
-Yes! Navigate to **Project > Settings > Domains** and click **Connect Domain** (requires a paid plan).
