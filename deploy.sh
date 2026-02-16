@@ -14,8 +14,8 @@ git pull
 echo "==> Installing dependencies..."
 npm install
 
-echo "==> Building for production..."
-npm run build
+echo "==> Building for production (with pre-rendering)..."
+ENABLE_PRERENDER=true npm run build
 
 echo "==> Deploying to $WEB_DIR..."
 sudo mkdir -p "$WEB_DIR"
