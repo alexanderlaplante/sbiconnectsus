@@ -74,7 +74,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "SBI Connects <onboarding@resend.dev>",
+        from: "SBI Connects <noreply@sbiconnects.us>",
         to: ["info@sbiconnects.us"],
         subject: `New Consultation Request from ${body.name}`,
         html: htmlBody,
