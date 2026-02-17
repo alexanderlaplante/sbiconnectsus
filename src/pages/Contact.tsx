@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, ArrowRight } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowRight, Loader2, CheckCircle } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import SeoHead from "@/components/seo/SeoHead";
 import ContactSchemaJsonLd from "@/components/seo/ContactSchemaJsonLd";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -40,7 +43,53 @@ const contactInfo = [
   },
 ];
 
+const initialForm = {
+  name: "",
+  email: "",
+  company: "",
+  phone: "",
+  service: "",
+  message: "",
+};
+
 const Contact = () => {
+  const [form, setForm] = useState(initialForm);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const { toast } = useToast();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      toast({ title: "Please fill in all required fields.", variant: "destructive" });
+      return;
+    }
+
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-email", {
+        body: form,
+      });
+
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+
+      setSent(true);
+      setForm(initialForm);
+      toast({ title: "Message sent!", description: "We'll get back to you within one business day." });
+    } catch (err: any) {
+      console.error("Submit error:", err);
+      toast({ title: "Something went wrong.", description: "Please try again or email us directly.", variant: "destructive" });
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <Layout>
       <SeoHead
@@ -120,71 +169,122 @@ const Contact = () => {
               variants={fadeUp}
               className="lg:col-span-3"
             >
-              <form
-                className="glass-card rounded-2xl p-8 space-y-6"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <h3 className="text-xl font-semibold mb-2">Request a Consultation</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm text-muted-foreground mb-2">Name</label>
-                    <input
-                      className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-muted-foreground mb-2">Email</label>
-                    <input
-                      type="email"
-                      className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                      placeholder="your@email.com"
-                    />
-                  </div>
+              {sent ? (
+                <div className="glass-card rounded-2xl p-12 text-center space-y-4">
+                  <CheckCircle className="h-12 w-12 text-primary mx-auto" />
+                  <h3 className="text-xl font-semibold">Thank You!</h3>
+                  <p className="text-muted-foreground text-sm">Your message has been sent. We'll be in touch within one business day.</p>
+                  <button
+                    onClick={() => setSent(false)}
+                    className="mt-4 px-6 py-2.5 rounded-lg bg-secondary text-foreground text-sm font-medium hover:bg-secondary/80 transition-all"
+                  >
+                    Send Another Message
+                  </button>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm text-muted-foreground mb-2">Company</label>
-                    <input
-                      className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                      placeholder="Your company"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-muted-foreground mb-2">Phone</label>
-                    <input
-                      type="tel"
-                      className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                      placeholder="(555) 555-5555"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm text-muted-foreground mb-2">Service Interest</label>
-                  <select className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50">
-                    <option value="">Select a service...</option>
-                    <option value="network">Network Infrastructure & Data Center</option>
-                    <option value="wireless">Wireless, Mobility & Industrial Connectivity</option>
-                    <option value="security">Security, Access & Life-Safety</option>
-                    <option value="av">Audio-Visual & Communications</option>
-                    <option value="other">Other / Not Sure</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm text-muted-foreground mb-2">Message</label>
-                  <textarea
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
-                    placeholder="Tell us about your project…"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold flex items-center justify-center gap-2"
+              ) : (
+                <form
+                  className="glass-card rounded-2xl p-8 space-y-6"
+                  onSubmit={handleSubmit}
                 >
-                  Send Message <ArrowRight className="h-4 w-4" />
-                </button>
-              </form>
+                  <h3 className="text-xl font-semibold mb-2">Request a Consultation</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2">Name *</label>
+                      <input
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        required
+                        maxLength={100}
+                        className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2">Email *</label>
+                      <input
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                        maxLength={255}
+                        className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2">Company</label>
+                      <input
+                        name="company"
+                        value={form.company}
+                        onChange={handleChange}
+                        maxLength={100}
+                        className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                        placeholder="Your company"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2">Phone</label>
+                      <input
+                        name="phone"
+                        type="tel"
+                        value={form.phone}
+                        onChange={handleChange}
+                        maxLength={20}
+                        className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                        placeholder="(555) 555-5555"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-muted-foreground mb-2">Service Interest</label>
+                    <select
+                      name="service"
+                      value={form.service}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    >
+                      <option value="">Select a service...</option>
+                      <option value="network">Network Infrastructure & Data Center</option>
+                      <option value="wireless">Wireless, Mobility & Industrial Connectivity</option>
+                      <option value="security">Security, Access & Life-Safety</option>
+                      <option value="av">Audio-Visual & Communications</option>
+                      <option value="other">Other / Not Sure</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-muted-foreground mb-2">Message *</label>
+                    <textarea
+                      name="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      required
+                      maxLength={2000}
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+                      placeholder="Tell us about your project…"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="w-full py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all glow-gold flex items-center justify-center gap-2 disabled:opacity-60"
+                  >
+                    {sending ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" /> Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
             </motion.div>
           </div>
         </div>
