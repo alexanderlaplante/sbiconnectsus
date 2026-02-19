@@ -19,24 +19,34 @@ export const useDynamicFavicon = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const root = document.documentElement;
-    const styles = getComputedStyle(root);
-    const bgColor = styles.getPropertyValue("--logo-text").trim() || "#121417";
-    const lineColor = styles.getPropertyValue("--logo-accent").trim() || "#f37216";
+    // Delay to ensure theme CSS variables are applied before reading them
+    const timeout = setTimeout(() => {
+      const root = document.documentElement;
+      const styles = getComputedStyle(root);
+      const bgColor = styles.getPropertyValue("--logo-text").trim() || "#121417";
+      const lineColor = styles.getPropertyValue("--logo-accent").trim() || "#f37216";
 
-    const svg = FAVICON_SVG_TEMPLATE(bgColor, lineColor);
-    const blob = new Blob([svg], { type: "image/svg+xml" });
-    const url = URL.createObjectURL(blob);
+      const svg = FAVICON_SVG_TEMPLATE(bgColor, lineColor);
+      const blob = new Blob([svg], { type: "image/svg+xml" });
+      const url = URL.createObjectURL(blob);
 
-    let link = document.querySelector("link[rel='icon']") as HTMLLinkElement;
-    if (!link) {
-      link = document.createElement("link");
+      // Remove all existing favicon links to force browser refresh
+      document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(el => el.remove());
+
+      const link = document.createElement("link");
       link.rel = "icon";
+      link.type = "image/svg+xml";
+      link.href = url;
       document.head.appendChild(link);
-    }
-    link.type = "image/svg+xml";
-    link.href = url;
 
-    return () => URL.revokeObjectURL(url);
+      // Store url for cleanup
+      (link as any).__blobUrl = url;
+    }, 50);
+
+    return () => {
+      clearTimeout(timeout);
+      const link = document.querySelector("link[rel='icon']") as any;
+      if (link?.__blobUrl) URL.revokeObjectURL(link.__blobUrl);
+    };
   }, [theme]);
 };
