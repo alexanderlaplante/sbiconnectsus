@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
 const BASE_URL = "https://sbiconnects.us";
@@ -25,76 +25,64 @@ const ServiceSchemaJsonLd = ({
 }: ServiceSchemaProps) => {
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    const graph: Record<string, unknown>[] = [];
+  const graph: Record<string, unknown>[] = [];
 
-    // Service Schema
+  graph.push({
+    "@type": "Service",
+    "@id": `${BASE_URL}${pathname}#service`,
+    name: serviceName,
+    description: serviceDescription,
+    serviceType,
+    provider: {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "SBI Connects",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "United States",
+    },
+    url: `${BASE_URL}${pathname}`,
+  });
+
+  if (faqs.length > 0) {
     graph.push({
-      "@type": "Service",
-      "@id": `${BASE_URL}${pathname}#service`,
-      name: serviceName,
-      description: serviceDescription,
-      serviceType,
-      provider: {
-        "@type": "Organization",
-        "@id": `${BASE_URL}/#organization`,
-        name: "SBI Connects",
-      },
-      areaServed: {
-        "@type": "Country",
-        name: "United States",
-      },
-      url: `${BASE_URL}${pathname}`,
+      "@type": "FAQPage",
+      "@id": `${BASE_URL}${pathname}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
     });
+  }
 
-    // FAQ Schema
-    if (faqs.length > 0) {
-      graph.push({
-        "@type": "FAQPage",
-        "@id": `${BASE_URL}${pathname}#faq`,
-        mainEntity: faqs.map((faq) => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.answer,
-          },
-        })),
-      });
-    }
+  if (breadcrumbs.length > 0) {
+    graph.push({
+      "@type": "BreadcrumbList",
+      "@id": `${BASE_URL}${pathname}#breadcrumb`,
+      itemListElement: breadcrumbs.map((crumb, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: crumb.name,
+        item: `${BASE_URL}${crumb.path}`,
+      })),
+    });
+  }
 
-    // Breadcrumb Schema
-    if (breadcrumbs.length > 0) {
-      graph.push({
-        "@type": "BreadcrumbList",
-        "@id": `${BASE_URL}${pathname}#breadcrumb`,
-        itemListElement: breadcrumbs.map((crumb, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          name: crumb.name,
-          item: `${BASE_URL}${crumb.path}`,
-        })),
-      });
-    }
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": graph,
+  };
 
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@graph": graph,
-    };
-
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify(jsonLd);
-    script.id = `service-schema-${pathname.replace(/\//g, "-")}`;
-    document.head.appendChild(script);
-
-    return () => {
-      const el = document.getElementById(script.id);
-      if (el) el.remove();
-    };
-  }, [pathname, serviceName, serviceDescription, serviceType, faqs, breadcrumbs]);
-
-  return null;
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+    </Helmet>
+  );
 };
 
 export default ServiceSchemaJsonLd;

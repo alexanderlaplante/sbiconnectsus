@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import heroAbout from "@/assets/hero-about.jpg";
 import aboutTeam from "@/assets/about-team.jpg";
 import SeoHead from "@/components/seo/SeoHead";
+import AboutSchemaJsonLd from "@/components/seo/AboutSchemaJsonLd";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -31,6 +32,7 @@ const About = () => {
         canonical="/about"
         keywords="about SBI Connects, veteran-owned contractor, SDVOSB, DVOSB, RCDD, BICSI, low voltage integrator, technology integration company"
       />
+      <AboutSchemaJsonLd />
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -173,7 +175,7 @@ const About = () => {
               variants={fadeUp}
               className="rounded-2xl overflow-hidden border border-border/50"
             >
-              <img src={aboutTeam} alt="SBI team collaboration" className="w-full h-full object-cover aspect-[4/3]" />
+              <img src={aboutTeam} alt="SBI team collaboration" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
             </motion.div>
           </div>
         </div>

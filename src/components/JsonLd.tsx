@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const BASE_URL = "https://sbiconnects.us";
 
@@ -118,21 +118,10 @@ const jsonLdData = {
   ],
 };
 
-const JsonLd = () => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify(jsonLdData);
-    script.id = "json-ld-structured-data";
-    document.head.appendChild(script);
-
-    return () => {
-      const el = document.getElementById("json-ld-structured-data");
-      if (el) el.remove();
-    };
-  }, []);
-
-  return null;
-};
+const JsonLd = () => (
+  <Helmet>
+    <script type="application/ld+json">{JSON.stringify(jsonLdData)}</script>
+  </Helmet>
+);
 
 export default JsonLd;

@@ -16,7 +16,7 @@ const Footer = () => (
             Veteran-owned (SDVOSB) low-voltage and telecommunications infrastructure specialists.
           </p>
           <div className="flex items-center gap-3">
-            <img src={veteranBadge} alt="Service-Disabled Veteran-Owned Small Business" className="w-14" />
+            <img src={veteranBadge} alt="Service-Disabled Veteran-Owned Small Business" className="w-14" loading="lazy" />
             <div>
               <p className="text-xs font-semibold text-foreground leading-tight">SERVICE-DISABLED</p>
               <p className="text-xs font-semibold text-foreground leading-tight">VETERAN-OWNED</p>
