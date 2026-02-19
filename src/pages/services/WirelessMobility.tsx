@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroWireless from "@/assets/hero-wireless.jpg";
+import heroWirelessSrcSet from "@/assets/hero-wireless.jpg?w=640;1024;1920&format=webp&as=srcset";
 import wirelessEngineeringImage from "@/assets/wireless-engineering.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SeoHead from "@/components/seo/SeoHead";
@@ -76,6 +77,7 @@ const WirelessMobility = () => {
     description="We design and deploy wireless and RF systems that support mobility, safety, and operational continuity across demanding environments. Wireless designs are validated through predictive modeling and field verification—not guesswork."
     tagline="Designed for uptime, interference control, and real-world RF conditions."
     heroImage={heroWireless}
+    heroSrcSet={heroWirelessSrcSet}
     heroAlt="Enterprise wireless access point installation and RF heat map survey"
     breadcrumbs={[
       { name: "Home", path: "/" },

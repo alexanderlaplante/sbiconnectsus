@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import { imagetools } from "vite-imagetools";
 
 const PRERENDER_ROUTES = [
   "/",
@@ -17,7 +18,7 @@ const PRERENDER_ROUTES = [
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ mode }) => {
-  const plugins: any[] = [react()];
+  const plugins: any[] = [react(), imagetools()];
 
   if (mode === "development") {
     plugins.push(componentTagger());

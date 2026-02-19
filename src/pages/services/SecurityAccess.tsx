@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroSecurity from "@/assets/hero-security-facial.jpg";
+import heroSecuritySrcSet from "@/assets/hero-security-facial.jpg?w=640;1024;1920&format=webp&as=srcset";
 import securityAccessControl from "@/assets/hero-security.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SeoHead from "@/components/seo/SeoHead";
@@ -76,6 +77,7 @@ const SecurityAccess = () => {
     description="We deliver converged security platforms designed to integrate cleanly with network and facility infrastructure. Systems are designed for scalability, auditability, and operational clarity."
     tagline="Security systems engineered—not pieced together."
     heroImage={heroSecurity}
+    heroSrcSet={heroSecuritySrcSet}
     heroAlt="Enterprise IP video surveillance and facial recognition access control system"
     breadcrumbs={[
       { name: "Home", path: "/" },

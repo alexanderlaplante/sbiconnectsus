@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Network, Wifi, ShieldCheck, MonitorSpeaker, Zap } from "lucide-react";
 import { useRef } from "react";
 import heroHome from "@/assets/hero-home.jpg";
+import heroHomeSrcSet from "@/assets/hero-home.jpg?w=640;1024;1920&format=webp&as=srcset";
 
 /** Floating 3D card with gentle idle animation */
 const FloatingCard = ({
@@ -34,7 +35,7 @@ const HeroSection = () => {
   return (
     <section ref={heroRef} className="relative min-h-[95vh] flex items-center overflow-hidden">
       <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
-        <img src={heroHome} alt="Data center infrastructure" className="w-full h-full object-cover" fetchPriority="high" loading="eager" decoding="async" />
+        <img srcSet={heroHomeSrcSet} src={heroHome} sizes="100vw" alt="Data center infrastructure" className="w-full h-full object-cover" fetchPriority="high" loading="eager" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent dark:via-background/85 dark:to-background/40" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/20 dark:to-background/60" />
       </motion.div>

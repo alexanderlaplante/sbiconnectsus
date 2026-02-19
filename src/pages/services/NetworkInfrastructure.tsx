@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroNetwork from "@/assets/hero-network.jpg";
+import heroNetworkSrcSet from "@/assets/hero-network.jpg?w=640;1024;1920&format=webp&as=srcset";
 import networkInfraImage from "@/assets/hero-network-infrastructure.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SeoHead from "@/components/seo/SeoHead";
@@ -75,6 +76,7 @@ const NetworkInfrastructure = () => {
     description="We design, build, remediate, and support structured network infrastructure ranging from greenfield deployments to complex, live operational environments. All systems are delivered in alignment with BICSI methodologies and ANSI/TIA standards."
     tagline="Every system is delivered fully tested, labeled, and documented—no orphaned cables, no assumptions."
     heroImage={heroNetwork}
+    heroSrcSet={heroNetworkSrcSet}
     heroAlt="Enterprise structured cabling installation and fiber optic network infrastructure"
     breadcrumbs={[
       { name: "Home", path: "/" },

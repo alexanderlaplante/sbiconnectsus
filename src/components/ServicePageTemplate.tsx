@@ -31,6 +31,7 @@ interface ServicePageProps {
   items: ServiceItem[];
   tagline: string;
   heroImage: string;
+  heroSrcSet?: string;
   heroAlt?: string;
   nextService?: { title: string; href: string };
   prevService?: { title: string; href: string };
@@ -52,6 +53,7 @@ const ServicePageTemplate = ({
   items,
   tagline,
   heroImage,
+  heroSrcSet,
   heroAlt,
   nextService,
   prevService,
@@ -122,7 +124,7 @@ const ServicePageTemplate = ({
       {/* Hero with parallax image */}
       <section ref={heroRef} className="relative py-28 md:py-40 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: imgY, scale: imgScale }}>
-          <img src={heroImage} alt={heroAlt || title} className="w-full h-full object-cover" loading="eager" />
+          <img srcSet={heroSrcSet} src={heroImage} sizes="100vw" alt={heroAlt || title} className="w-full h-full object-cover" loading="eager" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/30 dark:from-background dark:via-background/85 dark:to-background/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/10 dark:via-transparent dark:to-background/60" />
         </motion.div>
