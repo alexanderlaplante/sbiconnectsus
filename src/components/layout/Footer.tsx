@@ -15,7 +15,14 @@ const Footer = () => (
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             Veteran-owned (SDVOSB) low-voltage and telecommunications infrastructure specialists.
           </p>
-          <img src={veteranBadge} alt="Service-Disabled Veteran-Owned Small Business" className="w-24" />
+          <div className="flex items-center gap-3">
+            <img src={veteranBadge} alt="Service-Disabled Veteran-Owned Small Business" className="w-14" />
+            <div>
+              <p className="text-xs font-semibold text-foreground leading-tight">SERVICE-DISABLED</p>
+              <p className="text-xs font-semibold text-foreground leading-tight">VETERAN-OWNED</p>
+              <p className="text-[10px] text-muted-foreground leading-tight mt-0.5">SMALL BUSINESS (SDVOSB)</p>
+            </div>
+          </div>
         </div>
 
         {/* Services */}
