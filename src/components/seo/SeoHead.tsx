@@ -17,7 +17,7 @@ const SeoHead = ({
   description,
   canonical,
   keywords,
-  ogImage = `${BASE_URL}/favicon.ico`,
+  ogImage = `${BASE_URL}/og-image.png`,
   ogType = "website",
   robots = "index, follow",
 }: SeoHeadProps) => {
