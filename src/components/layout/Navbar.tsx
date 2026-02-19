@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
+import RackAndStackOverlay, { useTripleClick } from "@/components/RackAndStackEgg";
 
 const services = [
   { title: "Network Infrastructure", href: "/services/network-infrastructure" },
@@ -16,11 +17,14 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const location = useLocation();
+  const { triggered, handleClick, dismiss } = useTripleClick();
 
   return (
+    <>
+    <RackAndStackOverlay open={triggered} onClose={dismiss} />
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl pt-[env(safe-area-inset-top)]">
       <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center" onClick={handleClick}>
           <SbiLogo className="h-10" />
         </Link>
 
@@ -107,6 +111,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </nav>
+    </>
   );
 };
 
