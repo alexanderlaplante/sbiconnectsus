@@ -4,6 +4,7 @@ import { Network, Wifi, ShieldCheck, MonitorSpeaker, Zap } from "lucide-react";
 import { useRef } from "react";
 import heroHome from "@/assets/hero-home.jpg";
 import heroHomeSrcSet from "@/assets/hero-home.jpg?w=640;1024;1920&format=webp&as=srcset";
+import BlueprintOverlay, { useBlueprintTrigger } from "@/components/BlueprintMode";
 
 /** Floating 3D card with gentle idle animation */
 const FloatingCard = ({
@@ -31,9 +32,11 @@ const HeroSection = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const { active: blueprintActive, handleClick: blueprintClick, dismiss: blueprintDismiss } = useBlueprintTrigger();
 
   return (
     <section ref={heroRef} className="relative min-h-[95vh] flex items-center overflow-hidden">
+      <BlueprintOverlay active={blueprintActive} onClose={blueprintDismiss} />
       <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
         <img srcSet={heroHomeSrcSet} src={heroHome} sizes="100vw" alt="Data center infrastructure" className="w-full h-full object-cover" fetchPriority="high" loading="eager" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent dark:via-background/85 dark:to-background/40" />
@@ -89,7 +92,7 @@ const HeroSection = () => {
               </div>
             </FloatingCard>
             <FloatingCard delay={3.6} className="absolute top-[252px] right-36 w-52">
-              <div className="glass-card rounded-2xl p-5" style={{ transform: "rotateY(4deg) rotateX(-2deg)", boxShadow: "0 0 30px -8px hsl(270 70% 50% / 0.2)" }}>
+              <div onClick={blueprintClick} className="glass-card rounded-2xl p-5 cursor-pointer" style={{ transform: "rotateY(4deg) rotateX(-2deg)", boxShadow: "0 0 30px -8px hsl(270 70% 50% / 0.2)" }}>
                 <MonitorSpeaker className="h-8 w-8 text-purple-400 mb-3" />
                 <div className="text-sm font-semibold mb-1">Audio-Visual</div>
                 <div className="text-xs text-muted-foreground">AV · Paging · Displays</div>
