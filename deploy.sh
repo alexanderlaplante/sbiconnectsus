@@ -15,7 +15,7 @@ echo "==> Installing dependencies..."
 npm install
 
 echo "==> Building for production (with pre-rendering)..."
-ENABLE_PRERENDER=true npm run build
+ENABLE_PRERENDER=true npx vite build
 
 echo "==> Deploying to $WEB_DIR..."
 sudo mkdir -p "$WEB_DIR"
