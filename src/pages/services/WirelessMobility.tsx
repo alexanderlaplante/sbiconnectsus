@@ -5,6 +5,7 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroWireless from "@/assets/hero-wireless.jpg";
 import heroWirelessSrcSet from "@/assets/hero-wireless.jpg?w=640;1024;1920&format=webp&as=srcset";
 import wirelessEngineeringImage from "@/assets/wireless-engineering.jpg";
+import wirelessEngSrcSet from "@/assets/wireless-engineering.jpg?w=640;1024;1920&format=webp&as=srcset";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
@@ -125,7 +126,7 @@ const WirelessMobility = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={wirelessEngineeringImage} alt="Predictive RF heat map survey and enterprise wireless access point deployment" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+            <img srcSet={wirelessEngSrcSet} src={wirelessEngineeringImage} sizes="(max-width: 768px) 100vw, 50vw" alt="Predictive RF heat map survey and enterprise wireless access point deployment" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
           </motion.div>
         </div>
       </div>

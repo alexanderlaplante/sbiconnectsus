@@ -5,7 +5,9 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroAV from "@/assets/hero-audiovisual.jpg";
 import heroAVSrcSet from "@/assets/hero-audiovisual.jpg?w=640;1024;1920&format=webp&as=srcset";
 import avEngineeringImage from "@/assets/av-why-matters.jpg";
+import avEngSrcSet from "@/assets/av-why-matters.jpg?w=640;1024;1920&format=webp&as=srcset";
 import avMassNotificationImage from "@/assets/av-mass-notification.jpg";
+import avMassNotifSrcSet from "@/assets/av-mass-notification.jpg?w=640;1024;1920&format=webp&as=srcset";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
@@ -124,7 +126,7 @@ const AudioVisual = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={avEngineeringImage} alt="Professional enterprise conference room with video conferencing and AV rack systems" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+            <img srcSet={avEngSrcSet} src={avEngineeringImage} sizes="(max-width: 768px) 100vw, 50vw" alt="Professional enterprise conference room with video conferencing and AV rack systems" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
           </motion.div>
         </div>
       </div>
@@ -321,7 +323,7 @@ const AudioVisual = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={avMassNotificationImage} alt="Enterprise mass notification speakers and facility-wide paging system" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+            <img srcSet={avMassNotifSrcSet} src={avMassNotificationImage} sizes="(max-width: 768px) 100vw, 50vw" alt="Enterprise mass notification speakers and facility-wide paging system" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
           </motion.div>
         </div>
       </div>

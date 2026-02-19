@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import heroAbout from "@/assets/hero-about.jpg";
 import heroAboutSrcSet from "@/assets/hero-about.jpg?w=640;1024;1920&format=webp&as=srcset";
 import aboutTeam from "@/assets/about-team.jpg";
+import aboutTeamSrcSet from "@/assets/about-team.jpg?w=640;1024;1920&format=webp&as=srcset";
 import SeoHead from "@/components/seo/SeoHead";
 import AboutSchemaJsonLd from "@/components/seo/AboutSchemaJsonLd";
 
@@ -176,7 +177,7 @@ const About = () => {
               variants={fadeUp}
               className="rounded-2xl overflow-hidden border border-border/50"
             >
-              <img src={aboutTeam} alt="SBI team collaboration" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+              <img srcSet={aboutTeamSrcSet} src={aboutTeam} sizes="(max-width: 768px) 100vw, 50vw" alt="SBI team collaboration" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
             </motion.div>
           </div>
         </div>

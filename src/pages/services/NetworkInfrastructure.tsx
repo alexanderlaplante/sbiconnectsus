@@ -5,6 +5,7 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroNetwork from "@/assets/hero-network.jpg";
 import heroNetworkSrcSet from "@/assets/hero-network.jpg?w=640;1024;1920&format=webp&as=srcset";
 import networkInfraImage from "@/assets/hero-network-infrastructure.jpg";
+import networkInfraSrcSet from "@/assets/hero-network-infrastructure.jpg?w=640;1024;1920&format=webp&as=srcset";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
@@ -127,7 +128,7 @@ const NetworkInfrastructure = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={networkInfraImage} alt="Enterprise structured cabling patch panel installation in MDF room" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+            <img srcSet={networkInfraSrcSet} src={networkInfraImage} sizes="(max-width: 768px) 100vw, 50vw" alt="Enterprise structured cabling patch panel installation in MDF room" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
           </motion.div>
         </div>
       </div>
