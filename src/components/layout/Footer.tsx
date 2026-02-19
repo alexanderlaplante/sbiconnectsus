@@ -15,7 +15,7 @@ const Footer = () => (
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             Veteran-owned (SDVOSB) low-voltage and telecommunications infrastructure specialists.
           </p>
-          <VeteranBadge className="w-52" />
+          <VeteranBadge className="w-48 text-primary" />
         </div>
 
         {/* Services */}
