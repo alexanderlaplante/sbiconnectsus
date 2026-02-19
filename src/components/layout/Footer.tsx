@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SbiLogo from "@/components/SbiLogo";
 import { MapPin, Phone, Mail } from "lucide-react";
-import VeteranBadge from "@/components/VeteranBadge";
+import veteranBadge from "@/assets/veteran-owned-badge.png";
 
 const Footer = () => (
   <footer className="border-t border-border/50 bg-card/30">
@@ -15,7 +15,7 @@ const Footer = () => (
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             Veteran-owned (SDVOSB) low-voltage and telecommunications infrastructure specialists.
           </p>
-          <VeteranBadge className="w-48 text-primary" />
+          <img src={veteranBadge} alt="Service-Disabled Veteran-Owned Small Business" className="w-24" />
         </div>
 
         {/* Services */}
