@@ -5,6 +5,7 @@ import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroSecurity from "@/assets/hero-security-facial.jpg";
 import heroSecuritySrcSet from "@/assets/hero-security-facial.jpg?w=640;1024;1920&format=webp&as=srcset";
 import securityAccessControl from "@/assets/hero-security.jpg";
+import securityAccessSrcSet from "@/assets/hero-security.jpg?w=640;1024;1920&format=webp&as=srcset";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SeoHead from "@/components/seo/SeoHead";
 import AeoSection from "@/components/seo/AeoSection";
@@ -125,7 +126,7 @@ const SecurityAccess = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={securityAccessControl} alt="Enterprise IP video surveillance cameras and access control card readers" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+            <img srcSet={securityAccessSrcSet} src={securityAccessControl} sizes="(max-width: 768px) 100vw, 50vw" alt="Enterprise IP video surveillance cameras and access control card readers" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
           </motion.div>
         </div>
       </div>
@@ -324,7 +325,7 @@ const SecurityAccess = () => {
             initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} variants={fadeUp}
             className="rounded-2xl overflow-hidden border border-border/50"
           >
-            <img src={securityAccessControl} alt="Life-safety duress alarm and emergency communication systems" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+            <img srcSet={securityAccessSrcSet} src={securityAccessControl} sizes="(max-width: 768px) 100vw, 50vw" alt="Life-safety duress alarm and emergency communication systems" className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
           </motion.div>
         </div>
       </div>
