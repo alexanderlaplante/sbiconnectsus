@@ -1,0 +1,17 @@
+{
+  "name": "SBI Connects",
+  "short_name": "SBI",
+  "description": "Design-Build Low-Voltage Infrastructure & Technology Solutions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121417",
+  "theme_color": "#f37216",
+  "icons": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
