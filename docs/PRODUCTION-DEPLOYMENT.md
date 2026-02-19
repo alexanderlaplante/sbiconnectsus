@@ -305,17 +305,30 @@ You can verify the certificate at [ssllabs.com/ssltest](https://www.ssllabs.com/
 
 ### Deploying updates
 
-Every time you make changes to the site:
+#### Option A: Build on the server
 
 ```bash
-# On your local machine (or wherever you build)
-npm run build
-
-# Upload the new files
-rsync -avz --delete dist/ your-user@your-server-ip:/var/www/sbiconnects/
+sudo bash deploy.sh
 ```
 
-That's it. Nginx serves static files directly — no restart needed.
+This pulls the latest code, installs dependencies, builds, and deploys.
+
+#### Option B: Build locally, deploy only the output
+
+If the server can't build (e.g., the [sharp CPU error](FIXING-SHARP-BUILD-ERROR.md)):
+
+```bash
+# 1. Build on your local machine
+ENABLE_PRERENDER=true npx vite build
+
+# 2. Upload dist/ to the server
+rsync -avz --delete dist/ your-user@your-server-ip:/opt/sbiconnects/dist/
+
+# 3. SSH in and deploy
+ssh your-user@your-server-ip "cd /opt/sbiconnects && sudo bash deploy.sh --local"
+```
+
+Nginx serves static files directly — no restart needed.
 
 ### Certificate renewal
 
@@ -339,8 +352,10 @@ sudo apt update && sudo apt upgrade -y
 
 | Task | Command |
 |------|---------|
-| Build the site | `npm run build` |
-| Upload to server | `rsync -avz --delete dist/ user@server:/var/www/sbiconnects/` |
+| Build & deploy on server | `sudo bash deploy.sh` |
+| Deploy pre-built dist/ | `sudo bash deploy.sh --local` |
+| Build locally | `ENABLE_PRERENDER=true npx vite build` |
+| Upload dist/ to server | `rsync -avz --delete dist/ user@server:/opt/sbiconnects/dist/` |
 | Test Nginx config | `sudo nginx -t` |
 | Reload Nginx | `sudo systemctl reload nginx` |
 | Check certificate status | `sudo certbot certificates` |
