@@ -34,7 +34,7 @@ const HeroSection = () => {
   return (
     <section ref={heroRef} className="relative min-h-[95vh] flex items-center overflow-hidden">
       <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
-        <img src={heroHome} alt="Data center infrastructure" className="w-full h-full object-cover" />
+        <img src={heroHome} alt="Data center infrastructure" className="w-full h-full object-cover" fetchPriority="high" loading="eager" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent dark:via-background/85 dark:to-background/40" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/20 dark:to-background/60" />
       </motion.div>
@@ -42,7 +42,7 @@ const HeroSection = () => {
 
       <motion.div style={{ opacity: heroOpacity }} className="relative z-10 mx-auto max-w-7xl px-6 py-24 w-full">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
+          <motion.div initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }}>
             <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-primary/60 bg-background/80 dark:bg-background/90 text-primary text-xs sm:text-sm font-semibold mb-8 backdrop-blur-xl shadow-lg shadow-primary/10 animate-badge-glow">
               <Zap className="h-4 w-4 shrink-0" />
               <span>Veteran-Owned (SDVOSB) · Low-Voltage Specialists</span>
