@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Award, CheckCircle2, ArrowRight, Target, Users, ShieldCheck, Handshake } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import heroAbout from "@/assets/hero-about.jpg";
+import heroAboutSrcSet from "@/assets/hero-about.jpg?w=640;1024;1920&format=webp&as=srcset";
 import aboutTeam from "@/assets/about-team.jpg";
 import SeoHead from "@/components/seo/SeoHead";
 import AboutSchemaJsonLd from "@/components/seo/AboutSchemaJsonLd";

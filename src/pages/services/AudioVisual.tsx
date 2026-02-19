@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import heroAV from "@/assets/hero-audiovisual.jpg";
+import heroAVSrcSet from "@/assets/hero-audiovisual.jpg?w=640;1024;1920&format=webp&as=srcset";
 import avEngineeringImage from "@/assets/av-why-matters.jpg";
 import avMassNotificationImage from "@/assets/av-mass-notification.jpg";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -77,6 +78,7 @@ const AudioVisual = () => {
     description="We deploy professional AV and communication systems using structured cabling principles and coordinated design oversight to support collaboration, safety, and daily operations."
     tagline="Technology that communicates clearly, reliably, and at scale."
     heroImage={heroAV}
+    heroSrcSet={heroAVSrcSet}
     heroAlt="Enterprise conference room with professional video conferencing and AV integration"
     breadcrumbs={[
       { name: "Home", path: "/" },
