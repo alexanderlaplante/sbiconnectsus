@@ -1,83 +1,128 @@
 const VeteranBadge = ({ className = "" }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 220 64"
+    viewBox="0 0 180 200"
     className={className}
     aria-label="Service-Disabled Veteran-Owned Small Business"
   >
-    {/* Shield shape with flag inside */}
     <defs>
       <clipPath id="shieldClip">
-        <path d="M6,4 L30,0 L54,4 L54,30 C54,44 30,56 30,56 C30,56 6,44 6,30 Z" />
+        <path d="M10,8 L90,0 L170,8 L170,120 C170,155 90,190 90,190 C90,190 10,155 10,120 Z" />
       </clipPath>
     </defs>
 
-    {/* Shield background */}
+    {/* Shield border (dark navy) */}
     <path
-      d="M6,4 L30,0 L54,4 L54,30 C54,44 30,56 30,56 C30,56 6,44 6,30 Z"
-      fill="#002868"
+      d="M6,5 L90,-4 L174,5 L174,123 C174,160 90,195 90,195 C90,195 6,160 6,123 Z"
+      fill="#1B2A4A"
     />
 
-    {/* Flag inside shield */}
+    {/* Inner shield */}
+    <path
+      d="M10,8 L90,0 L170,8 L170,120 C170,155 90,190 90,190 C90,190 10,155 10,120 Z"
+      fill="#2B4570"
+    />
+
+    {/* Flag area clipped to shield */}
     <g clipPath="url(#shieldClip)">
+      {/* Flag background white */}
+      <rect x="10" y="40" width="160" height="100" fill="white" />
+
       {/* Red stripes */}
-      <rect x="0" y="0" width="60" height="4.3" fill="#BF0A30" />
-      <rect x="0" y="8.6" width="60" height="4.3" fill="#BF0A30" />
-      <rect x="0" y="17.2" width="60" height="4.3" fill="#BF0A30" />
-      <rect x="0" y="25.8" width="60" height="4.3" fill="#BF0A30" />
-      <rect x="0" y="34.4" width="60" height="4.3" fill="#BF0A30" />
-      <rect x="0" y="43" width="60" height="4.3" fill="#BF0A30" />
-      {/* White stripes */}
-      <rect x="0" y="4.3" width="60" height="4.3" fill="white" />
-      <rect x="0" y="12.9" width="60" height="4.3" fill="white" />
-      <rect x="0" y="21.5" width="60" height="4.3" fill="white" />
-      <rect x="0" y="30.1" width="60" height="4.3" fill="white" />
-      <rect x="0" y="38.7" width="60" height="4.3" fill="white" />
-      <rect x="0" y="47.3" width="60" height="4.3" fill="white" />
+      <rect x="10" y="40" width="160" height="8" fill="#BF0A30" />
+      <rect x="10" y="56" width="160" height="8" fill="#BF0A30" />
+      <rect x="10" y="72" width="160" height="8" fill="#BF0A30" />
+      <rect x="10" y="88" width="160" height="8" fill="#BF0A30" />
+      <rect x="10" y="104" width="160" height="8" fill="#BF0A30" />
+      <rect x="10" y="120" width="160" height="8" fill="#BF0A30" />
+      <rect x="10" y="136" width="160" height="8" fill="#BF0A30" />
+
       {/* Blue canton */}
-      <rect x="0" y="0" width="26" height="26" fill="#002868" />
-      {/* Stars */}
-      <circle cx="8" cy="5" r="1" fill="white" />
-      <circle cx="14" cy="5" r="1" fill="white" />
-      <circle cx="20" cy="5" r="1" fill="white" />
-      <circle cx="11" cy="9" r="1" fill="white" />
-      <circle cx="17" cy="9" r="1" fill="white" />
-      <circle cx="8" cy="13" r="1" fill="white" />
-      <circle cx="14" cy="13" r="1" fill="white" />
-      <circle cx="20" cy="13" r="1" fill="white" />
-      <circle cx="11" cy="17" r="1" fill="white" />
-      <circle cx="17" cy="17" r="1" fill="white" />
-      <circle cx="8" cy="21" r="1" fill="white" />
-      <circle cx="14" cy="21" r="1" fill="white" />
-      <circle cx="20" cy="21" r="1" fill="white" />
+      <rect x="10" y="40" width="68" height="48" fill="#002868" />
+
+      {/* Stars in canton */}
+      {/* Row 1 */}
+      <circle cx="22" cy="48" r="2" fill="white" />
+      <circle cx="34" cy="48" r="2" fill="white" />
+      <circle cx="46" cy="48" r="2" fill="white" />
+      <circle cx="58" cy="48" r="2" fill="white" />
+      <circle cx="70" cy="48" r="2" fill="white" />
+      {/* Row 2 */}
+      <circle cx="28" cy="56" r="2" fill="white" />
+      <circle cx="40" cy="56" r="2" fill="white" />
+      <circle cx="52" cy="56" r="2" fill="white" />
+      <circle cx="64" cy="56" r="2" fill="white" />
+      {/* Row 3 */}
+      <circle cx="22" cy="64" r="2" fill="white" />
+      <circle cx="34" cy="64" r="2" fill="white" />
+      <circle cx="46" cy="64" r="2" fill="white" />
+      <circle cx="58" cy="64" r="2" fill="white" />
+      <circle cx="70" cy="64" r="2" fill="white" />
+      {/* Row 4 */}
+      <circle cx="28" cy="72" r="2" fill="white" />
+      <circle cx="40" cy="72" r="2" fill="white" />
+      <circle cx="52" cy="72" r="2" fill="white" />
+      <circle cx="64" cy="72" r="2" fill="white" />
+      {/* Row 5 */}
+      <circle cx="22" cy="80" r="2" fill="white" />
+      <circle cx="34" cy="80" r="2" fill="white" />
+      <circle cx="46" cy="80" r="2" fill="white" />
+      <circle cx="58" cy="80" r="2" fill="white" />
+      <circle cx="70" cy="80" r="2" fill="white" />
+
+      {/* Soldier silhouette (saluting) */}
+      <g transform="translate(55, 38) scale(0.85)" opacity="0.92">
+        {/* Head */}
+        <ellipse cx="55" cy="12" rx="12" ry="13" fill="#1B2A4A" />
+        {/* Cap brim */}
+        <rect x="42" y="6" width="28" height="4" rx="2" fill="#1B2A4A" />
+        <rect x="40" y="9" width="32" height="2" fill="#1B2A4A" />
+        {/* Body/torso */}
+        <path d="M35,25 L75,25 L80,100 L30,100 Z" fill="#1B2A4A" />
+        {/* Saluting arm (right) */}
+        <path d="M68,28 L85,10 L92,6 L90,10 L82,18 L75,30 Z" fill="#1B2A4A" />
+        {/* Left arm */}
+        <path d="M38,30 L28,55 L32,56 L42,35 Z" fill="#1B2A4A" />
+        {/* Shoulders */}
+        <path d="M30,25 L80,25 L82,35 L28,35 Z" fill="#1B2A4A" />
+      </g>
     </g>
 
-    {/* Shield border */}
+    {/* Top banner - VETERAN OWNED */}
     <path
-      d="M6,4 L30,0 L54,4 L54,30 C54,44 30,56 30,56 C30,56 6,44 6,30 Z"
-      fill="none"
-      stroke="white"
-      strokeWidth="1.5"
-      opacity="0.7"
+      d="M10,8 L90,0 L170,8 L170,40 L10,40 Z"
+      fill="#1B2A4A"
     />
-
-    {/* White star at shield bottom */}
-    <polygon
-      points="30,36 31.8,41 37,41.5 33,44 34.2,49 30,46 25.8,49 27,44 23,41.5 28.2,41"
+    <text
+      x="90" y="28"
       fill="white"
-      opacity="0.9"
-    />
+      fontSize="16"
+      fontWeight="800"
+      fontFamily="system-ui, sans-serif"
+      textAnchor="middle"
+      letterSpacing="3"
+    >
+      VETERAN OWNED
+    </text>
 
-    {/* Text - all white */}
-    <text x="64" y="19" fill="white" fontSize="11.5" fontWeight="700" fontFamily="system-ui, sans-serif">
-      SERVICE-DISABLED
+    {/* Bottom text area */}
+    <text
+      x="90" y="175"
+      fill="white"
+      fontSize="8"
+      fontWeight="600"
+      fontFamily="system-ui, sans-serif"
+      textAnchor="middle"
+      letterSpacing="1"
+    >
+      SERVICE-DISABLED · SDVOSB
     </text>
-    <text x="64" y="34" fill="white" fontSize="11.5" fontWeight="700" fontFamily="system-ui, sans-serif">
-      VETERAN-OWNED
-    </text>
-    <text x="64" y="49" fill="white" fontSize="9" fontFamily="system-ui, sans-serif" opacity="0.75" letterSpacing="0.5">
-      SMALL BUSINESS (SDVOSB)
-    </text>
+
+    {/* Red star at bottom of shield */}
+    <polygon
+      points="90,150 94,160 105,161 97,168 99,179 90,173 81,179 83,168 75,161 86,160"
+      fill="#BF0A30"
+    />
   </svg>
 );
 
