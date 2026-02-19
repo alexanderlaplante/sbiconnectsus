@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
-const FAVICON_SVG_TEMPLATE = (textColor: string, accentColor: string) => `
+// Full SBI logo SVG paths — text (SBI letters) and accent (stripes)
+const LOGO_SVG = (textColor: string, accentColor: string) => `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1452.28 390.14">
   <g>
     <polygon fill="${textColor}" points="1452.28 24.76 1391.05 351.03 1292.13 351.03 1351.79 24.76 1452.28 24.76"/>
@@ -19,35 +20,126 @@ const FAVICON_SVG_TEMPLATE = (textColor: string, accentColor: string) => `
   </g>
 </svg>`;
 
+/**
+ * Render the SBI logo SVG onto a canvas at the given size with a background color,
+ * then return a data URL PNG.
+ */
+function renderIconToDataUrl(
+  size: number,
+  bgColor: string,
+  textColor: string,
+  accentColor: string
+): Promise<string> {
+  return new Promise((resolve) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d")!;
+
+    // Fill background
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, size, size);
+
+    // Draw logo SVG centered
+    const svg = LOGO_SVG(textColor, accentColor);
+    const blob = new Blob([svg], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      // Center the logo with padding
+      const padding = size * 0.12;
+      const availW = size - padding * 2;
+      const availH = size - padding * 2;
+      const logoAspect = 1452.28 / 390.14;
+      let drawW = availW;
+      let drawH = drawW / logoAspect;
+      if (drawH > availH) {
+        drawH = availH;
+        drawW = drawH * logoAspect;
+      }
+      const x = (size - drawW) / 2;
+      const y = (size - drawH) / 2;
+      ctx.drawImage(img, x, y, drawW, drawH);
+      URL.revokeObjectURL(url);
+      resolve(canvas.toDataURL("image/png"));
+    };
+    img.src = url;
+  });
+}
+
 export const useDynamicFavicon = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    const timeout = setTimeout(async () => {
       const root = document.documentElement;
       const styles = getComputedStyle(root);
-      const textColor = styles.getPropertyValue("--logo-text").trim() || "#121417";
+      const textColor = styles.getPropertyValue("--logo-text").trim() || "#e0e4ea";
       const accentColor = styles.getPropertyValue("--logo-accent").trim() || "#f37216";
+      const bgColor = styles.getPropertyValue("--background").trim();
 
-      const svg = FAVICON_SVG_TEMPLATE(textColor, accentColor);
-      const blob = new Blob([svg], { type: "image/svg+xml" });
-      const url = URL.createObjectURL(blob);
+      // Parse HSL background to a usable color string
+      const bgHsl = bgColor ? `hsl(${bgColor})` : "#121417";
+
+      // 1. Update SVG favicon
+      const faviconSvg = LOGO_SVG(textColor, accentColor);
+      const faviconBlob = new Blob([faviconSvg], { type: "image/svg+xml" });
+      const faviconUrl = URL.createObjectURL(faviconBlob);
 
       document.querySelectorAll("link[rel='icon'][type='image/svg+xml']").forEach(el => el.remove());
+      const faviconLink = document.createElement("link");
+      faviconLink.rel = "icon";
+      faviconLink.type = "image/svg+xml";
+      faviconLink.href = faviconUrl;
+      document.head.appendChild(faviconLink);
+      (faviconLink as any).__blobUrl = faviconUrl;
 
-      const link = document.createElement("link");
-      link.rel = "icon";
-      link.type = "image/svg+xml";
-      link.href = url;
-      document.head.appendChild(link);
+      // 2. Generate themed apple-touch-icon PNG
+      const applePng = await renderIconToDataUrl(180, bgHsl, textColor, accentColor);
+      document.querySelectorAll("link[rel='apple-touch-icon']").forEach(el => el.remove());
+      const appleLink = document.createElement("link");
+      appleLink.rel = "apple-touch-icon";
+      appleLink.href = applePng;
+      document.head.appendChild(appleLink);
 
-      (link as any).__blobUrl = url;
-    }, 50);
+      // 3. Generate themed manifest with dynamic icons
+      const icon192 = await renderIconToDataUrl(192, bgHsl, textColor, accentColor);
+      const icon512 = await renderIconToDataUrl(512, bgHsl, textColor, accentColor);
+
+      const manifest = {
+        name: "SBI Connects",
+        short_name: "SBI",
+        description: "Design-Build Low-Voltage Infrastructure & Technology Solutions",
+        start_url: "/",
+        display: "standalone",
+        background_color: bgHsl,
+        theme_color: accentColor,
+        icons: [
+          { src: icon192, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+          { src: icon512, sizes: "512x512", type: "image/png", purpose: "any maskable" },
+        ],
+      };
+
+      document.querySelectorAll("link[rel='manifest']").forEach(el => {
+        const old = (el as any).__blobUrl;
+        if (old) URL.revokeObjectURL(old);
+        el.remove();
+      });
+      const manifestBlob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
+      const manifestUrl = URL.createObjectURL(manifestBlob);
+      const manifestLink = document.createElement("link");
+      manifestLink.rel = "manifest";
+      manifestLink.href = manifestUrl;
+      document.head.appendChild(manifestLink);
+      (manifestLink as any).__blobUrl = manifestUrl;
+    }, 100);
 
     return () => {
       clearTimeout(timeout);
-      const link = document.querySelector("link[rel='icon'][type='image/svg+xml']") as any;
-      if (link?.__blobUrl) URL.revokeObjectURL(link.__blobUrl);
+      const svgLink = document.querySelector("link[rel='icon'][type='image/svg+xml']") as any;
+      if (svgLink?.__blobUrl) URL.revokeObjectURL(svgLink.__blobUrl);
+      const mLink = document.querySelector("link[rel='manifest']") as any;
+      if (mLink?.__blobUrl) URL.revokeObjectURL(mLink.__blobUrl);
     };
   }, [theme]);
 };
