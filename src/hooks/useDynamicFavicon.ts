@@ -71,6 +71,7 @@ export const useDynamicFavicon = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
+    // Defer favicon generation to after page is interactive
     const timeout = setTimeout(async () => {
       const root = document.documentElement;
       const styles = getComputedStyle(root);
@@ -132,7 +133,7 @@ export const useDynamicFavicon = () => {
       manifestLink.href = manifestUrl;
       document.head.appendChild(manifestLink);
       (manifestLink as any).__blobUrl = manifestUrl;
-    }, 100);
+    }, 2000); // Defer to well after LCP
 
     return () => {
       clearTimeout(timeout);
