@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
+import { useDynamicFavicon } from "./hooks/useDynamicFavicon";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -20,8 +21,14 @@ const Sitemap = lazy(() => import("./pages/Sitemap"));
 
 const queryClient = new QueryClient();
 
+const AppContent = () => {
+  useDynamicFavicon();
+  return null;
+};
+
 const App = () => (
   <ThemeProvider>
+    <AppContent />
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
