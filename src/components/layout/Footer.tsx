@@ -3,7 +3,7 @@ import SbiLogo from "@/components/SbiLogo";
 import { MapPin, Phone, Mail } from "lucide-react";
 import veteranBadge from "@/assets/veteran-owned-badge.png";
 
-const Footer = () => (
+const Footer = ({ onOpenQuiz }: { onOpenQuiz?: () => void }) => (
   <footer className="border-t border-border/50 bg-card/30">
     <div className="mx-auto max-w-7xl px-6 py-16">
       <div className="grid md:grid-cols-4 gap-10">
@@ -74,7 +74,17 @@ const Footer = () => (
 
       <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} SBI Connects. All rights reserved.</p>
-        <p className="text-xs text-muted-foreground">Built with precision. Engineered for performance.</p>
+        <div className="flex items-center gap-4">
+          <p className="text-xs text-muted-foreground">Built with precision. Engineered for performance.</p>
+          {onOpenQuiz && (
+            <button
+              onClick={onOpenQuiz}
+              className="text-xs text-muted-foreground/50 transition-colors hover:text-primary focus:outline-none"
+            >
+              Are You an Integrator?
+            </button>
+          )}
+        </div>
       </div>
     </div>
   </footer>
