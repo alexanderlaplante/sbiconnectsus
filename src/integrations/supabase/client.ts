@@ -5,13 +5,25 @@ import type { Database } from './types';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
+// Memory storage fallback for SSR/prerendering where localStorage is unavailable
+const memoryStorage: Storage = {
+  length: 0,
+  clear() { this._data = {}; this.length = 0; },
+  getItem(key: string) { return (this as any)._data?.[key] ?? null; },
+  key() { return null; },
+  removeItem(key: string) { delete (this as any)._data?.[key]; },
+  setItem(key: string, value: string) { ((this as any)._data ??= {})[key] = value; },
+};
+
+const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    storage: localStorage,
-    persistSession: true,
-    autoRefreshToken: true,
+    storage: isBrowser ? window.localStorage : memoryStorage,
+    persistSession: isBrowser,
+    autoRefreshToken: isBrowser,
   }
 });
