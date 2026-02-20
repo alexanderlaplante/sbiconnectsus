@@ -18,7 +18,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 pt-[calc(4rem+env(safe-area-inset-top))]">{children}</main>
-      <Footer onOpenQuiz={openQuiz} onOpenGame={openGame} />
+      <Footer onOpenQuiz={openQuiz} />
       <IntegratorIQModal open={quizOpen} onClose={() => setQuizOpen(false)} />
       <CableRunnerGame open={gameOpen} onClose={() => setGameOpen(false)} />
     </div>
