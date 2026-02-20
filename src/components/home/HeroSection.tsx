@@ -39,8 +39,8 @@ const HeroSection = () => {
       <BlueprintOverlay active={blueprintActive} onClose={blueprintDismiss} />
       <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
         <img srcSet={heroHomeSrcSet} src={heroHome} sizes="100vw" alt="Data center infrastructure" className="w-full h-full object-cover" fetchPriority="high" loading="eager" decoding="async" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent dark:via-background/85 dark:to-background/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/20 dark:to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 md:via-background/50 to-background/70 md:to-transparent dark:via-background/95 dark:md:via-background/85 dark:to-background/80 dark:md:to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 md:via-transparent to-background/50 md:to-background/20 dark:to-background/60" />
       </motion.div>
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
