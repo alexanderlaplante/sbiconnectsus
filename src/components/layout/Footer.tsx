@@ -3,7 +3,7 @@ import SbiLogo from "@/components/SbiLogo";
 import { MapPin, Phone, Mail } from "lucide-react";
 import veteranBadge from "@/assets/veteran-owned-badge.png";
 
-const Footer = ({ onOpenQuiz }: { onOpenQuiz?: () => void }) => (
+const Footer = ({ onOpenQuiz, onOpenGame }: { onOpenQuiz?: () => void; onOpenGame?: () => void }) => (
   <footer className="border-t border-border/50 bg-card/30">
     <div className="mx-auto max-w-7xl px-6 py-16">
       <div className="grid md:grid-cols-4 gap-10">
@@ -82,6 +82,14 @@ const Footer = ({ onOpenQuiz }: { onOpenQuiz?: () => void }) => (
               className="text-xs text-muted-foreground/50 transition-colors hover:text-primary focus:outline-none"
             >
               Are You an Integrator?
+            </button>
+          )}
+          {onOpenGame && (
+            <button
+              onClick={onOpenGame}
+              className="text-xs text-muted-foreground/50 transition-colors hover:text-primary focus:outline-none"
+            >
+              Arcade
             </button>
           )}
         </div>
