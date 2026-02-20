@@ -410,9 +410,6 @@ const CableRunnerGame = ({
           exit={{ opacity: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
           onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-          onTouchStart={(e) => {
-            if (e.target !== e.currentTarget) jump();
-          }}
         >
           <motion.div
             className="relative w-full max-w-2xl rounded-xl border border-border/50 bg-card shadow-2xl overflow-hidden"
@@ -421,7 +418,6 @@ const CableRunnerGame = ({
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
             onClick={(e) => e.stopPropagation()}
-            onTouchStart={(e) => { e.stopPropagation(); jump(); }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
@@ -436,12 +432,16 @@ const CableRunnerGame = ({
             </div>
 
             {/* Canvas */}
-            <div className="bg-background flex items-center justify-center">
+            <div
+              className="bg-background flex items-center justify-center cursor-pointer"
+              onClick={(e) => { e.stopPropagation(); jump(); }}
+              onTouchStart={(e) => { e.preventDefault(); jump(); }}
+            >
               <canvas
                 ref={canvasRef}
                 width={GAME_W}
                 height={GAME_H}
-                className="w-full max-w-2xl"
+                className="w-full max-w-2xl pointer-events-none"
                 style={{ imageRendering: "pixelated", aspectRatio: `${GAME_W}/${GAME_H}` }}
               />
             </div>
