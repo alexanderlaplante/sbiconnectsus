@@ -5,6 +5,7 @@ import IntegratorIQModal from "@/components/IntegratorIQ/IntegratorIQModal";
 import { useKeyboardTrigger } from "@/components/IntegratorIQ/useKeyboardTrigger";
 import CableRunnerGame from "@/components/CableRunner/CableRunnerGame";
 import { useGameKeyboardTrigger } from "@/components/CableRunner/useGameKeyboardTrigger";
+import { useZSwipeTrigger } from "@/components/CableRunner/useZSwipeTrigger";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const [quizOpen, setQuizOpen] = useState(false);
@@ -13,6 +14,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const openGame = useCallback(() => setGameOpen(true), []);
   useKeyboardTrigger(openQuiz);
   useGameKeyboardTrigger(openGame);
+  useZSwipeTrigger(openGame);
 
   return (
     <div className="min-h-screen flex flex-col">
