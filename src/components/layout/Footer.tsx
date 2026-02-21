@@ -1,9 +1,25 @@
+import { useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import SbiLogo from "@/components/SbiLogo";
 import { MapPin, Phone, Mail } from "lucide-react";
 import veteranBadge from "@/assets/veteran-owned-badge.png";
 
-const Footer = ({ onOpenQuiz }: { onOpenQuiz?: () => void }) => (
+const Footer = ({ onOpenQuiz, onOpenGame }: { onOpenQuiz?: () => void; onOpenGame?: () => void }) => {
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handlePressStart = useCallback(() => {
+    if (!onOpenGame) return;
+    timerRef.current = setTimeout(() => onOpenGame(), 1500);
+  }, [onOpenGame]);
+
+  const handlePressEnd = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  return (
   <footer className="border-t border-border/50 bg-card/30">
     <div className="mx-auto max-w-7xl px-6 py-16">
       <div className="grid md:grid-cols-4 gap-10">
@@ -15,7 +31,15 @@ const Footer = ({ onOpenQuiz }: { onOpenQuiz?: () => void }) => (
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             Veteran-owned (SDVOSB) low-voltage and telecommunications infrastructure specialists.
           </p>
-          <div className="flex items-center gap-3">
+          <div
+            className="flex items-center gap-3 select-none cursor-default"
+            onTouchStart={handlePressStart}
+            onTouchEnd={handlePressEnd}
+            onTouchCancel={handlePressEnd}
+            onMouseDown={handlePressStart}
+            onMouseUp={handlePressEnd}
+            onMouseLeave={handlePressEnd}
+          >
             <img src={veteranBadge} alt="Service-Disabled Veteran-Owned Small Business" className="w-14" loading="lazy" />
             <div>
               <p className="text-xs font-semibold text-foreground leading-tight">SERVICE-DISABLED</p>
@@ -88,6 +112,7 @@ const Footer = ({ onOpenQuiz }: { onOpenQuiz?: () => void }) => (
       </div>
     </div>
   </footer>
-);
+  );
+};
 
 export default Footer;
