@@ -1,3 +1,4 @@
+import { useState, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -22,6 +23,7 @@ import Layout from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-home.jpg";
 import SeoHead from "@/components/seo/SeoHead";
 import ServicesSchemaJsonLd from "@/components/seo/ServicesSchemaJsonLd";
+import CableRunnerGame from "@/components/CableRunner/CableRunnerGame";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -133,6 +135,20 @@ const complianceColumns = [
 ];
 
 const Services = () => {
+  const [gameOpen, setGameOpen] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handlePressStart = useCallback(() => {
+    timerRef.current = setTimeout(() => setGameOpen(true), 1500);
+  }, []);
+
+  const handlePressEnd = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
   return (
     <Layout>
       <SeoHead
@@ -309,7 +325,15 @@ const Services = () => {
                   ))}
                 </div>
                 <div className="mt-6 text-center">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30">
+                  <div
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 select-none cursor-default"
+                    onTouchStart={handlePressStart}
+                    onTouchEnd={handlePressEnd}
+                    onTouchCancel={handlePressEnd}
+                    onMouseDown={handlePressStart}
+                    onMouseUp={handlePressEnd}
+                    onMouseLeave={handlePressEnd}
+                  >
                     <span className="text-xs font-semibold text-primary">
                       Unified Infrastructure Platform
                     </span>
@@ -495,6 +519,7 @@ const Services = () => {
           </motion.div>
         </div>
       </section>
+      <CableRunnerGame open={gameOpen} onClose={() => setGameOpen(false)} />
     </Layout>
   );
 };

@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Network, Wifi, ShieldCheck, MonitorSpeaker, ArrowRight, CheckCircle2 } from "lucide-react";
 import { fadeUp } from "@/lib/animations";
-import { useRef, useCallback } from "react";
 
 const pillars = [
   {
@@ -35,35 +34,11 @@ const pillars = [
   },
 ];
 
-const PillarsSection = ({ onEasterEgg }: { onEasterEgg?: () => void }) => {
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handlePressStart = useCallback(() => {
-    timerRef.current = setTimeout(() => {
-      onEasterEgg?.();
-    }, 1500);
-  }, [onEasterEgg]);
-
-  const handlePressEnd = useCallback(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
-
-  return (
+const PillarsSection = () => (
   <section className="py-24 md:py-32">
     <div className="mx-auto max-w-7xl px-6">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-16">
-        <h2
-          className="text-3xl md:text-5xl font-bold mb-4 select-none cursor-default"
-          onTouchStart={handlePressStart}
-          onTouchEnd={handlePressEnd}
-          onTouchCancel={handlePressEnd}
-          onMouseDown={handlePressStart}
-          onMouseUp={handlePressEnd}
-          onMouseLeave={handlePressEnd}
-        >
+        <h2 className="text-3xl md:text-5xl font-bold mb-4">
           Four <span className="text-gradient">Core</span> Pillars
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
@@ -100,7 +75,6 @@ const PillarsSection = ({ onEasterEgg }: { onEasterEgg?: () => void }) => {
       </div>
     </div>
   </section>
-  );
-};
+);
 
 export default PillarsSection;
