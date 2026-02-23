@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Question, questionBank, categories, Category } from "./questionBank";
-import { X } from "lucide-react";
+import { Question, BICSI_CERTIFICATIONS } from "./questionBank";
+import { X, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 function shuffleArray<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -12,33 +13,14 @@ function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
-const HISTORY_KEY = "sbi-iq-history";
-
-function getHistory(): Record<Category, string[]> {
-  try {
-    const raw = localStorage.getItem(HISTORY_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return { fiber: [], rack: [], das: [] };
+interface QuizItem {
+  question: Question;
+  shuffledOptions: string[];
+  correctShuffled: number;
 }
 
-function saveHistory(selected: Question[]) {
-  const history = getHistory();
-  for (const q of selected) {
-    history[q.category].push(q.id);
-    if (history[q.category].length > 3) history[q.category] = history[q.category].slice(-3);
-  }
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-}
-
-function pickQuestions(): { question: Question; shuffledOptions: string[]; correctShuffled: number }[] {
-  const history = getHistory();
-  return categories.map((cat) => {
-    const pool = questionBank[cat];
-    const avoid = new Set(history[cat]);
-    let candidates = pool.filter((q) => !avoid.has(q.id));
-    if (candidates.length === 0) candidates = pool;
-    const question = candidates[Math.floor(Math.random() * candidates.length)];
+function prepareQuiz(questions: Question[]): QuizItem[] {
+  return questions.map((question) => {
     const correctAnswer = question.options[question.correctIndex];
     const shuffledOptions = shuffleArray(question.options);
     const correctShuffled = shuffledOptions.indexOf(correctAnswer);
@@ -51,7 +33,7 @@ interface Props {
   onClose: () => void;
 }
 
-type Phase = "question" | "feedback" | "results";
+type Phase = "loading" | "error" | "question" | "feedback" | "results";
 
 const reducedMotion =
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -59,29 +41,50 @@ const reducedMotion =
 const transition = reducedMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" as const };
 
 export default function IntegratorIQModal({ open, onClose }: Props) {
-  const [quiz, setQuiz] = useState<ReturnType<typeof pickQuestions>>([]);
+  const [quiz, setQuiz] = useState<QuizItem[]>([]);
   const [step, setStep] = useState(0);
   const [score, setScore] = useState(0);
-  const [phase, setPhase] = useState<Phase>("question");
+  const [phase, setPhase] = useState<Phase>("loading");
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [wasCorrect, setWasCorrect] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
   const prevFocus = useRef<HTMLElement | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const reset = useCallback(() => {
-    setQuiz(pickQuestions());
+  const fetchQuestions = useCallback(async () => {
+    setPhase("loading");
     setStep(0);
     setScore(0);
-    setPhase("question");
     setSelectedIdx(null);
     setWasCorrect(false);
+    setErrorMsg("");
+
+    try {
+      const certs = BICSI_CERTIFICATIONS.map((c) => c.key);
+      const { data, error } = await supabase.functions.invoke("generate-bicsi-questions", {
+        body: { certifications: certs },
+      });
+
+      if (error) throw new Error(error.message || "Failed to generate questions");
+      if (data?.error) throw new Error(data.error);
+
+      const questions: Question[] = data.questions;
+      if (!questions || questions.length === 0) throw new Error("No questions returned");
+
+      setQuiz(prepareQuiz(questions));
+      setPhase("question");
+    } catch (err: any) {
+      console.error("Failed to fetch BICSI questions:", err);
+      setErrorMsg(err.message || "Failed to load questions");
+      setPhase("error");
+    }
   }, []);
 
   useEffect(() => {
     if (open) {
       prevFocus.current = document.activeElement as HTMLElement;
-      reset();
+      fetchQuestions();
       document.body.style.overflow = "hidden";
       setTimeout(() => modalRef.current?.focus(), 50);
     } else {
@@ -91,7 +94,7 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [open, reset]);
+  }, [open, fetchQuestions]);
 
   useEffect(() => {
     if (!open) return;
@@ -102,12 +105,13 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
     return () => window.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
-  if (!open || quiz.length === 0) return null;
+  if (!open) return null;
 
+  const totalQuestions = quiz.length;
   const current = quiz[step];
 
   const handleAnswer = (idx: number) => {
-    if (phase !== "question") return;
+    if (phase !== "question" || !current) return;
     const correct = idx === current.correctShuffled;
     setSelectedIdx(idx);
     setWasCorrect(correct);
@@ -116,17 +120,16 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
   };
 
   const handleNext = () => {
-    if (step < 2) {
+    if (step < totalQuestions - 1) {
       setStep((s) => s + 1);
       setPhase("question");
       setSelectedIdx(null);
     } else {
-      saveHistory(quiz.map((q) => q.question));
       setPhase("results");
     }
   };
 
-  const passed = score >= 2;
+  const passed = score >= Math.ceil(totalQuestions * 0.7);
 
   return (
     <AnimatePresence>
@@ -145,7 +148,7 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
             ref={modalRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Integrator IQ Quiz"
+            aria-label="Integrator IQ Quiz — BICSI Certification Prep"
             tabIndex={-1}
             className="relative w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-2xl outline-none sm:p-8"
             initial={{ opacity: 0, y: 20, scale: 0.97 }}
@@ -167,17 +170,42 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
             >
               Integrator IQ
             </h2>
+            <p className="mb-4 text-xs text-muted-foreground">BICSI Certification Prep</p>
 
-            {phase !== "results" ? (
+            {/* Loading state */}
+            {phase === "loading" && (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader2 className="mb-3 h-8 w-8 animate-spin text-primary" />
+                <p className="text-sm text-muted-foreground">Generating BICSI practice questions…</p>
+              </div>
+            )}
+
+            {/* Error state */}
+            {phase === "error" && (
+              <div className="flex flex-col items-center justify-center py-12">
+                <p className="mb-4 text-sm text-destructive">{errorMsg}</p>
+                <button
+                  onClick={fetchQuestions}
+                  className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
+                >
+                  Try Again
+                </button>
+              </div>
+            )}
+
+            {/* Question / Feedback phase */}
+            {(phase === "question" || phase === "feedback") && current && (
               <>
                 <p className="mb-1 text-xs font-medium text-muted-foreground">
-                  Question {step + 1} of 3
+                  Question {step + 1} of {totalQuestions}
                 </p>
                 <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
                   <motion.div
                     className="h-full rounded-full bg-primary"
                     initial={false}
-                    animate={{ width: `${((step + (phase === "feedback" ? 1 : 0)) / 3) * 100}%` }}
+                    animate={{
+                      width: `${((step + (phase === "feedback" ? 1 : 0)) / totalQuestions) * 100}%`,
+                    }}
                     transition={transition}
                   />
                 </div>
@@ -233,13 +261,16 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
                         onClick={handleNext}
                         className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
                       >
-                        {step < 2 ? "Next Question" : "See Results"}
+                        {step < totalQuestions - 1 ? "Next Question" : "See Results"}
                       </button>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </>
-            ) : (
+            )}
+
+            {/* Results phase */}
+            {phase === "results" && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -250,7 +281,7 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
                   {passed ? "🏆" : "🔧"}
                 </div>
                 <p className="mb-1 text-lg font-bold text-foreground">
-                  {score}/3 Correct
+                  {score}/{totalQuestions} Correct
                 </p>
                 <p
                   className="mb-2 text-base font-semibold text-primary"
@@ -267,10 +298,10 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
                 </p>
                 <div className="flex justify-center gap-3">
                   <button
-                    onClick={reset}
+                    onClick={fetchQuestions}
                     className="rounded-lg bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring"
                   >
-                    Try Again
+                    New Questions
                   </button>
                   <button
                     onClick={onClose}

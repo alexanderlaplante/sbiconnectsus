@@ -1,1 +1,4 @@
 project_id = "eeatmiajiayvwakkihkd"
+
+[functions.generate-bicsi-questions]
+verify_jwt = false
