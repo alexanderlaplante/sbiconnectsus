@@ -9,9 +9,8 @@ const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ─── hook: detect N clicks within a time window ─── */
-export function useTripleClick(threshold = 2000) {
+export function useTripleClick(threshold = 2000, onTrigger?: () => void) {
   const clicks = useRef<number[]>([]);
-  const [triggered, setTriggered] = useState(false);
 
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
@@ -21,14 +20,13 @@ export function useTripleClick(threshold = 2000) {
       if (clicks.current.length >= 3) {
         e.preventDefault();
         clicks.current = [];
-        setTriggered(true);
+        onTrigger?.();
       }
     },
-    [threshold],
+    [threshold, onTrigger],
   );
 
-  const dismiss = useCallback(() => setTriggered(false), []);
-  return { triggered, handleClick, dismiss };
+  return { handleClick };
 }
 
 /* ─── overlay component ─── */
