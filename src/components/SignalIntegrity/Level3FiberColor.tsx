@@ -1,0 +1,214 @@
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { playSuccess, playError } from "./audioUtils";
+
+/**
+ * TIA-598 12-fiber color code standard.
+ * Players must tap the fibers in the correct order (position 1-12).
+ */
+const FIBER_COLORS: { name: string; hex: string }[] = [
+  { name: "Blue", hex: "#3b82f6" },
+  { name: "Orange", hex: "#f97316" },
+  { name: "Green", hex: "#22c55e" },
+  { name: "Brown", hex: "#92400e" },
+  { name: "Slate", hex: "#64748b" },
+  { name: "White", hex: "#f1f5f9" },
+  { name: "Red", hex: "#ef4444" },
+  { name: "Black", hex: "#1e293b" },
+  { name: "Yellow", hex: "#eab308" },
+  { name: "Violet", hex: "#8b5cf6" },
+  { name: "Rose", hex: "#f43f5e" },
+  { name: "Aqua", hex: "#06b6d4" },
+];
+
+interface Props {
+  onComplete: () => void;
+}
+
+export default function Level3FiberColor({ onComplete }: Props) {
+  // Shuffle fiber order for the player to sort
+  const [shuffled] = useState(() => {
+    const arr = Array.from({ length: 12 }, (_, i) => i);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  });
+
+  const [placed, setPlaced] = useState<number[]>([]);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [result, setResult] = useState<"success" | "fail" | null>(null);
+
+  const placedSet = new Set(placed);
+
+  const handleSlotClick = useCallback(
+    (slotIdx: number) => {
+      if (result) return;
+      if (selected === null) return;
+      if (slotIdx !== placed.length) return; // must fill in order
+      setPlaced((prev) => [...prev, selected]);
+      setSelected(null);
+    },
+    [selected, placed, result]
+  );
+
+  const handleUndo = useCallback(() => {
+    if (result) return;
+    setPlaced((prev) => prev.slice(0, -1));
+  }, [result]);
+
+  const handleValidate = () => {
+    const correct = placed.every((fiberIdx, pos) => fiberIdx === pos);
+    if (correct) {
+      playSuccess();
+      setResult("success");
+      setTimeout(onComplete, 1800);
+    } else {
+      playError();
+      setResult("fail");
+      setTimeout(() => {
+        setResult(null);
+        setPlaced([]);
+        setSelected(null);
+      }, 1500);
+    }
+  };
+
+  const allPlaced = placed.length === 12;
+
+  return (
+    <div className="flex flex-col items-center gap-4 w-full max-w-xl mx-auto px-2">
+      <div className="text-center mb-2">
+        <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-green-400/60 mb-1">
+          Level 3
+        </h3>
+        <h2 className="font-mono text-sm sm:text-base text-green-300 font-bold tracking-wider">
+          Fiber Color Code — TIA-598
+        </h2>
+        <p className="font-mono text-[10px] text-green-500/50 mt-1">
+          Place all 12 fibers in the correct color-code order (position 1-12).
+        </p>
+      </div>
+
+      {/* Fiber tray slots */}
+      <div className="relative bg-[#0c1117] border border-green-900/40 rounded-lg p-3 sm:p-4 w-full">
+        <div className="font-mono text-[9px] text-green-600/40 mb-2 text-center uppercase tracking-widest">
+          Fiber Tray — Position 1-12
+        </div>
+        <div className="grid grid-cols-6 sm:grid-cols-12 gap-1 sm:gap-1.5">
+          {Array.from({ length: 12 }).map((_, slotIdx) => {
+            const fiberIdx = placed[slotIdx] ?? null;
+            const isNext = slotIdx === placed.length;
+            return (
+              <button
+                key={slotIdx}
+                onClick={() => handleSlotClick(slotIdx)}
+                className={`relative h-14 sm:h-16 rounded border transition-all duration-200 flex flex-col items-center justify-center ${
+                  fiberIdx !== null
+                    ? "border-green-700/50"
+                    : isNext && selected !== null
+                    ? "border-green-500/60 bg-green-900/10 animate-pulse"
+                    : "border-green-900/30 bg-[#0a0e13]"
+                }`}
+                aria-label={`Position ${slotIdx + 1}${fiberIdx !== null ? `: ${FIBER_COLORS[fiberIdx].name}` : ""}`}
+              >
+                <span className="font-mono text-[8px] text-green-700/50 absolute top-0.5">
+                  {slotIdx + 1}
+                </span>
+                {fiberIdx !== null && (
+                  <motion.div
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    className="w-2 sm:w-2.5 h-8 sm:h-10 rounded-full"
+                    style={{
+                      backgroundColor: FIBER_COLORS[fiberIdx].hex,
+                      boxShadow: `0 0 6px ${FIBER_COLORS[fiberIdx].hex}66`,
+                    }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+        {placed.length > 0 && !result && (
+          <button
+            onClick={handleUndo}
+            className="mt-2 font-mono text-[10px] text-green-600/60 hover:text-green-400 transition-colors"
+          >
+            ↩ Undo last
+          </button>
+        )}
+      </div>
+
+      {/* Fiber pool */}
+      <div className="bg-[#0c1117] border border-green-900/30 rounded-lg p-3 w-full">
+        <div className="font-mono text-[9px] text-green-600/40 mb-2 text-center uppercase tracking-widest">
+          Available Fibers
+        </div>
+        <div className="flex flex-wrap gap-1.5 justify-center">
+          {shuffled.map((fiberIdx) => {
+            if (placedSet.has(fiberIdx)) return null;
+            const fiber = FIBER_COLORS[fiberIdx];
+            return (
+              <motion.button
+                key={fiberIdx}
+                onClick={() => setSelected(selected === fiberIdx ? null : fiberIdx)}
+                whileTap={{ scale: 0.92 }}
+                className={`flex items-center gap-1.5 px-2 py-1.5 rounded border transition-all font-mono text-[10px] ${
+                  selected === fiberIdx
+                    ? "border-green-400 bg-green-900/30 ring-1 ring-green-400/40"
+                    : "border-green-900/40 bg-[#0a0e13] hover:border-green-700/50"
+                }`}
+              >
+                <span
+                  className="w-2.5 h-6 rounded-full inline-block"
+                  style={{
+                    backgroundColor: fiber.hex,
+                    boxShadow: `0 0 4px ${fiber.hex}44`,
+                  }}
+                />
+                <span className="text-green-300/80 whitespace-nowrap">{fiber.name}</span>
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Validate */}
+      {allPlaced && !result && (
+        <motion.button
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          onClick={handleValidate}
+          className="font-mono text-xs uppercase tracking-[0.25em] px-6 py-2 border border-green-500/60 text-green-300 rounded hover:bg-green-900/30 transition-colors"
+        >
+          [ Validate Color Code ]
+        </motion.button>
+      )}
+
+      {/* Result */}
+      <AnimatePresence>
+        {result && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            className={`font-mono text-sm font-bold tracking-wider text-center py-2 ${
+              result === "success" ? "text-green-400" : "text-red-400"
+            }`}
+            style={
+              result === "success"
+                ? { textShadow: "0 0 12px rgba(0,255,102,0.6)" }
+                : { textShadow: "0 0 12px rgba(255,50,50,0.5)" }
+            }
+          >
+            {result === "success"
+              ? "▸ COLOR CODE VERIFIED ◂"
+              : "✗ INCORRECT SEQUENCE — RETRY..."}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

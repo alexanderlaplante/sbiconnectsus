@@ -18,34 +18,13 @@ export default function Level2FiberSplice({ onComplete }: Props) {
   const alignment = Math.max(0, 100 - Math.abs(offsetY) * 2.5);
   const loss = Math.abs(offsetY) * 0.005;
 
-  const handleKey = useCallback(
-    (e: KeyboardEvent) => {
-      if (arced) return;
-      if (e.key === "ArrowUp") {
-        e.preventDefault();
-        setOffsetY((v) => Math.max(v - 1, -40));
-      } else if (e.key === "ArrowDown") {
-        e.preventDefault();
-        setOffsetY((v) => Math.min(v + 1, 40));
-      } else if (e.key === " ") {
-        e.preventDefault();
-        handleArc();
-      }
-    },
-    [arced]
-  );
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [handleKey]);
-
   const handleArc = () => {
     if (arced) return;
     playArc();
     setArced(true);
     setTimeout(() => {
-      if (alignment >= 98) {
+      const currentAlignment = Math.max(0, 100 - Math.abs(offsetY) * 2.5);
+      if (currentAlignment >= 98) {
         playSuccess();
         setResult("success");
         setTimeout(onComplete, 2000);
@@ -60,6 +39,26 @@ export default function Level2FiberSplice({ onComplete }: Props) {
       }
     }, 600);
   };
+
+  const handleArcRef = useRef(handleArc);
+  handleArcRef.current = handleArc;
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setOffsetY((v) => Math.max(v - 1, -40));
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setOffsetY((v) => Math.min(v + 1, 40));
+      } else if (e.key === " ") {
+        e.preventDefault();
+        handleArcRef.current();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
 
   const centerY = 60;
 
