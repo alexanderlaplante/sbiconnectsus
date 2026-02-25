@@ -28,6 +28,34 @@ function prepareQuiz(questions: Question[]): QuizItem[] {
   });
 }
 
+// ─── Prefetch cache ───
+let prefetchedQuestions: Question[] | null = null;
+let prefetchPromise: Promise<Question[] | null> | null = null;
+
+async function fetchQuestionsFromAPI(): Promise<Question[] | null> {
+  try {
+    const certs = BICSI_CERTIFICATIONS.map((c) => c.key);
+    const { data, error } = await supabase.functions.invoke("generate-bicsi-questions", {
+      body: { certifications: certs },
+    });
+    if (error || data?.error) return null;
+    return data?.questions ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export function prefetchQuizQuestions() {
+  if (prefetchedQuestions || prefetchPromise) return;
+  prefetchPromise = fetchQuestionsFromAPI().then((q) => {
+    prefetchedQuestions = q;
+    prefetchPromise = null;
+    return q;
+  });
+}
+
+// ─── Component ───
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -61,19 +89,30 @@ export default function IntegratorIQModal({ open, onClose }: Props) {
     setErrorMsg("");
 
     try {
-      const certs = BICSI_CERTIFICATIONS.map((c) => c.key);
-      const { data, error } = await supabase.functions.invoke("generate-bicsi-questions", {
-        body: { certifications: certs },
-      });
+      // Use prefetched questions if available
+      let questions: Question[] | null = prefetchedQuestions;
+      prefetchedQuestions = null; // consume cache
 
-      if (error) throw new Error(error.message || "Failed to generate questions");
-      if (data?.error) throw new Error(data.error);
+      if (!questions && prefetchPromise) {
+        questions = await prefetchPromise;
+        prefetchedQuestions = null;
+      }
 
-      const questions: Question[] = data.questions;
+      if (!questions) {
+        questions = await fetchQuestionsFromAPI();
+      }
+
       if (!questions || questions.length === 0) throw new Error("No questions returned");
 
       setQuiz(prepareQuiz(questions));
       setPhase("question");
+
+      // Start prefetching the next round in background
+      prefetchPromise = fetchQuestionsFromAPI().then((q) => {
+        prefetchedQuestions = q;
+        prefetchPromise = null;
+        return q;
+      });
     } catch (err: any) {
       console.error("Failed to fetch BICSI questions:", err);
       setErrorMsg(err.message || "Failed to load questions");

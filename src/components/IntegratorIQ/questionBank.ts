@@ -14,6 +14,7 @@ export const BICSI_CERTIFICATIONS = [
   { key: "instc", label: "Installer 2, Copper (INSTC)" },
   { key: "instf", label: "Installer 2, Optical Fiber (INSTF)" },
   { key: "tech", label: "Technician (TECH)" },
+  { key: "rcdd", label: "Registered Communications Distribution Designer (RCDD)" },
 ] as const;
 
 export type CertKey = (typeof BICSI_CERTIFICATIONS)[number]["key"];

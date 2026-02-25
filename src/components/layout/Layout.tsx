@@ -1,7 +1,7 @@
-import { ReactNode, useState, useCallback, lazy, Suspense } from "react";
+import { ReactNode, useState, useCallback, useEffect, lazy, Suspense } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import IntegratorIQModal from "@/components/IntegratorIQ/IntegratorIQModal";
+import IntegratorIQModal, { prefetchQuizQuestions } from "@/components/IntegratorIQ/IntegratorIQModal";
 import { useKeyboardTrigger } from "@/components/IntegratorIQ/useKeyboardTrigger";
 import CableRunnerGame from "@/components/CableRunner/CableRunnerGame";
 import { useGameKeyboardTrigger } from "@/components/CableRunner/useGameKeyboardTrigger";
@@ -15,6 +15,7 @@ const SignalIntegrityGame = lazy(() => import("@/components/SignalIntegrity/Sign
 const RackAndStackGame = lazy(() => import("@/components/RackAndStack/RackAndStackGame"));
 
 const Layout = ({ children }: { children: ReactNode }) => {
+  useEffect(() => { prefetchQuizQuestions(); }, []);
   const [quizOpen, setQuizOpen] = useState(false);
   const [gameOpen, setGameOpen] = useState(false);
   const [overrideOpen, setOverrideOpen] = useState(false);
@@ -38,7 +39,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 pt-[calc(4rem+env(safe-area-inset-top))]">{children}</main>
-      <Footer onOpenQuiz={openQuiz} onOpenGame={openGame} />
+      <Footer onOpenGame={openGame} />
       <IntegratorIQModal open={quizOpen} onClose={() => setQuizOpen(false)} />
       <CableRunnerGame open={gameOpen} onClose={() => setGameOpen(false)} />
       <Suspense fallback={null}>
