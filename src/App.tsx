@@ -7,6 +7,9 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 import { useDynamicFavicon } from "./hooks/useDynamicFavicon";
+import { useFiberQuizTrigger } from "./components/FiberCertQuiz/useFiberQuizTrigger";
+
+const FiberCertQuizModal = lazy(() => import("./components/FiberCertQuiz/FiberCertQuizModal"));
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -24,7 +27,12 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   useDynamicFavicon();
-  return null;
+  const fiberQuiz = useFiberQuizTrigger();
+  return (
+    <Suspense fallback={null}>
+      <FiberCertQuizModal open={fiberQuiz.open} onClose={() => fiberQuiz.setOpen(false)} />
+    </Suspense>
+  );
 };
 
 const App = () => (
