@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Level1Cat6 = lazy(() => import("./Level1Cat6"));
 const Level2FiberSplice = lazy(() => import("./Level2FiberSplice"));
+const Level3FiberColor = lazy(() => import("./Level3FiberColor"));
 const MissionComplete = lazy(() => import("./MissionComplete"));
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   onClose: () => void;
 }
 
-type Stage = "briefing" | "level1" | "level2" | "complete";
+type Stage = "briefing" | "level1" | "level2" | "level3" | "complete";
 
 const prefersReduced =
   typeof window !== "undefined"
@@ -26,6 +27,7 @@ const BRIEFING_LINES = [
   "",
   "LEVEL 1 — Cat6 Termination (T568B)",
   "LEVEL 2 — Fiber Fusion Splicing",
+  "LEVEL 3 — Fiber Color Code (TIA-598)",
   "",
   "Good luck. SBI is watching.",
 ];
@@ -62,6 +64,7 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
 
   const startMission = useCallback(() => setStage("level1"), []);
   const goLevel2 = useCallback(() => setStage("level2"), []);
+  const goLevel3 = useCallback(() => setStage("level3"), []);
   const goComplete = useCallback(() => setStage("complete"), []);
 
   return (
@@ -172,7 +175,8 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
                 )}
 
                 {stage === "level1" && <Level1Cat6 onComplete={goLevel2} />}
-                {stage === "level2" && <Level2FiberSplice onComplete={goComplete} />}
+                {stage === "level2" && <Level2FiberSplice onComplete={goLevel3} />}
+                {stage === "level3" && <Level3FiberColor onComplete={goComplete} />}
                 {stage === "complete" && <MissionComplete onExit={onClose} />}
               </Suspense>
             </div>
