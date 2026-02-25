@@ -2,6 +2,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronDown, Zap, Cable, Plug, BarChart3, Radio, Shield, Building2, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Layout from "@/components/layout/Layout";
 
 /* ── Data ─────────────────────────────────────────────────────── */
 
@@ -296,7 +297,8 @@ const Glossary = () => {
   }, [filtered]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <Layout>
+    <div className="bg-background text-foreground relative">
       <FiberGrid />
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 py-14 md:py-24 lg:pr-14">
@@ -428,6 +430,7 @@ const Glossary = () => {
       {/* Alphabet jump bar */}
       <AlphabetBar letters={allLetters} onJump={jumpTo} />
     </div>
+    </Layout>
   );
 };
 
