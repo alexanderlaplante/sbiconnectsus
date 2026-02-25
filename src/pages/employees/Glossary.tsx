@@ -377,7 +377,9 @@ const Glossary = () => {
   const grouped = useMemo(() => {
     const map: Record<string, GlossaryEntry[]> = {};
     for (const e of filtered) {
-      const letter = e.acronym[0].toUpperCase();
+      const raw = e.acronym[0].toUpperCase();
+      // Normalize special characters to their letter group (e.g. µ → M)
+      const letter = raw === "µ" ? "M" : raw;
       (map[letter] ??= []).push(e);
     }
     return Object.entries(map).sort(([a], [b]) => a.localeCompare(b));
