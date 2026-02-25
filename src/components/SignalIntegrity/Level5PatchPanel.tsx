@@ -37,24 +37,24 @@ interface Props {
 export default function Level5PatchPanel({ onComplete }: Props) {
   const [shuffledDests] = useState(() => shuffle(MAPPINGS.map((m) => m.destination)));
   const [connections, setConnections] = useState<(number | null)[]>(Array(6).fill(null));
-  const [selectedPort, setSelectedPort] = useState<number | null>(null);
   const [result, setResult] = useState<"success" | "fail" | null>(null);
 
   const connectedPorts = new Set(connections.filter((v) => v !== null));
 
-  const handleDestClick = useCallback(
-    (destIdx: number) => {
+  // Tap a port → auto-place into the next empty destination slot
+  const handlePortClick = useCallback(
+    (portIdx: number) => {
       if (result) return;
-      if (selectedPort === null) return;
-      if (connections[destIdx] !== null) return;
+      if (connectedPorts.has(portIdx)) return;
+      const nextEmpty = connections.indexOf(null);
+      if (nextEmpty === -1) return;
       setConnections((prev) => {
         const next = [...prev];
-        next[destIdx] = selectedPort;
+        next[nextEmpty] = portIdx;
         return next;
       });
-      setSelectedPort(null);
     },
-    [selectedPort, connections, result]
+    [connections, connectedPorts, result]
   );
 
   const handleRemove = useCallback(
@@ -87,7 +87,6 @@ export default function Level5PatchPanel({ onComplete }: Props) {
       setTimeout(() => {
         setResult(null);
         setConnections(Array(6).fill(null));
-        setSelectedPort(null);
       }, 1500);
     }
   };
@@ -100,7 +99,7 @@ export default function Level5PatchPanel({ onComplete }: Props) {
           Patch Panel Port Mapping
         </h2>
         <p className="font-mono text-[10px] text-green-500/50 mt-1">
-          Select a port, then tap its correct destination label.
+          Tap a port to place it in the next destination slot. Tap a destination to remove.
         </p>
       </div>
 
@@ -111,20 +110,19 @@ export default function Level5PatchPanel({ onComplete }: Props) {
         </div>
         <div className="grid grid-cols-6 gap-1.5">
           {MAPPINGS.map((m, i) => (
-            <button
+            <motion.button
               key={i}
-              onClick={() => !result && !connectedPorts.has(i) && setSelectedPort(selectedPort === i ? null : i)}
+              onClick={() => !result && !connectedPorts.has(i) && handlePortClick(i)}
               disabled={connectedPorts.has(i)}
+              whileTap={{ scale: 0.92 }}
               className={`font-mono text-[11px] py-2.5 rounded border transition-all ${
                 connectedPorts.has(i)
                   ? "border-green-800/30 text-green-700/40 bg-green-950/20"
-                  : selectedPort === i
-                  ? "border-green-400 bg-green-900/30 text-green-300 ring-1 ring-green-400/40"
                   : "border-green-900/40 bg-[#0a0e13] text-green-500/70 hover:border-green-700/50"
               }`}
             >
               P{m.port}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
@@ -137,16 +135,15 @@ export default function Level5PatchPanel({ onComplete }: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
           {shuffledDests.map((dest, idx) => {
             const connPort = connections[idx];
+            const isNext = connPort === null && idx === connections.indexOf(null);
             return (
               <button
                 key={idx}
-                onClick={() =>
-                  connPort !== null ? handleRemove(idx) : handleDestClick(idx)
-                }
+                onClick={() => connPort !== null ? handleRemove(idx) : undefined}
                 className={`font-mono text-[10px] py-2 px-1.5 rounded border transition-all text-center ${
                   connPort !== null
-                    ? "border-green-600/50 bg-green-900/20 text-green-300"
-                    : selectedPort !== null
+                    ? "border-green-600/50 bg-green-900/20 text-green-300 hover:border-red-500/50 cursor-pointer"
+                    : isNext
                     ? "border-green-500/40 bg-green-900/10 text-green-400/80 animate-pulse"
                     : "border-green-900/40 bg-[#0a0e13] text-green-500/60"
                 }`}
