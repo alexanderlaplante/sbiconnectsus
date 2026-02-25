@@ -12,6 +12,9 @@ const CERT_DETAILS: Record<string, string> = {
   instf: "BICSI Installer 2 Optical Fiber (INSTF) – covers fiber optic cabling systems including singlemode/multimode fiber, fusion/mechanical splicing, OTDR testing, connector polishing, fiber standards, and loss budgets.",
   tech: "BICSI Technician (TECH) – covers advanced topics: network design, project management, codes & standards (TIA, NEC, NFPA), DAS, audiovisual systems, data center infrastructure, and system commissioning.",
   rcdd: "BICSI Registered Communications Distribution Designer (RCDD) – covers ICT system design, telecommunications spaces, pathways & spaces, cable management, fire stopping, grounding & bonding, project management, and building codes compliance.",
+  dcdc: "BICSI Data Center Design Consultant (DCDC) – covers data center site selection, power & cooling design, redundancy tiers (Uptime Institute), raised floor vs slab, hot/cold aisle containment, fire suppression, and BICSI-009 standard.",
+  osp: "BICSI Outside Plant Designer (OSP) – covers outside plant telecommunications design including aerial, buried, and underground pathways, right-of-way, manholes, handholes, pole line engineering, and OSP fiber/copper design.",
+  ess: "BICSI Electronic Safety & Security (ESS) – covers electronic safety and security system design including access control, video surveillance (CCTV), intrusion detection, fire alarm systems, mass notification, and integration with ICT infrastructure.",
 };
 
 serve(async (req) => {
