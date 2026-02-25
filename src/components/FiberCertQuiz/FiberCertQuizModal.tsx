@@ -10,16 +10,12 @@ interface PreparedQuestion {
 
 function prepareQuiz(): PreparedQuestion[] {
   return quizQuestions.map((q) => {
-    // Pick 3 random wrong answers from the pool
     const shuffledWrong = [...q.wrongPool].sort(() => Math.random() - 0.5);
     const selectedWrong = shuffledWrong.slice(0, 3);
-
-    // Build choices and shuffle
     const choices = [
       { text: q.correct, isCorrect: true },
       ...selectedWrong.map((w) => ({ text: w, isCorrect: false })),
     ].sort(() => Math.random() - 0.5);
-
     return { question: q, choices };
   });
 }
@@ -41,7 +37,6 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
   const total = prepared.length;
   const q = prepared[current];
 
-  // Reset quiz state when modal opens
   useEffect(() => {
     if (open) {
       const newPrep = prepareQuiz();
@@ -53,16 +48,11 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
     }
   }, [open]);
 
-  // Keyboard navigation
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-      if (phase === "quiz" && e.key === "Enter" && selected !== null) {
-        handleNext();
-      }
+      if (e.key === "Escape") onClose();
+      if (phase === "quiz" && e.key === "Enter" && selected !== null) handleNext();
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -80,7 +70,6 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
       next[current] = selected;
       return next;
     });
-
     if (current < total - 1) {
       setCurrent((c) => c + 1);
       setSelected(null);
@@ -107,7 +96,6 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
 
   const passed = score / total >= 0.8;
   const perfect = score === total;
-
   const CHOICE_LETTERS = ["A", "B", "C", "D"];
 
   if (!open) return null;
@@ -128,22 +116,22 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.92, opacity: 0 }}
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="relative bg-[#0a0e13] border border-green-900/50 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
+          className="relative bg-background border border-border rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="sticky top-0 bg-[#0a0e13]/95 backdrop-blur-sm border-b border-green-900/30 p-4 sm:p-5 z-10">
+          <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border p-4 sm:p-5 z-10">
             <button
               onClick={onClose}
-              className="absolute top-3 right-3 text-green-700/60 hover:text-green-400 transition-colors"
+              className="absolute top-3 right-3 text-muted-foreground hover:text-primary transition-colors"
               aria-label="Close quiz"
             >
               <X className="h-5 w-5" />
             </button>
-            <h2 className="font-mono text-sm sm:text-base text-green-300 font-bold tracking-wider uppercase">
+            <h2 className="font-mono text-sm sm:text-base text-primary font-bold tracking-wider uppercase">
               SBI Fiber Cert Quick Quiz
             </h2>
-            <p className="font-mono text-[10px] text-green-600/50 mt-0.5 tracking-wide">
+            <p className="font-mono text-[10px] text-muted-foreground mt-0.5 tracking-wide">
               No frayed wires allowed.
             </p>
           </div>
@@ -153,7 +141,7 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
               <div>
                 {/* Progress */}
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-[10px] text-green-500/60 uppercase tracking-widest">
+                  <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
                     Question {current + 1}/{total}
                   </span>
                   <div className="flex gap-0.5">
@@ -162,10 +150,10 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
                         key={i}
                         className={`w-1.5 h-1.5 rounded-full transition-colors ${
                           i < current
-                            ? "bg-green-500/70"
+                            ? "bg-primary/70"
                             : i === current
-                            ? "bg-green-400 animate-pulse"
-                            : "bg-green-900/40"
+                            ? "bg-primary animate-pulse"
+                            : "bg-muted"
                         }`}
                       />
                     ))}
@@ -179,7 +167,7 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <p className="font-mono text-xs sm:text-sm text-green-200/90 leading-relaxed mb-5">
+                  <p className="font-mono text-xs sm:text-sm text-foreground leading-relaxed mb-5">
                     {q.question.prompt}
                   </p>
 
@@ -191,13 +179,13 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
                         onClick={() => handleSelect(idx)}
                         className={`w-full text-left p-3 rounded border transition-all duration-200 font-mono text-[11px] sm:text-xs leading-relaxed flex gap-2 ${
                           selected === idx
-                            ? "border-green-400/70 bg-green-900/30 ring-1 ring-green-400/30 text-green-200"
-                            : "border-green-900/40 bg-[#0c1117] hover:border-green-700/50 text-green-300/70 hover:text-green-300/90"
+                            ? "border-primary/70 bg-primary/10 ring-1 ring-primary/30 text-foreground"
+                            : "border-border bg-card hover:border-primary/30 text-muted-foreground hover:text-foreground"
                         }`}
                       >
                         <span
                           className={`shrink-0 font-bold ${
-                            selected === idx ? "text-green-400" : "text-green-600/50"
+                            selected === idx ? "text-primary" : "text-muted-foreground"
                           }`}
                         >
                           {CHOICE_LETTERS[idx]}.
@@ -215,8 +203,8 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
                     disabled={selected === null}
                     className={`font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] px-5 py-2 rounded border flex items-center gap-1.5 transition-all ${
                       selected !== null
-                        ? "border-green-500/60 text-green-300 hover:bg-green-900/30 cursor-pointer"
-                        : "border-green-900/30 text-green-800/50 cursor-not-allowed"
+                        ? "border-primary/60 text-primary hover:bg-primary/10 cursor-pointer"
+                        : "border-border text-muted-foreground/40 cursor-not-allowed"
                     }`}
                   >
                     {current < total - 1 ? "Next" : "Finish"}
@@ -235,25 +223,19 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
                 <div className="text-center mb-6">
                   <div
                     className={`font-mono text-3xl font-bold tracking-wider ${
-                      passed ? "text-green-400" : "text-red-400"
+                      passed ? "text-primary" : "text-destructive"
                     }`}
-                    style={{
-                      textShadow: passed
-                        ? "0 0 20px rgba(0,255,102,0.5)"
-                        : "0 0 20px rgba(255,50,50,0.4)",
-                    }}
                   >
                     {score}/{total}
                   </div>
                   <div
                     className={`font-mono text-xs mt-1 tracking-wider ${
-                      passed ? "text-green-500/80" : "text-red-400/70"
+                      passed ? "text-primary/80" : "text-destructive/70"
                     }`}
                   >
-                    {passed ? (passed && perfect ? "PASS" : "PASS") : "FAIL"} —{" "}
-                    {Math.round((score / total) * 100)}%
+                    {passed ? "PASS" : "FAIL"} — {Math.round((score / total) * 100)}%
                   </div>
-                  <p className="font-mono text-[10px] text-green-500/50 mt-2 tracking-wide">
+                  <p className="font-mono text-[10px] text-muted-foreground mt-2 tracking-wide">
                     {perfect
                       ? "Certified. Go rack and stack."
                       : passed
@@ -274,30 +256,30 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
                         key={qIdx}
                         className={`border rounded p-3 ${
                           isCorrect
-                            ? "border-green-800/40 bg-green-950/20"
-                            : "border-red-900/40 bg-red-950/10"
+                            ? "border-primary/30 bg-primary/5"
+                            : "border-destructive/30 bg-destructive/5"
                         }`}
                       >
                         <div className="flex items-start gap-2 mb-1.5">
                           {isCorrect ? (
-                            <CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0 mt-0.5" />
+                            <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
                           ) : (
-                            <XCircle className="h-3.5 w-3.5 text-red-400 shrink-0 mt-0.5" />
+                            <XCircle className="h-3.5 w-3.5 text-destructive shrink-0 mt-0.5" />
                           )}
-                          <p className="font-mono text-[10px] text-green-300/80 leading-relaxed">
+                          <p className="font-mono text-[10px] text-foreground/80 leading-relaxed">
                             {pq.question.prompt}
                           </p>
                         </div>
                         {!isCorrect && userChoice !== null && (
-                          <p className="font-mono text-[9px] text-red-400/70 ml-5 mb-1">
+                          <p className="font-mono text-[9px] text-destructive/70 ml-5 mb-1">
                             Your answer: {pq.choices[userChoice].text}
                           </p>
                         )}
-                        <p className="font-mono text-[9px] text-green-500/60 ml-5">
+                        <p className="font-mono text-[9px] text-primary/60 ml-5">
                           ✓ {pq.question.correct}
                         </p>
                         {pq.question.explanation && (
-                          <p className="font-mono text-[9px] text-green-600/40 ml-5 mt-0.5 italic">
+                          <p className="font-mono text-[9px] text-muted-foreground/60 ml-5 mt-0.5 italic">
                             {pq.question.explanation}
                           </p>
                         )}
@@ -310,20 +292,20 @@ export default function FiberCertQuizModal({ open, onClose }: Props) {
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={handleRetake}
-                    className="font-mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 rounded border border-green-500/60 text-green-300 hover:bg-green-900/30 transition-colors flex items-center gap-1.5"
+                    className="font-mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 rounded border border-primary/60 text-primary hover:bg-primary/10 transition-colors flex items-center gap-1.5"
                   >
                     <RotateCcw className="h-3 w-3" />
                     Retake
                   </button>
                   <button
                     onClick={onClose}
-                    className="font-mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 rounded border border-green-900/40 text-green-600/60 hover:text-green-400 hover:border-green-700/50 transition-colors"
+                    className="font-mono text-[10px] uppercase tracking-[0.2em] px-4 py-2 rounded border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
                   >
                     Close
                   </button>
                 </div>
 
-                <p className="font-mono text-[9px] text-green-700/30 text-center mt-4 tracking-wide">
+                <p className="font-mono text-[9px] text-muted-foreground/40 text-center mt-4 tracking-wide">
                   Type `test` again if you're brave.
                 </p>
               </motion.div>
