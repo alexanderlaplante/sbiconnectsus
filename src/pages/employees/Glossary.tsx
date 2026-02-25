@@ -437,7 +437,7 @@ const Glossary = () => {
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search 67 terms…"
+              placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10 bg-card/60 backdrop-blur-sm border-border/60 focus:border-primary/50 transition-colors"
