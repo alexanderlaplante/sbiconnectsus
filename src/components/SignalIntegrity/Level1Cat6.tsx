@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { playSuccess, playError } from "./audioUtils";
 
@@ -13,6 +13,11 @@ const T568B = [
   { name: "Brown", color: "#92400e", stripe: null },
 ];
 
+const WIRE_ORANGE = 1;
+const WIRE_WHITE_ORANGE = 0;
+const SLOT_1 = 0; // Pin 1 (0-indexed)
+const SLOT_2 = 1; // Pin 2 (0-indexed)
+
 interface Props {
   onComplete: () => void;
 }
@@ -21,6 +26,14 @@ export default function Level1Cat6({ onComplete }: Props) {
   const [placed, setPlaced] = useState<(number | null)[]>(Array(8).fill(null));
   const [selected, setSelected] = useState<number | null>(null);
   const [result, setResult] = useState<"success" | "fail" | null>(null);
+  const [hint, setHint] = useState<string | null>(null);
+  const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showHint = useCallback((msg: string) => {
+    if (hintTimer.current) clearTimeout(hintTimer.current);
+    setHint(msg);
+    hintTimer.current = setTimeout(() => setHint(null), 2500);
+  }, []);
 
   // Shuffled wire indices for the pool
   const [pool] = useState(() => {
@@ -33,6 +46,42 @@ export default function Level1Cat6({ onComplete }: Props) {
   });
 
   const placedSet = new Set(placed.filter((v) => v !== null));
+
+  // Handle tapping a wire in the Available Wires pool
+  const handleWireSelect = useCallback(
+    (wireIdx: number) => {
+      if (result) return;
+
+      // Orange wire: toggle select only, never auto-place
+      if (wireIdx === WIRE_ORANGE) {
+        setSelected((prev) => (prev === wireIdx ? null : wireIdx));
+        return;
+      }
+
+      // White-Orange wire: auto-place into Slot 2 if Orange is in Slot 1
+      if (wireIdx === WIRE_WHITE_ORANGE) {
+        if (placed[SLOT_1] !== WIRE_ORANGE) {
+          showHint("Sequence Error: Orange must be placed before White-Orange.");
+          return;
+        }
+        if (placed[SLOT_2] !== null) {
+          showHint("Pin 2 occupied. Clear before pairing.");
+          return;
+        }
+        setPlaced((prev) => {
+          const next = [...prev];
+          next[SLOT_2] = WIRE_WHITE_ORANGE;
+          return next;
+        });
+        setSelected(null);
+        return;
+      }
+
+      // Default: toggle selection
+      setSelected((prev) => (prev === wireIdx ? null : wireIdx));
+    },
+    [result, placed, showHint]
+  );
 
   const handleSlotClick = useCallback(
     (slotIdx: number) => {
@@ -52,13 +101,21 @@ export default function Level1Cat6({ onComplete }: Props) {
   const handleRemove = useCallback(
     (slotIdx: number) => {
       if (result) return;
+      const wireIdx = placed[slotIdx];
+
       setPlaced((prev) => {
         const next = [...prev];
         next[slotIdx] = null;
+
+        // If removing Orange from Slot 1, also remove White-Orange from Slot 2
+        if (wireIdx === WIRE_ORANGE && slotIdx === SLOT_1 && next[SLOT_2] === WIRE_WHITE_ORANGE) {
+          next[SLOT_2] = null;
+        }
+
         return next;
       });
     },
-    [result]
+    [result, placed]
   );
 
   const handleValidate = () => {
@@ -74,6 +131,7 @@ export default function Level1Cat6({ onComplete }: Props) {
         setResult(null);
         setPlaced(Array(8).fill(null));
         setSelected(null);
+        setHint(null);
       }, 1500);
     }
   };
@@ -153,7 +211,7 @@ export default function Level1Cat6({ onComplete }: Props) {
             return (
               <motion.button
                 key={wireIdx}
-                onClick={() => setSelected(selected === wireIdx ? null : wireIdx)}
+                onClick={() => handleWireSelect(wireIdx)}
                 whileTap={{ scale: 0.92 }}
                 className={`flex items-center gap-1.5 px-2 py-1.5 rounded border transition-all font-mono text-[10px] ${
                   selected === wireIdx
@@ -180,6 +238,21 @@ export default function Level1Cat6({ onComplete }: Props) {
           })}
         </div>
       </div>
+
+      {/* Terminal Hint */}
+      <AnimatePresence>
+        {hint && (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="font-mono text-[10px] text-amber-400/80 text-center tracking-wider"
+            style={{ textShadow: "0 0 8px rgba(245,158,11,0.4)" }}
+          >
+            ▸ {hint}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Validate Button */}
       {allPlaced && !result && (
