@@ -4,6 +4,13 @@ import { AnimatePresence, motion } from "framer-motion";
 const Level1Cat6 = lazy(() => import("./Level1Cat6"));
 const Level2FiberSplice = lazy(() => import("./Level2FiberSplice"));
 const Level3FiberColor = lazy(() => import("./Level3FiberColor"));
+const Level4ConduitFill = lazy(() => import("./Level4ConduitFill"));
+const Level5PatchPanel = lazy(() => import("./Level5PatchPanel"));
+const Level6CableLabel = lazy(() => import("./Level6CableLabel"));
+const Level7PoeBudget = lazy(() => import("./Level7PoeBudget"));
+const Level8RackElevation = lazy(() => import("./Level8RackElevation"));
+const Level9FireAlarm = lazy(() => import("./Level9FireAlarm"));
+const Level10CableCert = lazy(() => import("./Level10CableCert"));
 const MissionComplete = lazy(() => import("./MissionComplete"));
 
 interface Props {
@@ -11,7 +18,11 @@ interface Props {
   onClose: () => void;
 }
 
-type Stage = "briefing" | "level1" | "level2" | "level3" | "complete";
+type Stage =
+  | "briefing"
+  | "level1" | "level2" | "level3" | "level4" | "level5"
+  | "level6" | "level7" | "level8" | "level9" | "level10"
+  | "complete";
 
 const prefersReduced =
   typeof window !== "undefined"
@@ -22,12 +33,19 @@ const BRIEFING_LINES = [
   "▸ OPERATION: SIGNAL INTEGRITY",
   "",
   "Operator, your mission:",
-  "Prove you can build infrastructure",
-  "that meets SBI specifications.",
+  "Complete 10 low-voltage tasks",
+  "that meet SBI specifications.",
   "",
-  "LEVEL 1 — Cat6 Termination (T568B)",
-  "LEVEL 2 — Fiber Fusion Splicing",
-  "LEVEL 3 — Fiber Color Code (TIA-598)",
+  "LEVEL 1  — Cat6 Termination (T568B)",
+  "LEVEL 2  — Fiber Fusion Splicing",
+  "LEVEL 3  — Fiber Color Code (TIA-598)",
+  "LEVEL 4  — Conduit Fill (NEC 40%)",
+  "LEVEL 5  — Patch Panel Port Mapping",
+  "LEVEL 6  — Cable Labeling (TIA-606-C)",
+  "LEVEL 7  — PoE Power Budget",
+  "LEVEL 8  — Rack Elevation Planning",
+  "LEVEL 9  — Fire Alarm Loop (NFPA 72)",
+  "LEVEL 10 — Cable Certification",
   "",
   "Good luck. SBI is watching.",
 ];
@@ -36,7 +54,6 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
   const [stage, setStage] = useState<Stage>("briefing");
   const [briefingLine, setBriefingLine] = useState(0);
 
-  // Reset on open
   useEffect(() => {
     if (open) {
       setStage("briefing");
@@ -44,7 +61,6 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
     }
   }, [open]);
 
-  // Briefing typewriter
   useEffect(() => {
     if (stage !== "briefing" || briefingLine >= BRIEFING_LINES.length) return;
     const delay = BRIEFING_LINES[briefingLine] === "" ? 80 : 50;
@@ -52,7 +68,6 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
     return () => clearTimeout(t);
   }, [stage, briefingLine]);
 
-  // ESC to close
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
@@ -65,7 +80,20 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
   const startMission = useCallback(() => setStage("level1"), []);
   const goLevel2 = useCallback(() => setStage("level2"), []);
   const goLevel3 = useCallback(() => setStage("level3"), []);
+  const goLevel4 = useCallback(() => setStage("level4"), []);
+  const goLevel5 = useCallback(() => setStage("level5"), []);
+  const goLevel6 = useCallback(() => setStage("level6"), []);
+  const goLevel7 = useCallback(() => setStage("level7"), []);
+  const goLevel8 = useCallback(() => setStage("level8"), []);
+  const goLevel9 = useCallback(() => setStage("level9"), []);
+  const goLevel10 = useCallback(() => setStage("level10"), []);
   const goComplete = useCallback(() => setStage("complete"), []);
+
+  const stageLabel = stage === "briefing"
+    ? "standby"
+    : stage === "complete"
+    ? "mission complete"
+    : stage.replace("level", "lvl ");
 
   return (
     <AnimatePresence>
@@ -80,14 +108,12 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
           aria-modal="true"
           aria-label="Operation Signal Integrity"
         >
-          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/95"
             onClick={onClose}
             aria-label="Close game"
           />
 
-          {/* Scanline overlay */}
           <div
             className="absolute inset-0 pointer-events-none"
             aria-hidden="true"
@@ -97,7 +123,6 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
             }}
           />
 
-          {/* Game Window */}
           <motion.div
             className="relative z-10 w-[95vw] max-w-2xl rounded-lg border overflow-hidden my-auto"
             style={{
@@ -110,7 +135,6 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: prefersReduced ? 0.1 : 0.3, ease: "easeOut" }}
           >
-            {/* Title bar */}
             <div
               className="flex items-center gap-2 px-4 py-2 border-b"
               style={{ borderColor: "rgba(0,255,102,0.12)" }}
@@ -122,15 +146,14 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
                 className="ml-3 font-mono text-[10px] tracking-wider uppercase"
                 style={{ color: "rgba(0,255,102,0.4)" }}
               >
-                sbi_signal_integrity v1.0
+                sbi_signal_integrity v2.0
               </span>
               <span className="ml-auto font-mono text-[9px] text-green-700/30 uppercase">
-                {stage === "briefing" ? "standby" : stage === "complete" ? "mission complete" : stage.replace("level", "lvl ")}
+                {stageLabel}
               </span>
             </div>
 
-            {/* Content */}
-            <div className="p-4 sm:p-6 min-h-[400px] flex flex-col justify-center">
+            <div className="p-4 sm:p-6 min-h-[400px] max-h-[80vh] overflow-y-auto flex flex-col justify-center">
               <Suspense
                 fallback={
                   <div className="font-mono text-xs text-green-500/50 text-center animate-pulse">
@@ -176,12 +199,18 @@ export default function SignalIntegrityGame({ open, onClose }: Props) {
 
                 {stage === "level1" && <Level1Cat6 onComplete={goLevel2} />}
                 {stage === "level2" && <Level2FiberSplice onComplete={goLevel3} />}
-                {stage === "level3" && <Level3FiberColor onComplete={goComplete} />}
+                {stage === "level3" && <Level3FiberColor onComplete={goLevel4} />}
+                {stage === "level4" && <Level4ConduitFill onComplete={goLevel5} />}
+                {stage === "level5" && <Level5PatchPanel onComplete={goLevel6} />}
+                {stage === "level6" && <Level6CableLabel onComplete={goLevel7} />}
+                {stage === "level7" && <Level7PoeBudget onComplete={goLevel8} />}
+                {stage === "level8" && <Level8RackElevation onComplete={goLevel9} />}
+                {stage === "level9" && <Level9FireAlarm onComplete={goLevel10} />}
+                {stage === "level10" && <Level10CableCert onComplete={goComplete} />}
                 {stage === "complete" && <MissionComplete onExit={onClose} />}
               </Suspense>
             </div>
 
-            {/* Footer */}
             <div
               className="px-4 pb-3 flex items-center justify-between"
               style={{ borderColor: "rgba(0,255,102,0.1)" }}
