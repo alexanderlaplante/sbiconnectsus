@@ -37,26 +37,29 @@ export default function Level3FiberColor({ onComplete }: Props) {
   });
 
   const [placed, setPlaced] = useState<number[]>([]);
-  const [selected, setSelected] = useState<number | null>(null);
   const [result, setResult] = useState<"success" | "fail" | null>(null);
 
   const placedSet = new Set(placed);
 
+  // Clicking an available fiber places it in the next open slot
+  const handlePickFiber = useCallback(
+    (fiberIdx: number) => {
+      if (result) return;
+      if (placed.length >= 12) return;
+      setPlaced((prev) => [...prev, fiberIdx]);
+    },
+    [placed, result]
+  );
+
+  // Clicking a placed fiber removes it (and all after it) back to available
   const handleSlotClick = useCallback(
     (slotIdx: number) => {
       if (result) return;
-      if (selected === null) return;
-      if (slotIdx !== placed.length) return; // must fill in order
-      setPlaced((prev) => [...prev, selected]);
-      setSelected(null);
+      if (slotIdx >= placed.length) return;
+      setPlaced((prev) => prev.slice(0, slotIdx));
     },
-    [selected, placed, result]
+    [placed, result]
   );
-
-  const handleUndo = useCallback(() => {
-    if (result) return;
-    setPlaced((prev) => prev.slice(0, -1));
-  }, [result]);
 
   const handleValidate = () => {
     const correct = placed.every((fiberIdx, pos) => fiberIdx === pos);
@@ -70,7 +73,7 @@ export default function Level3FiberColor({ onComplete }: Props) {
       setTimeout(() => {
         setResult(null);
         setPlaced([]);
-        setSelected(null);
+        setPlaced([]);
       }, 1500);
     }
   };
@@ -106,9 +109,9 @@ export default function Level3FiberColor({ onComplete }: Props) {
                 onClick={() => handleSlotClick(slotIdx)}
                 className={`relative h-14 sm:h-16 rounded border transition-all duration-200 flex flex-col items-center justify-center ${
                   fiberIdx !== null
-                    ? "border-green-700/50"
-                    : isNext && selected !== null
-                    ? "border-green-500/60 bg-green-900/10 animate-pulse"
+                    ? "border-green-700/50 hover:border-red-500/50 cursor-pointer"
+                    : isNext
+                    ? "border-green-500/60 bg-green-900/10"
                     : "border-green-900/30 bg-[#0a0e13]"
                 }`}
                 aria-label={`Position ${slotIdx + 1}${fiberIdx !== null ? `: ${FIBER_COLORS[fiberIdx].name}` : ""}`}
@@ -132,12 +135,9 @@ export default function Level3FiberColor({ onComplete }: Props) {
           })}
         </div>
         {placed.length > 0 && !result && (
-          <button
-            onClick={handleUndo}
-            className="mt-2 font-mono text-[10px] text-green-600/60 hover:text-green-400 transition-colors"
-          >
-            ↩ Undo last
-          </button>
+          <div className="font-mono text-[9px] text-green-600/40 mt-2 text-center">
+            Tap a placed fiber to remove it
+          </div>
         )}
       </div>
 
@@ -153,13 +153,9 @@ export default function Level3FiberColor({ onComplete }: Props) {
             return (
               <motion.button
                 key={fiberIdx}
-                onClick={() => setSelected(selected === fiberIdx ? null : fiberIdx)}
+                onClick={() => handlePickFiber(fiberIdx)}
                 whileTap={{ scale: 0.92 }}
-                className={`flex items-center gap-1.5 px-2 py-1.5 rounded border transition-all font-mono text-[10px] ${
-                  selected === fiberIdx
-                    ? "border-green-400 bg-green-900/30 ring-1 ring-green-400/40"
-                    : "border-green-900/40 bg-[#0a0e13] hover:border-green-700/50"
-                }`}
+                className="flex items-center gap-1.5 px-2 py-1.5 rounded border transition-all font-mono text-[10px] border-green-900/40 bg-[#0a0e13] hover:border-green-700/50"
               >
                 <span
                   className="w-2.5 h-6 rounded-full inline-block"
