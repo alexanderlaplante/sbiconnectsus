@@ -1,7 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
-import { motion } from "framer-motion";
+import { Search, ChevronDown, Zap, Cable, Plug, BarChart3, Radio, Shield, Building2, Globe } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+/* ── Data ─────────────────────────────────────────────────────── */
 
 interface GlossaryEntry {
   acronym: string;
@@ -12,26 +14,37 @@ interface GlossaryEntry {
 }
 
 const CATEGORIES = [
-  "All",
-  "Fiber Types",
-  "Connectors",
-  "Polish & Loss",
-  "Transceivers & Cables",
-  "Multiplexing",
-  "Jacket & Ratings",
-  "Standards & Organizations",
-  "Network & Telecom",
+  { key: "All", icon: Zap, label: "All" },
+  { key: "Fiber Types", icon: Cable, label: "Fiber Types" },
+  { key: "Connectors", icon: Plug, label: "Connectors" },
+  { key: "Polish & Loss", icon: BarChart3, label: "Polish & Loss" },
+  { key: "Transceivers & Cables", icon: Radio, label: "Transceivers" },
+  { key: "Multiplexing", icon: Zap, label: "Multiplexing" },
+  { key: "Jacket & Ratings", icon: Shield, label: "Jacket & Ratings" },
+  { key: "Standards & Organizations", icon: Building2, label: "Standards" },
+  { key: "Network & Telecom", icon: Globe, label: "Network" },
 ] as const;
 
-const CATEGORY_COLORS: Record<string, string> = {
-  "Fiber Types": "bg-emerald-500/15 text-emerald-400 border-emerald-500/25",
-  "Connectors": "bg-sky-500/15 text-sky-400 border-sky-500/25",
-  "Polish & Loss": "bg-violet-500/15 text-violet-400 border-violet-500/25",
-  "Transceivers & Cables": "bg-amber-500/15 text-amber-400 border-amber-500/25",
-  "Multiplexing": "bg-rose-500/15 text-rose-400 border-rose-500/25",
-  "Jacket & Ratings": "bg-orange-500/15 text-orange-400 border-orange-500/25",
-  "Standards & Organizations": "bg-cyan-500/15 text-cyan-400 border-cyan-500/25",
-  "Network & Telecom": "bg-indigo-500/15 text-indigo-400 border-indigo-500/25",
+const GLOW: Record<string, string> = {
+  "Fiber Types": "from-emerald-500/20 to-emerald-500/0",
+  "Connectors": "from-sky-500/20 to-sky-500/0",
+  "Polish & Loss": "from-violet-500/20 to-violet-500/0",
+  "Transceivers & Cables": "from-amber-500/20 to-amber-500/0",
+  "Multiplexing": "from-rose-500/20 to-rose-500/0",
+  "Jacket & Ratings": "from-orange-500/20 to-orange-500/0",
+  "Standards & Organizations": "from-cyan-500/20 to-cyan-500/0",
+  "Network & Telecom": "from-indigo-500/20 to-indigo-500/0",
+};
+
+const DOT: Record<string, string> = {
+  "Fiber Types": "bg-emerald-400",
+  "Connectors": "bg-sky-400",
+  "Polish & Loss": "bg-violet-400",
+  "Transceivers & Cables": "bg-amber-400",
+  "Multiplexing": "bg-rose-400",
+  "Jacket & Ratings": "bg-orange-400",
+  "Standards & Organizations": "bg-cyan-400",
+  "Network & Telecom": "bg-indigo-400",
 };
 
 const GLOSSARY: GlossaryEntry[] = [
@@ -39,6 +52,13 @@ const GLOSSARY: GlossaryEntry[] = [
   { acronym: "LAN", standsFor: "Local Area Network", category: "Network & Telecom", description: "Network within a limited area such as an office or campus.", details: "LANs are the backbone of enterprise environments, connecting workstations, printers, and servers within a building or campus. Ethernet (IEEE 802.3) is the dominant LAN technology, running over both copper and fiber media." },
   { acronym: "VM", standsFor: "Virtual Machine", category: "Network & Telecom", description: "Software-based computer instance that runs on physical servers.", details: "VMs allow multiple operating systems to share a single physical host, increasing server utilization. They rely on high-bandwidth LAN connections—often 10G or 25G fiber—to handle east-west traffic between virtual workloads in modern data centers." },
   { acronym: "Gb / Gbps", standsFor: "Gigabit / Gigabits per second", category: "Network & Telecom", description: "Unit of data transfer speed equal to 1 billion bits per second.", details: "Gigabit Ethernet (1000BASE-T over copper, 1000BASE-SX/LX over fiber) is the baseline speed in most modern networks. Higher tiers—10G, 25G, 40G, 100G, and 400G—are increasingly common in data center spine-leaf architectures." },
+  { acronym: "CATV", standsFor: "Cable Television (Community Antenna Television)", category: "Network & Telecom", description: "Video distribution system increasingly carried over fiber.", details: "CATV headends distribute RF video signals over fiber using analog or digital modulation. APC connectors are mandatory because the analog signals are extremely sensitive to back-reflections. Modern systems use RF-over-Glass (RFoG) and IP video (IPTV) over PON architectures." },
+  { acronym: "SONET", standsFor: "Synchronous Optical Network", category: "Network & Telecom", description: "Legacy North American fiber-optic telecom transport protocol.", details: "SONET (ANSI T1.105) defines a hierarchy of data rates starting at OC-1 (51.84 Mbps) up to OC-768 (40 Gbps). It provides synchronous multiplexing, built-in fault recovery (ring protection), and operations management. Largely replaced by packet-based OTN and Carrier Ethernet in new deployments." },
+  { acronym: "SDH", standsFor: "Synchronous Digital Hierarchy", category: "Network & Telecom", description: "International equivalent of SONET used outside North America.", details: "SDH (ITU-T G.707) starts at STM-1 (155 Mbps) and scales to STM-256 (40 Gbps). It is functionally equivalent to SONET with different naming conventions. SDH/SONET ring networks formed the backbone of global telecom for decades." },
+  { acronym: "ATM", standsFor: "Asynchronous Transfer Mode", category: "Network & Telecom", description: "Fixed-cell-size switching technology — legacy telecom.", details: "ATM uses 53-byte cells for multiplexing voice, video, and data with Quality of Service guarantees. It was prominent in the 1990s–2000s WAN and backbone networks but has been almost entirely replaced by MPLS, Carrier Ethernet, and IP/MPLS architectures." },
+  { acronym: "EPON", standsFor: "Ethernet Passive Optical Network", category: "Network & Telecom", description: "IEEE 802.3ah standard for fiber-to-the-premise access.", details: "EPON uses passive optical splitters to share a single fiber from the central office (OLT) to up to 32 subscribers (ONUs). Operating at 1G symmetric, it is widely deployed in Asia. 10G-EPON (IEEE 802.3av) extends capacity for next-generation access." },
+  { acronym: "GPON", standsFor: "Gigabit Passive Optical Network", category: "Network & Telecom", description: "ITU-T G.984 standard for high-speed fiber access.", details: "GPON provides 2.488 Gbps downstream and 1.244 Gbps upstream over single-mode fiber using 1490 nm (downstream) and 1310 nm (upstream) wavelengths. A 1550 nm overlay supports RF video. It is the dominant PON technology in North America and Europe. XGS-PON (G.9807.1) extends to 10G symmetric." },
+  { acronym: "RJ45", standsFor: "Registered Jack 45", category: "Network & Telecom", description: "8-position 8-contact (8P8C) copper Ethernet connector.", details: "Although technically a telephone registration standard, RJ-45 commonly refers to the 8P8C modular connector used for twisted-pair Ethernet (Cat5e, Cat6, Cat6A). It is not a fiber connector but is included here because SFP copper modules use RJ-45 for short copper runs in fiber-dominant networks." },
 
   // Fiber Types
   { acronym: "nm", standsFor: "Nanometer", category: "Fiber Types", description: "Unit of wavelength measurement for optical signals.", details: "Multimode fiber typically operates at 850 nm (VCSEL-based) or 1300 nm, while single-mode fiber uses 1310 nm and 1550 nm windows. The wavelength determines attenuation characteristics, dispersion behavior, and which transceivers are compatible." },
@@ -110,20 +130,129 @@ const GLOSSARY: GlossaryEntry[] = [
   { acronym: "OFCG", standsFor: "Optical Fiber Conductive General Purpose", category: "Jacket & Ratings", description: "General-purpose fiber cable with metallic elements.", details: "OFCG is the conductive counterpart to OFNG, adding metallic armor or strength members. It is rated only for same-floor horizontal runs and requires bonding and grounding." },
   { acronym: "OFN", standsFor: "Optical Fiber Nonconductive", category: "Jacket & Ratings", description: "Basic all-dielectric fiber cable — no specific fire rating.", details: "OFN denotes fiber cable without metallic components and without a specific plenum, riser, or general-purpose NEC fire rating. It is used where local codes do not require a higher-rated cable, such as within equipment rooms or short patch cord applications." },
   { acronym: "OFC", standsFor: "Optical Fiber Conductive", category: "Jacket & Ratings", description: "Basic fiber cable with metallic elements — no specific fire rating.", details: "OFC includes metallic components (typically a strength member) but does not carry a plenum, riser, or general-purpose fire rating. The metallic elements require bonding and grounding per NEC Article 770." },
-
-  // Network & Telecom (continued)
-  { acronym: "CATV", standsFor: "Cable Television (Community Antenna Television)", category: "Network & Telecom", description: "Video distribution system increasingly carried over fiber.", details: "CATV headends distribute RF video signals over fiber using analog or digital modulation. APC connectors are mandatory because the analog signals are extremely sensitive to back-reflections. Modern systems use RF-over-Glass (RFoG) and IP video (IPTV) over PON architectures." },
-  { acronym: "SONET", standsFor: "Synchronous Optical Network", category: "Network & Telecom", description: "Legacy North American fiber-optic telecom transport protocol.", details: "SONET (ANSI T1.105) defines a hierarchy of data rates starting at OC-1 (51.84 Mbps) up to OC-768 (40 Gbps). It provides synchronous multiplexing, built-in fault recovery (ring protection), and operations management. Largely replaced by packet-based OTN and Carrier Ethernet in new deployments." },
-  { acronym: "SDH", standsFor: "Synchronous Digital Hierarchy", category: "Network & Telecom", description: "International equivalent of SONET used outside North America.", details: "SDH (ITU-T G.707) starts at STM-1 (155 Mbps) and scales to STM-256 (40 Gbps). It is functionally equivalent to SONET with different naming conventions. SDH/SONET ring networks formed the backbone of global telecom for decades." },
-  { acronym: "ATM", standsFor: "Asynchronous Transfer Mode", category: "Network & Telecom", description: "Fixed-cell-size switching technology — legacy telecom.", details: "ATM uses 53-byte cells for multiplexing voice, video, and data with Quality of Service guarantees. It was prominent in the 1990s–2000s WAN and backbone networks but has been almost entirely replaced by MPLS, Carrier Ethernet, and IP/MPLS architectures." },
-  { acronym: "EPON", standsFor: "Ethernet Passive Optical Network", category: "Network & Telecom", description: "IEEE 802.3ah standard for fiber-to-the-premise access.", details: "EPON uses passive optical splitters to share a single fiber from the central office (OLT) to up to 32 subscribers (ONUs). Operating at 1G symmetric, it is widely deployed in Asia. 10G-EPON (IEEE 802.3av) extends capacity for next-generation access." },
-  { acronym: "GPON", standsFor: "Gigabit Passive Optical Network", category: "Network & Telecom", description: "ITU-T G.984 standard for high-speed fiber access.", details: "GPON provides 2.488 Gbps downstream and 1.244 Gbps upstream over single-mode fiber using 1490 nm (downstream) and 1310 nm (upstream) wavelengths. A 1550 nm overlay supports RF video. It is the dominant PON technology in North America and Europe. XGS-PON (G.9807.1) extends to 10G symmetric." },
-  { acronym: "RJ45", standsFor: "Registered Jack 45", category: "Network & Telecom", description: "8-position 8-contact (8P8C) copper Ethernet connector.", details: "Although technically a telephone registration standard, RJ-45 commonly refers to the 8P8C modular connector used for twisted-pair Ethernet (Cat5e, Cat6, Cat6A). It is not a fiber connector but is included here because SFP copper modules use RJ-45 for short copper runs in fiber-dominant networks." },
 ];
+
+/* ── Animated Background ──────────────────────────────────────── */
+
+const FiberGrid = () => (
+  <div className="pointer-events-none fixed inset-0 overflow-hidden opacity-[0.04]">
+    <div
+      className="absolute inset-0"
+      style={{
+        backgroundImage:
+          "linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)",
+        backgroundSize: "60px 60px",
+      }}
+    />
+  </div>
+);
+
+/* ── Expandable Card ──────────────────────────────────────────── */
+
+const GlossaryCard = ({ entry, isOpen, onToggle }: { entry: GlossaryEntry; isOpen: boolean; onToggle: () => void }) => {
+  const glow = GLOW[entry.category] ?? "from-primary/20 to-primary/0";
+  const dot = DOT[entry.category] ?? "bg-primary";
+
+  return (
+    <motion.div
+      layout
+      className="group relative"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.25 }}
+    >
+      {/* Glow edge */}
+      <div
+        className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${glow} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+      />
+
+      <div
+        onClick={onToggle}
+        className="relative cursor-pointer rounded-2xl border border-border/60 bg-card/70 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-border"
+      >
+        {/* Header */}
+        <div className="flex items-center gap-4 px-5 py-4">
+          {/* Acronym badge */}
+          <div className="shrink-0 flex items-center justify-center min-w-[4rem] h-10 rounded-lg bg-muted/60 border border-border/40">
+            <span className="font-mono text-sm font-bold text-primary tracking-wide">
+              {entry.acronym}
+            </span>
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold truncate leading-tight">
+              {entry.standsFor}
+            </p>
+            <p className="text-xs text-muted-foreground truncate mt-0.5">
+              {entry.description}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <span className={`w-2 h-2 rounded-full ${dot}`} />
+            <motion.div
+              animate={{ rotate: isOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Expanded Detail */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="px-5 pb-5 pt-1">
+                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent mb-4" />
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  {entry.details}
+                </p>
+                <div className="mt-3 flex items-center gap-2">
+                  <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+                  <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">
+                    {entry.category}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+};
+
+/* ── Alphabet Jump Bar ────────────────────────────────────────── */
+
+const AlphabetBar = ({ letters, onJump }: { letters: string[]; onJump: (l: string) => void }) => (
+  <div className="hidden lg:flex flex-col items-center gap-0.5 fixed right-4 top-1/2 -translate-y-1/2 z-30">
+    {letters.map((l) => (
+      <button
+        key={l}
+        onClick={() => onJump(l)}
+        className="w-6 h-5 flex items-center justify-center text-[10px] font-mono font-bold text-muted-foreground hover:text-primary hover:scale-125 transition-all duration-150"
+      >
+        {l}
+      </button>
+    ))}
+  </div>
+);
+
+/* ── Main Component ───────────────────────────────────────────── */
 
 const Glossary = () => {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [openAcronym, setOpenAcronym] = useState<string | null>(null);
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const filtered = useMemo(() => {
     let result = GLOSSARY;
@@ -143,97 +272,161 @@ const Glossary = () => {
     return result;
   }, [search, activeCategory]);
 
+  // Group alphabetically
+  const grouped = useMemo(() => {
+    const map: Record<string, GlossaryEntry[]> = {};
+    for (const e of filtered) {
+      const letter = e.acronym[0].toUpperCase();
+      (map[letter] ??= []).push(e);
+    }
+    return Object.entries(map).sort(([a], [b]) => a.localeCompare(b));
+  }, [filtered]);
+
+  const allLetters = useMemo(() => grouped.map(([l]) => l), [grouped]);
+
+  const jumpTo = (letter: string) => {
+    sectionRefs.current[letter]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // Auto-expand single search result
+  useEffect(() => {
+    if (filtered.length === 1) {
+      setOpenAcronym(filtered[0].acronym);
+    }
+  }, [filtered]);
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-5xl px-4 py-12 md:py-20">
-        {/* Header */}
+    <div className="min-h-screen bg-background text-foreground relative">
+      <FiberGrid />
+
+      <div className="relative z-10 mx-auto max-w-4xl px-4 py-14 md:py-24 lg:pr-14">
+        {/* Hero Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">
-            Fiber Optics Acronym Glossary
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-5 tracking-wide">
+            <Cable className="h-3.5 w-3.5" />
+            INTERNAL REFERENCE
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4">
+            Fiber Optics
+            <br />
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              Acronym Glossary
+            </span>
           </h1>
-          <p className="text-muted-foreground mb-10 max-w-2xl">
-            Quick-reference guide sourced from{" "}
-            <span className="italic">Fiber Optics in the LAN and Data Center</span>.
-            Search or filter by category to find what you need.
+          <p className="text-muted-foreground max-w-lg leading-relaxed">
+            Quick-reference field guide sourced from{" "}
+            <span className="italic text-foreground/70">Fiber Optics in the LAN & Data Center</span>.
+            Tap any term to expand full details.
           </p>
         </motion.div>
 
-        {/* Search */}
-        <div className="relative mb-6 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search acronyms, terms, descriptions…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
-          />
+        {/* Search & Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mb-8 space-y-4"
+        >
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search 67 terms…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10 bg-card/60 backdrop-blur-sm border-border/60 focus:border-primary/50 transition-colors"
+            />
+          </div>
+
+          <div className="flex flex-wrap gap-1.5">
+            {CATEGORIES.map(({ key, icon: Icon, label }) => (
+              <button
+                key={key}
+                onClick={() => setActiveCategory(key)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
+                  activeCategory === key
+                    ? "bg-primary/15 text-primary border border-primary/30 shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
+                    : "bg-muted/30 text-muted-foreground border border-transparent hover:bg-muted/50 hover:text-foreground"
+                }`}
+              >
+                <Icon className="h-3 w-3" />
+                {label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Count */}
+        <div className="flex items-center gap-2 mb-6">
+          <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
+          <span className="text-[11px] font-mono text-muted-foreground tracking-wider uppercase">
+            {filtered.length} terms
+          </span>
+          <div className="h-px flex-1 bg-gradient-to-l from-border to-transparent" />
         </div>
 
-        {/* Category pills */}
-        <div className="flex flex-wrap gap-2 mb-10">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-                activeCategory === cat
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-muted/40 text-muted-foreground border-border hover:bg-muted"
-              }`}
+        {/* Grouped Entries */}
+        <div className="space-y-8">
+          {grouped.map(([letter, entries]) => (
+            <div
+              key={letter}
+              ref={(el) => { sectionRefs.current[letter] = el; }}
+              className="scroll-mt-24"
             >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Cards */}
-        <div className="grid gap-4 sm:grid-cols-2">
-          {filtered.map((entry, i) => (
-            <motion.div
-              key={entry.acronym}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.6) }}
-              className="rounded-xl border border-border bg-card p-5 flex flex-col gap-3"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <span className="font-mono text-lg font-bold text-primary leading-tight">
-                  {entry.acronym}
+              {/* Letter divider */}
+              <div className="flex items-center gap-3 mb-3">
+                <span className="font-mono text-2xl font-black text-primary/30 select-none">
+                  {letter}
                 </span>
-                <span
-                  className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
-                    CATEGORY_COLORS[entry.category] ?? "bg-muted text-muted-foreground border-border"
-                  }`}
-                >
-                  {entry.category}
-                </span>
+                <div className="h-px flex-1 bg-border/40" />
               </div>
 
-              <p className="text-sm font-semibold leading-snug">{entry.standsFor}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {entry.description}
-              </p>
-              <p className="text-xs text-muted-foreground/80 leading-relaxed border-t border-border pt-3">
-                {entry.details}
-              </p>
-            </motion.div>
+              <div className="space-y-2">
+                <AnimatePresence mode="popLayout">
+                  {entries.map((entry) => (
+                    <GlossaryCard
+                      key={entry.acronym}
+                      entry={entry}
+                      isOpen={openAcronym === entry.acronym}
+                      onToggle={() =>
+                        setOpenAcronym((prev) =>
+                          prev === entry.acronym ? null : entry.acronym
+                        )
+                      }
+                    />
+                  ))}
+                </AnimatePresence>
+              </div>
+            </div>
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <p className="text-center text-muted-foreground py-16">
-            No matching entries found.
-          </p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <p className="text-muted-foreground text-lg">No matching terms found.</p>
+            <button
+              onClick={() => {
+                setSearch("");
+                setActiveCategory("All");
+              }}
+              className="mt-3 text-sm text-primary hover:underline"
+            >
+              Clear filters
+            </button>
+          </motion.div>
         )}
-
-        <p className="text-xs text-muted-foreground mt-8">
-          Showing {filtered.length} of {GLOSSARY.length} entries
-        </p>
       </div>
+
+      {/* Alphabet jump bar */}
+      <AlphabetBar letters={allLetters} onJump={jumpTo} />
     </div>
   );
 };
