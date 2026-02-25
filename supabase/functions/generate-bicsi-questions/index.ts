@@ -11,6 +11,7 @@ const CERT_DETAILS: Record<string, string> = {
   instc: "BICSI Installer 2 Copper (INSTC) – covers copper cabling systems including Cat5e/Cat6/Cat6A termination, testing, troubleshooting, TIA-568 standards, bonding & grounding, and advanced copper installation techniques.",
   instf: "BICSI Installer 2 Optical Fiber (INSTF) – covers fiber optic cabling systems including singlemode/multimode fiber, fusion/mechanical splicing, OTDR testing, connector polishing, fiber standards, and loss budgets.",
   tech: "BICSI Technician (TECH) – covers advanced topics: network design, project management, codes & standards (TIA, NEC, NFPA), DAS, audiovisual systems, data center infrastructure, and system commissioning.",
+  rcdd: "BICSI Registered Communications Distribution Designer (RCDD) – covers ICT system design, telecommunications spaces, pathways & spaces, cable management, fire stopping, grounding & bonding, project management, and building codes compliance.",
 };
 
 serve(async (req) => {
@@ -25,7 +26,7 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
-    const validCerts = (certifications || ["inst1", "instc", "instf", "tech"]).filter(
+    const validCerts = (certifications || ["inst1", "instc", "instf", "tech", "rcdd"]).filter(
       (c: string) => CERT_DETAILS[c]
     );
 

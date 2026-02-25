@@ -4,7 +4,7 @@ import SbiLogo from "@/components/SbiLogo";
 import { MapPin, Phone, Mail } from "lucide-react";
 import veteranBadge from "@/assets/veteran-owned-badge.png";
 
-const Footer = ({ onOpenQuiz, onOpenGame }: { onOpenQuiz?: () => void; onOpenGame?: () => void }) => {
+const Footer = ({ onOpenGame }: { onOpenQuiz?: () => void; onOpenGame?: () => void }) => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handlePressStart = useCallback(() => {
@@ -98,17 +98,7 @@ const Footer = ({ onOpenQuiz, onOpenGame }: { onOpenQuiz?: () => void; onOpenGam
 
       <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} SBI Connects. All rights reserved.</p>
-        <div className="flex items-center gap-4">
-          <p className="text-xs text-muted-foreground">Built with precision. Engineered for performance.</p>
-          {onOpenQuiz && (
-            <button
-              onClick={onOpenQuiz}
-              className="text-xs text-muted-foreground/50 transition-colors hover:text-primary focus:outline-none"
-            >
-              Are You an Integrator?
-            </button>
-          )}
-        </div>
+        <p className="text-xs text-muted-foreground">Built with precision. Engineered for performance.</p>
       </div>
     </div>
   </footer>
