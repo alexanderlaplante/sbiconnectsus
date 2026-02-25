@@ -378,8 +378,8 @@ const Glossary = () => {
     const map: Record<string, GlossaryEntry[]> = {};
     for (const e of filtered) {
       const raw = e.acronym[0].toUpperCase();
-      // Normalize special characters to their letter group (e.g. µ → M)
-      const letter = raw === "µ" ? "M" : raw;
+      // Normalize special characters to their letter group (e.g. µ/Μ → M)
+      const letter = raw === "µ" || raw === "Μ" ? "M" : raw;
       (map[letter] ??= []).push(e);
     }
     return Object.entries(map).sort(([a], [b]) => a.localeCompare(b));
