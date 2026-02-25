@@ -37,9 +37,11 @@ serve(async (req) => {
       .map((c: string, i: number) => `${i + 1}. ${CERT_DETAILS[c]}`)
       .join("\n");
 
-    const prompt = `You are a BICSI certification exam prep expert. Generate exactly ${validCerts.length} multiple-choice practice questions, one for each of these BICSI certifications:
+    const prompt = `You are a BICSI certification exam prep expert. Generate exactly 5 multiple-choice practice questions randomly selected from these two BICSI certifications:
 
 ${certDescriptions}
+
+Mix the questions randomly — some rounds might have more RCDD, some more TECH. Vary the topics within each certification across different knowledge domains.
 
 For each question:
 - Make it realistic exam-level difficulty
@@ -51,7 +53,7 @@ For each question:
 Return a JSON array with this exact structure:
 [
   {
-    "category": "<cert key: inst1|instc|instf|tech>",
+    "category": "<cert key: rcdd|tech>",
     "categoryLabel": "<human readable cert name>",
     "prompt": "<question text>",
     "options": ["<option A>", "<option B>", "<option C>", "<option D>"],
