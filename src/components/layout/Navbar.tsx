@@ -5,6 +5,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTripleClick } from "@/components/RackAndStackEgg";
+import RackAndStackOverlay from "@/components/RackAndStackEgg";
 
 const services = [
   { title: "Network Infrastructure", href: "/services/network-infrastructure" },
@@ -13,13 +14,15 @@ const services = [
   { title: "Audio-Visual Systems", href: "/services/audio-visual" },
 ];
 
-const Navbar = ({ onOpenRackGame }: { onOpenRackGame?: () => void }) => {
+const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [rackOverlay, setRackOverlay] = useState(false);
   const location = useLocation();
-  const { handleClick } = useTripleClick(1500, onOpenRackGame);
+  const { handleClick } = useTripleClick(1500, () => setRackOverlay(true));
 
   return (
+    <>
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl pt-[env(safe-area-inset-top)]">
       <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center" onClick={handleClick}>
@@ -109,6 +112,8 @@ const Navbar = ({ onOpenRackGame }: { onOpenRackGame?: () => void }) => {
         )}
       </AnimatePresence>
     </nav>
+    <RackAndStackOverlay open={rackOverlay} onClose={() => setRackOverlay(false)} />
+    </>
   );
 };
 
