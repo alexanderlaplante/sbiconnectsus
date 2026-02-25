@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const TRIGGER = "test";
+const TRIGGER = "tech";
 const BUFFER_TIMEOUT = 1500;
 
 const IGNORED_TAGS = new Set(["INPUT", "TEXTAREA", "SELECT"]);
