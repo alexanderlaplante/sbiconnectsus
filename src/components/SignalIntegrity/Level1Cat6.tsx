@@ -19,7 +19,6 @@ interface Props {
 
 export default function Level1Cat6({ onComplete }: Props) {
   const [placed, setPlaced] = useState<(number | null)[]>(Array(8).fill(null));
-  const [selected, setSelected] = useState<number | null>(null);
   const [result, setResult] = useState<"success" | "fail" | null>(null);
 
   // Shuffled wire indices for the pool
@@ -34,19 +33,19 @@ export default function Level1Cat6({ onComplete }: Props) {
 
   const placedSet = new Set(placed.filter((v) => v !== null));
 
-  const handleSlotClick = useCallback(
-    (slotIdx: number) => {
+  // Tap an available wire → auto-place into the next empty slot
+  const handlePickWire = useCallback(
+    (wireIdx: number) => {
       if (result) return;
-      if (selected === null) return;
-      if (placed[slotIdx] !== null) return;
+      const nextEmpty = placed.indexOf(null);
+      if (nextEmpty === -1) return;
       setPlaced((prev) => {
         const next = [...prev];
-        next[slotIdx] = selected;
+        next[nextEmpty] = wireIdx;
         return next;
       });
-      setSelected(null);
     },
-    [selected, placed, result]
+    [placed, result]
   );
 
   const handleRemove = useCallback(
@@ -73,7 +72,6 @@ export default function Level1Cat6({ onComplete }: Props) {
       setTimeout(() => {
         setResult(null);
         setPlaced(Array(8).fill(null));
-        setSelected(null);
       }, 1500);
     }
   };
@@ -91,7 +89,7 @@ export default function Level1Cat6({ onComplete }: Props) {
           Cat6 Termination — T568B Standard
         </h2>
         <p className="font-mono text-[10px] text-green-500/50 mt-1">
-          Tap a wire, then tap a slot to place it. Tap a placed wire to remove.
+          Tap a wire to place it in the next open pin. Tap a placed wire to remove.
         </p>
       </div>
 
@@ -101,16 +99,16 @@ export default function Level1Cat6({ onComplete }: Props) {
           RJ45 Connector — Pin 1-8
         </div>
         <div className="grid grid-cols-8 gap-1 sm:gap-1.5">
-          {placed.map((wireIdx, slotIdx) => (
+          {placed.map((wireIdx, slotIdx) => {
+            const isNext = wireIdx === null && slotIdx === placed.indexOf(null);
+            return (
             <button
               key={slotIdx}
-              onClick={() =>
-                wireIdx !== null ? handleRemove(slotIdx) : handleSlotClick(slotIdx)
-              }
+              onClick={() => wireIdx !== null ? handleRemove(slotIdx) : undefined}
               className={`relative h-14 sm:h-16 rounded border transition-all duration-200 flex flex-col items-center justify-center ${
                 wireIdx !== null
-                  ? "border-green-700/50"
-                  : selected !== null
+                  ? "border-green-700/50 hover:border-red-500/50 cursor-pointer"
+                  : isNext
                   ? "border-green-500/60 bg-green-900/10 animate-pulse"
                   : "border-green-900/30 bg-[#0a0e13]"
               }`}
@@ -137,7 +135,8 @@ export default function Level1Cat6({ onComplete }: Props) {
                 </motion.div>
               )}
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -153,13 +152,9 @@ export default function Level1Cat6({ onComplete }: Props) {
             return (
               <motion.button
                 key={wireIdx}
-                onClick={() => setSelected(selected === wireIdx ? null : wireIdx)}
+                onClick={() => handlePickWire(wireIdx)}
                 whileTap={{ scale: 0.92 }}
-                className={`flex items-center gap-1.5 px-2 py-1.5 rounded border transition-all font-mono text-[10px] ${
-                  selected === wireIdx
-                    ? "border-green-400 bg-green-900/30 ring-1 ring-green-400/40"
-                    : "border-green-900/40 bg-[#0a0e13] hover:border-green-700/50"
-                }`}
+                className="flex items-center gap-1.5 px-2 py-1.5 rounded border transition-all font-mono text-[10px] border-green-900/40 bg-[#0a0e13] hover:border-green-700/50"
               >
                 <span
                   className="w-3 h-6 rounded-sm inline-block relative overflow-hidden"
