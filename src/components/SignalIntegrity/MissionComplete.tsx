@@ -11,16 +11,26 @@ const LINES = [
   "CLASSIFICATION: TOP SECRET // SBI EYES ONLY",
   "",
   "OPERATIVE STATUS: VERIFIED",
-  "CLEARANCE LEVEL: SIGNAL INTEGRITY SPECIALIST",
+  "CLEARANCE LEVEL: MASTER SIGNAL INTEGRITY SPECIALIST",
   "",
   "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
   "",
-  'You\'ve proven you can terminate Cat6 to spec',
-  'and fuse fiber with sub-0.01dB loss.',
-  "",
-  "You're operating at SEAL-grade precision.",
+  "10/10 MISSIONS COMPLETED:",
+  "✓ Cat6 Termination (T568B)",
+  "✓ Fiber Fusion Splicing",
+  "✓ Fiber Color Code (TIA-598)",
+  "✓ Conduit Fill Calculation",
+  "✓ Patch Panel Port Mapping",
+  "✓ Cable Labeling (TIA-606-C)",
+  "✓ PoE Power Budget",
+  "✓ Rack Elevation Planning",
+  "✓ Fire Alarm Loop (NFPA 72)",
+  "✓ Cable Certification",
   "",
   "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+  "",
+  "You're operating at SEAL-grade precision",
+  "across the full low-voltage spectrum.",
   "",
   "📞 PRIORITY CONTACT LINE:",
   "sbiconnects.us/contact",
@@ -60,7 +70,9 @@ export default function MissionComplete({ onExit }: Props) {
                 line.startsWith("━") ? "text-green-700/40" :
                 line.startsWith("📞") ? "text-green-300" :
                 line.includes("sbiconnects") ? "text-green-400 underline" :
+                line.startsWith("✓") ? "text-green-400/90" :
                 line.includes("SEAL") ? "text-green-300 font-bold" :
+                line.includes("10/10") ? "text-green-300 font-bold" :
                 "text-green-400/80"
               }`}
             >
