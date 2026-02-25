@@ -1,10 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { playSuccess, playError } from "./audioUtils";
 
 /**
  * TIA-598 12-fiber color code standard.
- * Players must tap the fibers in the correct order (position 1-12).
+ * Players must place fibers in the correct sequential order (position 1-12).
+ * Immediate sequence validation with terminal-style hints on wrong picks.
  */
 const FIBER_COLORS: { name: string; hex: string }[] = [
   { name: "Blue", hex: "#3b82f6" },
@@ -26,7 +27,6 @@ interface Props {
 }
 
 export default function Level3FiberColor({ onComplete }: Props) {
-  // Shuffle fiber order for the player to sort
   const [shuffled] = useState(() => {
     const arr = Array.from({ length: 12 }, (_, i) => i);
     for (let i = arr.length - 1; i > 0; i--) {
@@ -38,45 +38,61 @@ export default function Level3FiberColor({ onComplete }: Props) {
 
   const [placed, setPlaced] = useState<number[]>([]);
   const [result, setResult] = useState<"success" | "fail" | null>(null);
+  const [hint, setHint] = useState<string | null>(null);
+  const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const placedSet = new Set(placed);
 
-  // Clicking an available fiber places it in the next open slot
+  const showHint = useCallback((msg: string) => {
+    if (hintTimer.current) clearTimeout(hintTimer.current);
+    setHint(msg);
+    hintTimer.current = setTimeout(() => setHint(null), 2500);
+  }, []);
+
+  // The next expected fiber index in the TIA-598 sequence
+  const nextExpected = placed.length < 12 ? placed.length : null;
+
   const handlePickFiber = useCallback(
     (fiberIdx: number) => {
       if (result) return;
       if (placed.length >= 12) return;
+
+      // Sequence validation: only allow the correct next fiber
+      if (fiberIdx !== nextExpected) {
+        const expectedName = FIBER_COLORS[nextExpected!].name;
+        const tappedName = FIBER_COLORS[fiberIdx].name;
+        showHint(
+          `Sequence Error: ${expectedName} required at position ${placed.length + 1}, not ${tappedName}.`
+        );
+        playError();
+        return;
+      }
+
+      // Correct fiber — auto-place into the next slot
       setPlaced((prev) => [...prev, fiberIdx]);
+      setHint(null);
     },
-    [placed, result]
+    [placed, result, nextExpected, showHint]
   );
 
-  // Clicking a placed fiber removes it (and all after it) back to available
+  // Clicking a placed fiber removes it and all fibers after it
   const handleSlotClick = useCallback(
     (slotIdx: number) => {
       if (result) return;
       if (slotIdx >= placed.length) return;
       setPlaced((prev) => prev.slice(0, slotIdx));
+      setHint(null);
     },
     [placed, result]
   );
 
-  const handleValidate = () => {
-    const correct = placed.every((fiberIdx, pos) => fiberIdx === pos);
-    if (correct) {
-      playSuccess();
-      setResult("success");
-      setTimeout(onComplete, 1800);
-    } else {
-      playError();
-      setResult("fail");
-      setTimeout(() => {
-        setResult(null);
-        setPlaced([]);
-        setPlaced([]);
-      }, 1500);
-    }
-  };
+  // Auto-complete: once all 12 are placed (all correct by construction), succeed
+  const handleValidate = useCallback(() => {
+    // All placed fibers are guaranteed correct due to sequence validation
+    playSuccess();
+    setResult("success");
+    setTimeout(onComplete, 1800);
+  }, [onComplete]);
 
   const allPlaced = placed.length === 12;
 
@@ -90,7 +106,7 @@ export default function Level3FiberColor({ onComplete }: Props) {
           Fiber Color Code — TIA-598
         </h2>
         <p className="font-mono text-[10px] text-green-500/50 mt-1">
-          Place all 12 fibers in the correct color-code order (position 1-12).
+          Place fibers in the correct TIA-598 color-code sequence. Wrong picks are rejected.
         </p>
       </div>
 
@@ -111,7 +127,7 @@ export default function Level3FiberColor({ onComplete }: Props) {
                   fiberIdx !== null
                     ? "border-green-700/50 hover:border-red-500/50 cursor-pointer"
                     : isNext
-                    ? "border-green-500/60 bg-green-900/10"
+                    ? "border-green-500/60 bg-green-900/10 animate-pulse"
                     : "border-green-900/30 bg-[#0a0e13]"
                 }`}
                 aria-label={`Position ${slotIdx + 1}${fiberIdx !== null ? `: ${FIBER_COLORS[fiberIdx].name}` : ""}`}
@@ -136,7 +152,7 @@ export default function Level3FiberColor({ onComplete }: Props) {
         </div>
         {placed.length > 0 && !result && (
           <div className="font-mono text-[9px] text-green-600/40 mt-2 text-center">
-            Tap a placed fiber to remove it
+            Tap a placed fiber to remove it and all after
           </div>
         )}
       </div>
@@ -170,6 +186,21 @@ export default function Level3FiberColor({ onComplete }: Props) {
           })}
         </div>
       </div>
+
+      {/* Terminal Hint */}
+      <AnimatePresence>
+        {hint && (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="font-mono text-[10px] text-amber-400/80 text-center tracking-wider"
+            style={{ textShadow: "0 0 8px rgba(245,158,11,0.4)" }}
+          >
+            ▸ {hint}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Validate */}
       {allPlaced && !result && (
