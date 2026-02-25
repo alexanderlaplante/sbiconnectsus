@@ -119,8 +119,8 @@ export default function RackAndStackOverlay({
 
 /* ─── rack SVG animation ─── */
 function RackAnimation({ dur }: { dur: number }) {
-  const rackW = 180;
-  const rackH = 260;
+  const rackW = 260;
+  const rackH = 380;
   const unitH = (rackH - 40) / RACK_UNITS;
 
   return (
@@ -131,7 +131,7 @@ function RackAnimation({ dur }: { dur: number }) {
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: dur * 0.5 }}
-      style={{ filter: "drop-shadow(0 0 24px rgba(56,152,236,0.18))" }}
+      style={{ filter: "drop-shadow(0 0 24px rgba(56,152,236,0.18))", maxWidth: "70vw", maxHeight: "55vh" }}
     >
       {/* rack frame */}
       <motion.rect
