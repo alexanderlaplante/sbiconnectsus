@@ -21,6 +21,7 @@ const Services = lazy(() => import("./pages/Services"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
+const Resources = lazy(() => import("./pages/Resources"));
 const Glossary = lazy(() => import("./pages/employees/Glossary"));
 
 const queryClient = new QueryClient();
