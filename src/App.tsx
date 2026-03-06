@@ -55,6 +55,7 @@ const App = () => (
               <Route path="/services/wireless-mobility" element={<WirelessMobility />} />
               <Route path="/services/security-access" element={<SecurityAccess />} />
               <Route path="/services/audio-visual" element={<AudioVisual />} />
+              <Route path="/resources" element={<Resources />} />
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/employees/glossary" element={<Glossary />} />
               <Route path="*" element={<NotFound />} />
