@@ -49,8 +49,20 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://sbiconnects.us/resources</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sbiconnects.us/employees/glossary</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://sbiconnects.us/sitemap</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-03-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

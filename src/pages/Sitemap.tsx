@@ -9,6 +9,7 @@ const sections = [
       { label: "Home", href: "/" },
       { label: "About SBI Connects", href: "/about" },
       { label: "Contact Us", href: "/contact" },
+      { label: "Resources", href: "/resources" },
     ],
   },
   {
@@ -31,6 +32,12 @@ const sections = [
         label: "Audio-Visual, Communications & Facility Systems",
         href: "/services/audio-visual",
       },
+    ],
+  },
+  {
+    heading: "Employee Resources",
+    links: [
+      { label: "Technical Glossary", href: "/employees/glossary" },
     ],
   },
 ];
