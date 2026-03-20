@@ -11,6 +11,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "light";
     const saved = localStorage.getItem("sbi-theme") as Theme;
     return saved || "light";
   });
